@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.proyecto_idnp.Fragments.CuadrosFragment;
 import com.example.proyecto_idnp.Fragments.HomeFragment;
-import com.example.proyecto_idnp.Fragments.MapaFragment;
+import com.example.proyecto_idnp.Fragments.MapFragment;
 import com.example.proyecto_idnp.Modelos.CuadrosViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -37,7 +37,7 @@ public class HomeActivity extends AppCompatActivity {
             } else if (item.getItemId() == R.id.menu_cuadros){
                 fragment = new CuadrosFragment();
             } else if (item.getItemId() == R.id.menu_mapa){
-                fragment = new MapaFragment();
+                fragment = new MapFragment();
             } else {
                 return false;
             }
