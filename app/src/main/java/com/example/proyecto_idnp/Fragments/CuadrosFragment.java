@@ -90,7 +90,7 @@ public class CuadrosFragment extends Fragment implements OnCuadroClickListener {
         //Cargar fragment detalle
         FragmentManager fragmentManager = getParentFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainerView, CuadrosFragment.class, null)
+                .replace(R.id.fragmentContainerView, DetalleCuadroFragment.class, null)
                 .addToBackStack(null)
                 .commit();
     }

@@ -8,8 +8,13 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.fragment.app.Fragment;
 
+import com.example.proyecto_idnp.Fragments.CuadrosFragment;
+import com.example.proyecto_idnp.Fragments.HomeFragment;
+import com.example.proyecto_idnp.Fragments.MapaFragment;
 import com.example.proyecto_idnp.Modelos.CuadrosViewModel;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -24,5 +29,22 @@ public class HomeActivity extends AppCompatActivity {
             return insets;
         });
         CuadrosViewModel cuadrosModel = new ViewModelProvider(this).get(CuadrosViewModel.class);
+        BottomNavigationView menu = findViewById(R.id.menuNavegacion);
+        menu.setOnNavigationItemSelectedListener(item -> {
+            Fragment fragment;
+            if(item.getItemId() == R.id.menu_home){
+                fragment = new HomeFragment();
+            } else if (item.getItemId() == R.id.menu_cuadros){
+                fragment = new CuadrosFragment();
+            } else if (item.getItemId() == R.id.menu_mapa){
+                fragment = new MapaFragment();
+            } else {
+                return false;
+            }
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragmentContainerView, fragment)
+                    .commit();
+            return true;
+        });
     }
 }
