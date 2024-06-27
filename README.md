@@ -1,4 +1,4 @@
-# PROYECTO: RECORRIDO ACTIVO DE GALERÍA DE ARTE
+# PROYECTO: RECORRIDO ACTIVO DE GALERÍA DE ARTE.
 
 - Arteaga Peña, Carlos Fabián
 - Chirinos Concha, Luis Guillermo
