@@ -6,4 +6,11 @@
     </style>
 
     <style name="Theme.PROYECTO_IDNP" parent="Base.Theme.PROYECTO_IDNP" />
+
+    <style name="ColorBottomNavigationView">
+        <item name="android:background">@color/white</item>
+        <item name="itemIconTint">@color/purple_white</item>
+        <item name="itemTextColor">@color/purple_white</item>
+    </style>
+
 </resources>
