@@ -1,20 +1,31 @@
-package com.example.proyecto_idnp.customviews;
+package com.example.proyecto_idnp.Customviews;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.content.res.AppCompatResources;
+
+import com.example.proyecto_idnp.Modelos.CuadrosViewModel;
+import com.example.proyecto_idnp.R;
 
 public class MapView extends View {
+    private final String TAG = "MapView";
     private Paint paintRoom;
     private Paint textRoom;
     private Paint textPatios;
     private Context context;
     private Canvas canvas;
+    private Drawable pictureDrawable;
+    private CuadrosViewModel itemViewModel;
 
     public MapView(Context context) {
         super(context);
@@ -51,6 +62,7 @@ public class MapView extends View {
         drawMapLayout();
         drawMarkers();
         drawNameSpaces();
+        drawPicture();
     }
 
     private void drawMapLayout() {
@@ -126,6 +138,42 @@ public class MapView extends View {
         int contentWidth = 1100;
         int contentHeight = 2200;
         setMeasuredDimension(contentWidth, contentHeight);
+    }
+    private void drawPicture() {
+        pictureDrawable = AppCompatResources.getDrawable(context, R.drawable.cuadros_icon_blue);
+        if (pictureDrawable != null) {
+            pictureDrawable.setBounds(456, 1980, 556, 2080);
+            ImageView imageView = new ImageView(context);
+            imageView.setImageDrawable(pictureDrawable);
+            imageView.draw(canvas);
+            Log.d(TAG, "Dibujando icono de cuadro ");
+        }
+    }
+
+    public void setListener(CuadrosViewModel itemViewModel){
+        this.itemViewModel = itemViewModel;
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event){
+        int pointX = (int) event.getX();
+        int pointY = (int) event.getY();
+
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                boolean clicked = pictureDrawable.getBounds().contains(pointX,pointY);
+                if (clicked) {
+                    itemViewModel.setCuadroSeleccionadoPorId(1);
+                    Log.d("MapView","onTouchEvent Puntos " + pointX + " " + pointY );
+                }
+                break;
+            case MotionEvent.ACTION_MOVE:
+                Log.d("MapView","Puntos " + pointX + " " + pointY );
+            default:
+                return false;
+        }
+        invalidate();
+        return true;
     }
 }
 

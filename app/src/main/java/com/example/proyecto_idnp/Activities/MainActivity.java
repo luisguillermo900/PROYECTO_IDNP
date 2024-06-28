@@ -1,4 +1,4 @@
-package com.example.proyecto_idnp.activities;
+package com.example.proyecto_idnp.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;

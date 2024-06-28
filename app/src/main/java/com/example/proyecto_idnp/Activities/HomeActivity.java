@@ -1,4 +1,4 @@
-package com.example.proyecto_idnp.activities;
+package com.example.proyecto_idnp.Activities;
 
 import android.os.Bundle;
 import android.view.View;
@@ -9,10 +9,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.fragment.app.Fragment;
 
 import com.example.proyecto_idnp.Fragments.CuadrosFragment;
+import com.example.proyecto_idnp.Fragments.DetalleCuadroFragment;
 import com.example.proyecto_idnp.Fragments.HomeFragment;
 import com.example.proyecto_idnp.Fragments.MapFragment;
 import com.example.proyecto_idnp.Fragments.QrFragment;
@@ -23,6 +26,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class HomeActivity extends AppCompatActivity {
 
     private TextView layout;
+    private CuadrosViewModel itemViewModel;
+    private DetalleCuadroFragment pictureFragment;
+    private FragmentManager fragmentManager = null;
+    private FragmentTransaction fragmentTransaction = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,10 +68,27 @@ public class HomeActivity extends AppCompatActivity {
             } else {
                 return false;
             }
+
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragmentContainerView, fragment)
                     .commit();
+
+
+            itemViewModel = new ViewModelProvider(this).get(CuadrosViewModel.class);
+            itemViewModel.getCuadroSeleccionado().observe(this, id -> {
+                pictureFragment = DetalleCuadroFragment.newInstance("","");
+                loadFragment(pictureFragment);
+            });
+
             return true;
         });
+    }
+
+    private void loadFragment(Fragment fragment){
+        if (fragmentManager != null){
+            fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.fragmentContainerView, fragment);
+            fragmentTransaction.commit();
+        }
     }
 }

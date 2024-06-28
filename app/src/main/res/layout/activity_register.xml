@@ -5,55 +5,55 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.RegisterActivity">
-    <EditText
-        android:id="@+id/username"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="112dp"
-        android:hint="User Name"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="-16dp" />
+    tools:context=".Activities.RegisterActivity">
 
-    <EditText
-        android:id="@+id/password"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/username"
-        android:layout_marginTop="76dp"
-        android:hint="Password"
-        app:layout_constraintTop_toBottomOf="@+id/username"
-        tools:layout_editor_absoluteX="0dp" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
 
-    <EditText
-        android:id="@+id/repassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/password"
-        android:layout_marginTop="64dp"
-        android:hint="Retype Password"
-        app:layout_constraintTop_toBottomOf="@+id/password"
-        tools:layout_editor_absoluteX="0dp" />
+        <EditText
+            android:id="@+id/username"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="112dp"
+            android:hint="User Name" />
 
-    <Button
-        android:id="@+id/btnsignin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/btnsignup"
-        android:layout_marginTop="52dp"
-        android:text="Ya tengo cuenta, iniciar sesion"
-        app:layout_constraintTop_toBottomOf="@+id/btnsignup"
-        tools:layout_editor_absoluteX="38dp" />
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/username"
+            android:layout_marginTop="76dp"
+            android:hint="Password" />
 
-    <Button
-        android:id="@+id/btnsignup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/repassword"
-        android:layout_marginTop="56dp"
-        android:text="Registrarse"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/repassword" />
+        <EditText
+            android:id="@+id/repassword"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/password"
+            android:layout_marginTop="64dp"
+            android:hint="Retype Password"
+            app:layout_constraintTop_toBottomOf="@+id/password"
+            tools:layout_editor_absoluteX="0dp" />
 
+        <Button
+            android:id="@+id/btnsignin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btnsignup"
+            android:layout_marginTop="52dp"
+            android:text="Ya tengo cuenta, iniciar sesion"/>
+
+        <Button
+            android:id="@+id/btnsignup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/repassword"
+            android:layout_marginTop="56dp"
+            android:text="Registrarse"/>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

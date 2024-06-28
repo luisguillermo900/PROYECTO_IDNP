@@ -3,6 +3,7 @@ package com.example.proyecto_idnp.Fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,8 +11,8 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ScrollView;
 
-import com.example.proyecto_idnp.R;
-import com.example.proyecto_idnp.customviews.MapView;
+import com.example.proyecto_idnp.Modelos.CuadrosViewModel;
+import com.example.proyecto_idnp.Customviews.MapView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,6 +29,8 @@ public class MapFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private CuadrosViewModel itemViewModel;
+    private MapView mapView;
 
     public MapFragment() {
         // Required empty public constructor
@@ -65,9 +68,15 @@ public class MapFragment extends Fragment {
                              Bundle savedInstanceState) {
         ScrollView scrollView = new ScrollView(requireContext());
         FrameLayout frameLayout = new FrameLayout(requireContext());
-        MapView mapView = new MapView(requireContext());
+        mapView = new MapView(requireContext());
         frameLayout.addView(mapView);
         scrollView.addView(frameLayout);
         return scrollView;
+    }
+
+    public void onViewCreated( View view, Bundle savedInstanceStatus) {
+        super.onViewCreated(view, savedInstanceStatus);
+        itemViewModel = new ViewModelProvider(requireActivity()).get(CuadrosViewModel.class);
+        mapView.setListener(itemViewModel);
     }
 }
