@@ -14,29 +14,34 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.proyecto_idnp.Adaptadores.AdaptadorObra;
-import com.example.proyecto_idnp.Entidades.ObraDeArte;
 import com.example.proyecto_idnp.Adaptadores.OnObraClickListener;
+import com.example.proyecto_idnp.Entidades.ObraDeArte;
 import com.example.proyecto_idnp.Modelos.ObrasViewModel;
 import com.example.proyecto_idnp.R;
 
-public class ExplorarFragment extends Fragment implements OnObraClickListener {
+/**
+ * A simple {@link Fragment} subclass.
+ * Use the {@link DetalleExposicionFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
+public class DetalleExposicionFragment extends Fragment implements OnObraClickListener {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
     private RecyclerView recyclerListaObras;
     private AdaptadorObra adaptadorObra;
     private ObrasViewModel obrasModel;
 
+    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
-    public ExplorarFragment() {
+    public DetalleExposicionFragment() {
         // Required empty public constructor
     }
 
-    public static ExplorarFragment newInstance(String param1, String param2) {
-        ExplorarFragment fragment = new ExplorarFragment();
+    public static DetalleExposicionFragment newInstance(String param1, String param2) {
+        DetalleExposicionFragment fragment = new DetalleExposicionFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -57,14 +62,14 @@ public class ExplorarFragment extends Fragment implements OnObraClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_explorar, container, false);
+        View view = inflater.inflate(R.layout.fragment_detalle_exposicion, container, false);
         obrasModel = new ViewModelProvider(requireActivity()).get(ObrasViewModel.class);
         recyclerListaObras = view.findViewById(R.id.recyclerListaObras);
         recyclerListaObras.setLayoutManager(new LinearLayoutManager(getContext()));
 
         adaptadorObra = new AdaptadorObra(obrasModel.getObrasLiveData().getValue(),getContext(),this);
         recyclerListaObras.setAdapter(adaptadorObra);
-        Log.d("AdaptadorObra", "Adaptador configurado y asignado al RecyclerView.");
+        Log.d("AdaptadorCuadro", "Adaptador configurado y asignado al RecyclerView.");
         return view;
     }
     @Override
