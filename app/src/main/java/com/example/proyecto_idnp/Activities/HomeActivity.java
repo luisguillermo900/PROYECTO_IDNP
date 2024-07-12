@@ -14,7 +14,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.fragment.app.Fragment;
 
-import com.example.proyecto_idnp.Fragments.ObrasFragment;
+import com.example.proyecto_idnp.Fragments.ExplorarFragment;
 import com.example.proyecto_idnp.Fragments.DetalleObraFragment;
 import com.example.proyecto_idnp.Fragments.HomeFragment;
 import com.example.proyecto_idnp.Fragments.MapFragment;
@@ -56,7 +56,7 @@ public class HomeActivity extends AppCompatActivity {
             } else if (item.getItemId() == R.id.menu_obras){
                 layout.setVisibility(View.VISIBLE);
                 layout.setText("Obras");
-                fragment = new ObrasFragment();
+                fragment = new ExplorarFragment();
             } else if (item.getItemId() == R.id.menu_mapa){
                 layout.setVisibility(View.VISIBLE);
                 layout.setText("Mapa");
