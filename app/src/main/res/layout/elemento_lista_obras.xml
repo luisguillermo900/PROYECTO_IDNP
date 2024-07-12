@@ -13,7 +13,7 @@
         android:padding="8dp">
 
         <ImageView
-            android:id="@+id/imgFotoCuadro"
+            android:id="@+id/imgFotoObra"
             android:layout_width="100dp"
             android:layout_height="100dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -22,24 +22,24 @@
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
-            android:id="@+id/txtTituloCuadro"
+            android:id="@+id/txtTituloObra"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:text="TextView"
-            app:layout_constraintStart_toEndOf="@+id/imgFotoCuadro"
-            app:layout_constraintTop_toTopOf="@+id/imgFotoCuadro" />
+            app:layout_constraintStart_toEndOf="@+id/imgFotoObra"
+            app:layout_constraintTop_toTopOf="@+id/imgFotoObra" />
 
         <TextView
-            android:id="@+id/txtDescripcionCuadro"
+            android:id="@+id/txtDescripcionObra"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
             android:text="asdddddddddddddddddddddddddddddddddddddddddddddasdasdasdsadasdsadddd"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/txtTituloCuadro"
-            app:layout_constraintTop_toBottomOf="@+id/txtTituloCuadro" />
+            app:layout_constraintStart_toStartOf="@+id/txtTituloObra"
+            app:layout_constraintTop_toBottomOf="@+id/txtTituloObra" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

@@ -12,41 +12,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.proyecto_idnp.Modelos.CuadrosViewModel;
+import com.example.proyecto_idnp.Modelos.ObrasViewModel;
 import com.example.proyecto_idnp.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link DetalleCuadroFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class DetalleCuadroFragment extends Fragment {
+public class DetalleObraFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private CuadrosViewModel cuadrosModel;
+    private ObrasViewModel obrasModel;
 
-    public DetalleCuadroFragment() {
+    public DetalleObraFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment DescriptionFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static DetalleCuadroFragment newInstance(String param1, String param2) {
-        DetalleCuadroFragment fragment = new DetalleCuadroFragment();
+    public static DetalleObraFragment newInstance(String param1, String param2) {
+        DetalleObraFragment fragment = new DetalleObraFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -72,17 +55,17 @@ public class DetalleCuadroFragment extends Fragment {
         ImageView imgDetalleFoto = view.findViewById(R.id.imgDetalleFoto);
         TextView txtDetalleDescripcion = view.findViewById(R.id.txtDetalleDescripcion);
 
-        cuadrosModel = new ViewModelProvider(requireActivity()).get(CuadrosViewModel.class);
+        obrasModel = new ViewModelProvider(requireActivity()).get(ObrasViewModel.class);
 
         // Observar el cuadro seleccionado y actualizar la UI
-        cuadrosModel.getCuadroSeleccionado().observe(getViewLifecycleOwner(), cuadro -> {
-            if (cuadro != null) {
-                txtDetalleTitulo.setText(cuadro.getNombreCuadro());
+        obrasModel.getObraSeleccionada().observe(getViewLifecycleOwner(), obra -> {
+            if (obra != null) {
+                txtDetalleTitulo.setText(obra.getTitulo());
                 Glide.with(getContext())
-                        .load(cuadro.getFotoCuadro())
+                        .load(obra.getUrlImagen())
                         .centerCrop()
                         .into(imgDetalleFoto);
-                txtDetalleDescripcion.setText(cuadro.getDescripcionCuadro());
+                txtDetalleDescripcion.setText(obra.getDescripcion());
             }
         });
         return view;

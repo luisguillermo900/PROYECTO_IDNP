@@ -14,20 +14,20 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.fragment.app.Fragment;
 
-import com.example.proyecto_idnp.Fragments.CuadrosFragment;
-import com.example.proyecto_idnp.Fragments.DetalleCuadroFragment;
+import com.example.proyecto_idnp.Fragments.ObrasFragment;
+import com.example.proyecto_idnp.Fragments.DetalleObraFragment;
 import com.example.proyecto_idnp.Fragments.HomeFragment;
 import com.example.proyecto_idnp.Fragments.MapFragment;
 import com.example.proyecto_idnp.Fragments.QrFragment;
-import com.example.proyecto_idnp.Modelos.CuadrosViewModel;
+import com.example.proyecto_idnp.Modelos.ObrasViewModel;
 import com.example.proyecto_idnp.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class HomeActivity extends AppCompatActivity {
 
     private TextView layout;
-    private CuadrosViewModel itemViewModel;
-    private DetalleCuadroFragment pictureFragment;
+    private ObrasViewModel itemViewModel;
+    private DetalleObraFragment obraFragment;
     private FragmentManager fragmentManager = null;
     private FragmentTransaction fragmentTransaction = null;
     @Override
@@ -44,7 +44,7 @@ public class HomeActivity extends AppCompatActivity {
         layout = findViewById(R.id.pageHomeActivity);
         layout.setVisibility(View.GONE);
 
-        CuadrosViewModel cuadrosModel = new ViewModelProvider(this).get(CuadrosViewModel.class);
+        ObrasViewModel cuadrosModel = new ViewModelProvider(this).get(ObrasViewModel.class);
         BottomNavigationView menu = findViewById(R.id.menuNavegacion);
         menu.setOnNavigationItemSelectedListener(item -> {
 
@@ -53,10 +53,10 @@ public class HomeActivity extends AppCompatActivity {
             if(item.getItemId() == R.id.menu_home){
                 layout.setVisibility(View.GONE);
                 fragment = new HomeFragment();
-            } else if (item.getItemId() == R.id.menu_cuadros){
+            } else if (item.getItemId() == R.id.menu_obras){
                 layout.setVisibility(View.VISIBLE);
-                layout.setText("Cuadros");
-                fragment = new CuadrosFragment();
+                layout.setText("Obras");
+                fragment = new ObrasFragment();
             } else if (item.getItemId() == R.id.menu_mapa){
                 layout.setVisibility(View.VISIBLE);
                 layout.setText("Mapa");
@@ -74,10 +74,10 @@ public class HomeActivity extends AppCompatActivity {
                     .commit();
 
 
-            itemViewModel = new ViewModelProvider(this).get(CuadrosViewModel.class);
-            itemViewModel.getCuadroSeleccionado().observe(this, id -> {
-                pictureFragment = DetalleCuadroFragment.newInstance("","");
-                loadFragment(pictureFragment);
+            itemViewModel = new ViewModelProvider(this).get(ObrasViewModel.class);
+            itemViewModel.getObraSeleccionada().observe(this, id -> {
+                obraFragment = DetalleObraFragment.newInstance("","");
+                loadFragment(obraFragment);
             });
 
             return true;

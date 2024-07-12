@@ -6,8 +6,8 @@
         android:id="@+id/menu_home"
         android:icon="@drawable/baseline_home_24"
         />
-    <item android:title="Cuadros"
-        android:id="@+id/menu_cuadros"
+    <item android:title="Obras"
+        android:id="@+id/menu_obras"
         android:icon="@drawable/baseline_add_photo_alternate_24"
         />
     <item android:title="Mapa"

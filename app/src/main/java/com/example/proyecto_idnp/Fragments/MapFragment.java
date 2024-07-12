@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ScrollView;
 
-import com.example.proyecto_idnp.Modelos.CuadrosViewModel;
+import com.example.proyecto_idnp.Modelos.ObrasViewModel;
 import com.example.proyecto_idnp.Customviews.MapView;
 
 /**
@@ -29,7 +29,7 @@ public class MapFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private CuadrosViewModel itemViewModel;
+    private ObrasViewModel itemViewModel;
     private MapView mapView;
 
     public MapFragment() {
@@ -76,7 +76,7 @@ public class MapFragment extends Fragment {
 
     public void onViewCreated( View view, Bundle savedInstanceStatus) {
         super.onViewCreated(view, savedInstanceStatus);
-        itemViewModel = new ViewModelProvider(requireActivity()).get(CuadrosViewModel.class);
+        itemViewModel = new ViewModelProvider(requireActivity()).get(ObrasViewModel.class);
         mapView.setListener(itemViewModel);
     }
 }

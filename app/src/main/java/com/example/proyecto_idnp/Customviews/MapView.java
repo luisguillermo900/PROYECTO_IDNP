@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.content.res.AppCompatResources;
 
-import com.example.proyecto_idnp.Modelos.CuadrosViewModel;
+import com.example.proyecto_idnp.Modelos.ObrasViewModel;
 import com.example.proyecto_idnp.R;
 
 public class MapView extends View {
@@ -25,7 +25,7 @@ public class MapView extends View {
     private Context context;
     private Canvas canvas;
     private Drawable pictureDrawable;
-    private CuadrosViewModel itemViewModel;
+    private ObrasViewModel itemViewModel;
 
     public MapView(Context context) {
         super(context);
@@ -146,11 +146,11 @@ public class MapView extends View {
             ImageView imageView = new ImageView(context);
             imageView.setImageDrawable(pictureDrawable);
             imageView.draw(canvas);
-            Log.d(TAG, "Dibujando icono de cuadro ");
+            Log.d(TAG, "Dibujando icono de Obra ");
         }
     }
 
-    public void setListener(CuadrosViewModel itemViewModel){
+    public void setListener(ObrasViewModel itemViewModel){
         this.itemViewModel = itemViewModel;
     }
 
@@ -163,7 +163,7 @@ public class MapView extends View {
             case MotionEvent.ACTION_DOWN:
                 boolean clicked = pictureDrawable.getBounds().contains(pointX,pointY);
                 if (clicked) {
-                    itemViewModel.setCuadroSeleccionadoPorId(1);
+                    itemViewModel.setObraSeleccionadaPorId(1);
                     Log.d("MapView","onTouchEvent Puntos " + pointX + " " + pointY );
                 }
                 break;
