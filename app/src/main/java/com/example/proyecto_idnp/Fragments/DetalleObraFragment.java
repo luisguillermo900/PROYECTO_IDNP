@@ -50,22 +50,22 @@ public class DetalleObraFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_detalle, container, false);
-        TextView txtDetalleTitulo = view.findViewById(R.id.txtDetalleTitulo);
-        ImageView imgDetalleFoto = view.findViewById(R.id.imgDetalleFoto);
-        TextView txtDetalleDescripcion = view.findViewById(R.id.txtDetalleDescripcion);
+        View view = inflater.inflate(R.layout.fragment_detalle_obra, container, false);
+        TextView txtDetObraTitulo = view.findViewById(R.id.txtDetObraTitulo);
+        ImageView imgDetObraFoto = view.findViewById(R.id.imgDetObraFoto);
+        TextView txtDetObraDescripcion = view.findViewById(R.id.txtDetObraDescripcion);
 
         obrasModel = new ViewModelProvider(requireActivity()).get(ObrasViewModel.class);
 
         // Observar el cuadro seleccionado y actualizar la UI
         obrasModel.getObraSeleccionada().observe(getViewLifecycleOwner(), obra -> {
             if (obra != null) {
-                txtDetalleTitulo.setText(obra.getTitulo());
+                txtDetObraTitulo.setText(obra.getTitulo());
                 Glide.with(getContext())
                         .load(obra.getUrlImagen())
                         .centerCrop()
-                        .into(imgDetalleFoto);
-                txtDetalleDescripcion.setText(obra.getDescripcion());
+                        .into(imgDetObraFoto);
+                txtDetObraDescripcion.setText(obra.getDescripcion());
             }
         });
         return view;
