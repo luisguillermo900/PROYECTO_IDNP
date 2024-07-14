@@ -2,6 +2,7 @@ package com.example.proyecto_idnp.Fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -11,8 +12,8 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ScrollView;
 
-import com.example.proyecto_idnp.Modelos.CuadrosViewModel;
 import com.example.proyecto_idnp.Customviews.MapView;
+import com.example.proyecto_idnp.Modelos.CuadrosViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -74,8 +75,8 @@ public class MapFragment extends Fragment {
         return scrollView;
     }
 
-    public void onViewCreated( View view, Bundle savedInstanceStatus) {
-        super.onViewCreated(view, savedInstanceStatus);
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         itemViewModel = new ViewModelProvider(requireActivity()).get(CuadrosViewModel.class);
         mapView.setListener(itemViewModel);
     }

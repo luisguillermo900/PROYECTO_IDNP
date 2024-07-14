@@ -1,9 +1,11 @@
 package com.example.proyecto_idnp.Customviews;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -14,11 +16,14 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.content.res.AppCompatResources;
 
+import com.example.proyecto_idnp.Adaptadores.Cuadro;
 import com.example.proyecto_idnp.Modelos.CuadrosViewModel;
 import com.example.proyecto_idnp.R;
 
 public class MapView extends View {
-    private final String TAG = "MapView";
+    private static final String TAG = "MapView";
+    private static final float DRAW_WIDTH = 1050f;
+    private static final float DRAW_HEIGHT = 2080f;
     private Paint paintRoom;
     private Paint textRoom;
     private Paint textPatios;
@@ -26,19 +31,21 @@ public class MapView extends View {
     private Canvas canvas;
     private Drawable pictureDrawable;
     private CuadrosViewModel itemViewModel;
+    private float scaleX, scaleY;
 
     public MapView(Context context) {
         super(context);
         this.context = context;
-        init();
+        initPaint();
     }
 
     public MapView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
+        this.context = context;
+        initPaint();
     }
 
-    private void init() {
+    private void initPaint() {
         paintRoom = new Paint();
         paintRoom.setColor(Color.GRAY);
         paintRoom.setStyle(Paint.Style.STROKE);
@@ -59,38 +66,48 @@ public class MapView extends View {
     protected void onDraw(@NonNull Canvas canvas) {
         super.onDraw(canvas);
         this.canvas = canvas;
+        calculateScale();
         drawMapLayout();
-        drawMarkers();
         drawNameSpaces();
         drawPicture();
     }
 
-    private void drawMapLayout() {
-        canvas.drawRect(25, 20, 1050, 337, paintRoom); // Marco
+    private void calculateScale(){
 
-        canvas.drawRect(25, 20, 253, 337, paintRoom);      // Baños
-        canvas.drawRect(797, 20, 1050, 337, paintRoom);    // Baños
-
-        canvas.drawRect(253, 337, 684, 654, paintRoom);    // Sala 7
-        canvas.drawRect(25, 337, 253, 971, paintRoom);     // Sala 6
-
-        canvas.drawRect(253, 1129, 684, 1446, paintRoom);  // Sala 5
-        canvas.drawRect(25, 1129, 253, 1446, paintRoom);   // Sala 4
-        canvas.drawRect(25, 1446, 253, 1763, paintRoom);   // Sala 3
-        canvas.drawRect(25, 1763, 253, 2080, paintRoom);   // Sala 2
-        canvas.drawRect(253, 1763, 684, 2080, paintRoom);  // Sala 1
-
-        canvas.drawRect(797, 337, 1050, 654, paintRoom);   // Administrativo
-        canvas.drawRect(797, 654, 1050, 1129, paintRoom);  // Espacio libre
-        canvas.drawRect(797, 1129, 1050, 1446, paintRoom); // Sala 8
-        canvas.drawRect(797, 1446, 1050, 1763, paintRoom); // Sala 9
-        canvas.drawRect(797, 1763, 1050, 2080, paintRoom); // Sala 10
+        float canvasWidth = canvas.getWidth();
+        float canvasHeight = canvas.getHeight();
+        scaleX = canvasWidth / DRAW_WIDTH;
+        scaleY = canvasHeight / DRAW_HEIGHT;
     }
 
-    private void drawMarkers() {
-        paintRoom.setColor(Color.RED);
-        paintRoom.setStyle(Paint.Style.FILL);
-        canvas.drawCircle(456, 1980, 10, paintRoom);
+    private void drawMapLayout() {
+
+        float [][] romms = {
+
+                {25, 20, 1050, 2080}, // Marco
+                //{10, 20, 1040, 2070}, // Marco
+                {25, 20, 253, 337}, // Administrativo
+                {797, 20, 1050, 337}, // Baños
+
+                {253, 337, 684, 654}, // Sala 7
+                {25, 337, 253, 971}, // Sala 6
+
+                {253, 1129, 684, 1446}, // Sala 5
+                {25, 1129, 253, 1446}, // Sala 4
+                {25, 1446, 253, 1763}, // Sala 3
+                {25, 1763, 253, 2080}, // Sala 2
+                {253, 1763, 684, 2080}, // Sala 1
+
+                {797, 337, 1050, 654}, // Administrativo
+                {797, 654, 1050, 1129}, // Espacio libre
+                {797, 1129, 1050, 1446}, // Sala 8
+                {797, 1446, 1050, 1763}, // Sala 9
+                {797, 1763, 1050, 2080}, // Sala 10
+        };
+
+        for (float[] array : romms) {
+            canvas.drawRect(array[0] * scaleX, array[1] * scaleY,array[2] * scaleX, array[3] * scaleY, paintRoom);
+        }
     }
 
     private void drawNameSpaces() {
@@ -114,61 +131,60 @@ public class MapView extends View {
         };
         int aux = 1;
         for (float[] array : roomCenters) {
-            canvas.drawText("Sala " + (aux++), array[0], array[1], textRoom);
+            canvas.drawText("Sala " + (aux++), array[0] * scaleX, array[1] * scaleY, textRoom);
         }
     }
 
     private void drawNamesPatiosAndBathroom() {
-        canvas.drawText("Patio 1", 410, 1627, textPatios);
-        canvas.drawText("Patio 2", 410, 903, textPatios);
-        canvas.drawText("Patio 3", 410, 198, textPatios);
-        canvas.drawText("Baños", 860, 198, textPatios);
+        canvas.drawText("Patio 1", 410 * scaleX, 1627 * scaleY, textPatios);
+        canvas.drawText("Patio 2", 410 * scaleX, 903 * scaleY, textPatios);
+        canvas.drawText("Patio 3", 410 * scaleX, 198 * scaleY, textPatios);
+        canvas.drawText("Baños", 860 * scaleX, 198 * scaleY, textPatios);
     }
 
     private void drawEntrance() {
         canvas.save();
-        canvas.rotate(270, 750, 2050);
-        canvas.drawText("Ingreso", 750, 2050, textPatios);
+        canvas.rotate(270, 750 * scaleX, 2050 * scaleY);
+        canvas.drawText("Ingreso", 750 * scaleX, 2050 * scaleY, textPatios);
         canvas.restore();
     }
 
     @Override
-    protected void onMeasure(int width, int height) {
-        super.onMeasure(width, height);
-        int contentWidth = 1100;
-        int contentHeight = 2200;
-        setMeasuredDimension(contentWidth, contentHeight);
+    protected void onMeasure(int widthSpec, int heightSpec) {
+        super.onMeasure(widthSpec,  heightSpec);
+        int width = MeasureSpec.getSize(widthSpec);
+        int height = (int) (DRAW_HEIGHT * (width / DRAW_WIDTH));
+        setMeasuredDimension(width, height);
+        invalidate();
     }
+
     private void drawPicture() {
         pictureDrawable = AppCompatResources.getDrawable(context, R.drawable.cuadros_icon_blue);
         if (pictureDrawable != null) {
-            pictureDrawable.setBounds(456, 1980, 556, 2080);
-            ImageView imageView = new ImageView(context);
-            imageView.setImageDrawable(pictureDrawable);
-            imageView.draw(canvas);
+            int left = (int) (456 * scaleX);
+            int top = (int) (1980 * scaleY);
+            int right = (int) (556 * scaleX);
+            int bottom = (int) (2080 * scaleY);
+            pictureDrawable.setBounds(left, top, right, bottom);
+            pictureDrawable.draw(canvas);
             Log.d(TAG, "Dibujando icono de cuadro ");
         }
     }
 
-    public void setListener(CuadrosViewModel itemViewModel){
+    public void setListener(CuadrosViewModel itemViewModel) {
         this.itemViewModel = itemViewModel;
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent event){
+    public boolean onTouchEvent(MotionEvent event) {
         int pointX = (int) event.getX();
         int pointY = (int) event.getY();
-
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                boolean clicked = pictureDrawable.getBounds().contains(pointX,pointY);
-                if (clicked) {
+                if (pictureDrawable != null && pictureDrawable.getBounds().contains(pointX, pointY)) {
                     itemViewModel.setCuadroSeleccionadoPorId(1);
-                    Log.d("MapView","onTouchEvent Puntos " + pointX + " " + pointY );
                 }
                 break;
-            case MotionEvent.ACTION_MOVE:
-                Log.d("MapView","Puntos " + pointX + " " + pointY );
             default:
                 return false;
         }

@@ -1,4 +1,4 @@
-package com.example.proyecto_idnp.Activities;
+package com.example.proyecto_idnp.Actividades;
 
 import android.content.ContentValues;
 import android.content.Context;
