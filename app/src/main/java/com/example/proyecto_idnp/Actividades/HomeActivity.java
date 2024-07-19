@@ -35,6 +35,7 @@ import com.google.android.material.navigation.NavigationBarView;
 public class HomeActivity extends AppCompatActivity {
 
     private TextView layout;
+    private BottomNavigationView menu;
     private ObrasViewModel itemViewModel;
     private DetalleObraFragment pictureFragment;
     private FragmentManager fragmentManager = null;
@@ -54,7 +55,7 @@ public class HomeActivity extends AppCompatActivity {
         layout = findViewById(R.id.pageHomeActivity);
         layout.setVisibility(View.GONE);
 
-        BottomNavigationView menu = findViewById(R.id.menuNavegacion);
+        menu = findViewById(R.id.menuNavegacion);
         menu.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -85,11 +86,17 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         itemViewModel = new ViewModelProvider(this).get(ObrasViewModel.class);
+        // Dibuja un cuadro
         itemViewModel.getObraSeleccionada().observe(this, cuadro -> {
             if (cuadro != null) {
                 pictureFragment = new DetalleObraFragment();
                 loadFragment(pictureFragment);
             }
+        });
+
+        // Regresa al canvas del mapa y elimina el cuadro
+        itemViewModel.getClosePicture().observe(this, id -> {
+            loadFragment(new MapFragment());
         });
     }
 

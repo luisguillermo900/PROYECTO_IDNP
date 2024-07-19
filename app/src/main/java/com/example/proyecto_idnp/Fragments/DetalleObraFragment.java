@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -66,6 +67,16 @@ public class DetalleObraFragment extends Fragment {
                         .centerCrop()
                         .into(imgDetObraFoto);
                 txtDetObraDescripcion.setText(obra.getDescripcion());
+            }
+        });
+
+        ImageView btnBack = view.findViewById(R.id.icono_atras);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(obrasModel != null){
+                    obrasModel.setClosePictureById(1);
+                }
             }
         });
         return view;

@@ -14,11 +14,13 @@ import java.util.List;
 public class ObrasViewModel extends ViewModel {
     private MutableLiveData<List<ObraDeArte>> obrasLiveData;
     private MutableLiveData<ObraDeArte> obraSeleccionada;
+    private MutableLiveData<ObraDeArte> closePicture;
     private List<ObraDeArte> listaObras;
 
     public ObrasViewModel() {
         obrasLiveData = new MutableLiveData<>();
         obraSeleccionada = new MutableLiveData<>();
+        closePicture = new MutableLiveData<>();
         loadObras();
     }
     public LiveData<List<ObraDeArte>> getObrasLiveData() {
@@ -37,6 +39,16 @@ public class ObrasViewModel extends ViewModel {
         ObraDeArte obra = getObraPorId(id);
         obraSeleccionada.setValue(obra);
     }
+
+    public void setClosePictureById(int id) {
+        ObraDeArte obra = getObraPorId(id);
+        closePicture.setValue(obra);
+    }
+
+    public LiveData<ObraDeArte> getClosePicture(){
+        return closePicture;
+    }
+
     private ObraDeArte getObraPorId(int id) {
         if (listaObras != null) {
             for (ObraDeArte obra : listaObras) {
