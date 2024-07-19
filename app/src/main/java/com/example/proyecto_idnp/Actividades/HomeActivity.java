@@ -36,9 +36,10 @@ public class HomeActivity extends AppCompatActivity {
 
     private TextView layout;
     private ObrasViewModel itemViewModel;
-    private DetalleObraFragment obraFragment;
+    private DetalleObraFragment pictureFragment;
     private FragmentManager fragmentManager = null;
     private FragmentTransaction fragmentTransaction = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,88 +54,47 @@ public class HomeActivity extends AppCompatActivity {
         layout = findViewById(R.id.pageHomeActivity);
         layout.setVisibility(View.GONE);
 
-//        BottomNavigationView menu = findViewById(R.id.menuNavegacion);
-//        menu.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-//                fragmentManager = getSupportFragmentManager();
-//                if(menuItem.getItemId() == R.id.menu_home){
-//                    layout.setVisibility(View.GONE);
-//                    loadFragment(new HomeFragment());
-//                    return true;
-//                } else if (menuItem.getItemId() == R.id.menu_cuadros) {
-//                    layout.setVisibility(View.VISIBLE);
-//                    layout.setText("Cuadros");
-//                    loadFragment(new CuadrosFragment());
-//                    return true;
-//                } else if (menuItem.getItemId() == R.id.menu_mapa) {
-//                    layout.setVisibility(View.VISIBLE);
-//                    layout.setText("Mapa");
-//                    loadFragment(new MapFragment());
-//                    return true;
-//                } else if (menuItem.getItemId() == R.id.menu_qr) {
-//                    layout.setVisibility(View.VISIBLE);
-//                    layout.setText("Qr");
-//                    loadFragment(new QrFragment());
-//                    return true;
-//                } else {
-//                    return false;
-//                }
-
-        ObrasViewModel cuadrosModel = new ViewModelProvider(this).get(ObrasViewModel.class);
         BottomNavigationView menu = findViewById(R.id.menuNavegacion);
-        menu.setOnNavigationItemSelectedListener(item -> {
-
-            Fragment fragment;
-
-            if(item.getItemId() == R.id.menu_home){
-                layout.setVisibility(View.GONE);
-                fragment = new HomeFragment();
-            } else if (item.getItemId() == R.id.menu_obras){
-                layout.setVisibility(View.VISIBLE);
-                layout.setText("Obras");
-                fragment = new ExplorarFragment();
-            } else if (item.getItemId() == R.id.menu_mapa){
-                layout.setVisibility(View.VISIBLE);
-                layout.setText("Mapa");
-                fragment = new MapFragment();
-            } else if (item.getItemId() == R.id.menu_qr) {
-                layout.setVisibility(View.VISIBLE);
-                layout.setText("Qr");
-                fragment = new QrFragment();
-            } else {
-                return false;
+        menu.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                fragmentManager = getSupportFragmentManager();
+                if (menuItem.getItemId() == R.id.menu_home) {
+                    layout.setVisibility(View.GONE);
+                    loadFragment(new HomeFragment());
+                    return true;
+                } else if (menuItem.getItemId() == R.id.menu_obras) {
+                    layout.setVisibility(View.VISIBLE);
+                    layout.setText("Cuadros");
+                    loadFragment(new ExplorarFragment());
+                    return true;
+                } else if (menuItem.getItemId() == R.id.menu_mapa) {
+                    layout.setVisibility(View.VISIBLE);
+                    layout.setText("Mapa");
+                    loadFragment(new MapFragment());
+                    return true;
+                } else if (menuItem.getItemId() == R.id.menu_qr) {
+                    layout.setVisibility(View.VISIBLE);
+                    layout.setText("Qr");
+                    loadFragment(new QrFragment());
+                    return true;
+                } else {
+                    return false;
+                }
             }
+        });
 
-//        itemViewModel = new ViewModelProvider(this).get(CuadrosViewModel.class);
-////        itemViewModel.getSelectPicture().observe(this, id -> {
-////            itemViewModel.setCuadroSeleccionadoPorId(1);
-////            pictureFragment = new DetalleCuadroFragment();
-////            loadFragment(pictureFragment);
-////        });
-//        itemViewModel.getCuadroSeleccionado().observe(this, cuadro -> {
-//            if (cuadro != null) {
-//                pictureFragment = new DetalleCuadroFragment();
-//                loadFragment(pictureFragment);
-//                Log.d("HomeActivity","pictureFragment");
-//            }
-
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragmentContainerView, fragment)
-                    .commit();
-
-
-            itemViewModel = new ViewModelProvider(this).get(ObrasViewModel.class);
-            itemViewModel.getObraSeleccionada().observe(this, id -> {
-                obraFragment = DetalleObraFragment.newInstance("","");
-                loadFragment(obraFragment);
-            });
-            return true;
+        itemViewModel = new ViewModelProvider(this).get(ObrasViewModel.class);
+        itemViewModel.getObraSeleccionada().observe(this, cuadro -> {
+            if (cuadro != null) {
+                pictureFragment = new DetalleObraFragment();
+                loadFragment(pictureFragment);
+            }
         });
     }
 
-    private void loadFragment(Fragment fragment){
-        if (fragmentManager != null){
+    private void loadFragment(Fragment fragment) {
+        if (fragmentManager != null) {
             fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.fragmentContainerView, fragment);
             fragmentTransaction.commit();

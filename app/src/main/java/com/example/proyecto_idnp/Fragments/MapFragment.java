@@ -74,13 +74,6 @@ public class MapFragment extends Fragment {
         scrollView.addView(frameLayout);
         return scrollView;
     }
-
-//<<<<<<< HEAD
-//    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-//        super.onViewCreated(view, savedInstanceState);
-//        itemViewModel = new ViewModelProvider(requireActivity()).get(CuadrosViewModel.class);
-//=======
-
     public void onViewCreated( View view, Bundle savedInstanceStatus) {
         super.onViewCreated(view, savedInstanceStatus);
         itemViewModel = new ViewModelProvider(requireActivity()).get(ObrasViewModel.class);

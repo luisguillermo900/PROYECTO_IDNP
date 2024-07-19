@@ -32,7 +32,6 @@ public class MapView extends View {
     private Context context;
     private Canvas canvas;
     private Drawable pictureDrawable;
-//    private CuadrosViewModel itemViewModel;
     private float scaleX, scaleY;
     private ObrasViewModel itemViewModel;
 
@@ -165,24 +164,12 @@ public class MapView extends View {
     private void drawPicture() {
         pictureDrawable = AppCompatResources.getDrawable(context, R.drawable.cuadros_icon_blue);
         if (pictureDrawable != null) {
-//<<<<<<< HEAD
-//            int left = (int) (456 * scaleX);
-//            int top = (int) (1980 * scaleY);
-//            int right = (int) (556 * scaleX);
-//            int bottom = (int) (2080 * scaleY);
-//            pictureDrawable.setBounds(left, top, right, bottom);
-//            pictureDrawable.draw(canvas);
-//            Log.d(TAG, "Dibujando icono de cuadro ");
-//        }
-//    }
-//
-//    public void setListener(CuadrosViewModel itemViewModel) {
-//=======
-            pictureDrawable.setBounds(456, 1980, 556, 2080);
-            ImageView imageView = new ImageView(context);
-            imageView.setImageDrawable(pictureDrawable);
-            imageView.draw(canvas);
-            Log.d(TAG, "Dibujando icono de Obra ");
+            int left = (int) (456 * scaleX);
+            int top = (int) (1980 * scaleY);
+            int right = (int) (556 * scaleX);
+            int bottom = (int) (2080 * scaleY);
+            pictureDrawable.setBounds(left, top, right, bottom);
+            pictureDrawable.draw(canvas);
         }
     }
 
@@ -196,10 +183,6 @@ public class MapView extends View {
         int pointY = (int) event.getY();
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-//<<<<<<< HEAD
-//                if (pictureDrawable != null && pictureDrawable.getBounds().contains(pointX, pointY)) {
-//                    itemViewModel.setCuadroSeleccionadoPorId(1);
-//=======
                 boolean clicked = pictureDrawable.getBounds().contains(pointX,pointY);
                 if (clicked) {
                     itemViewModel.setObraSeleccionadaPorId(1);
