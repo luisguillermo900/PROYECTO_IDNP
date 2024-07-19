@@ -14,17 +14,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.proyecto_idnp.Entidades.ObraDeArte;
 import com.example.proyecto_idnp.R;
 
 import java.util.List;
 
-public class AdaptadorCuadro extends RecyclerView.Adapter<AdaptadorCuadro.ViewHolder>{
-    private List<Cuadro> listaCuadros;
+public class AdaptadorObra extends RecyclerView.Adapter<AdaptadorObra.ViewHolder>{
+    private List<ObraDeArte> listaObras;
     private Context contexto;
-    private OnCuadroClickListener listener;
+    private OnObraClickListener listener;
 
-    public AdaptadorCuadro(List<Cuadro> listaCuadros, Context contexto, OnCuadroClickListener listener) {
-        this.listaCuadros = listaCuadros;
+    public AdaptadorObra(List<ObraDeArte> listaObras, Context contexto, OnObraClickListener listener) {
+        this.listaObras = listaObras;
         this.contexto = contexto;
         this.listener = listener;
     }
@@ -32,26 +33,26 @@ public class AdaptadorCuadro extends RecyclerView.Adapter<AdaptadorCuadro.ViewHo
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.elemento_lista_cuadros, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.elemento_lista_obras, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.txtTituloCuadro.setText(listaCuadros.get(position).getNombreCuadro());
-        Log.d(TAG,"onBindViewHolder" + listaCuadros.get(position).getNombreCuadro());
-        holder.txtDescripcionCuadro.setText(listaCuadros.get(position).getDescripcionCuadro());
-        Log.d(TAG,"onBindViewHolder" + listaCuadros.get(position).getDescripcionCuadro());
+        holder.txtTituloObra.setText(listaObras.get(position).getTitulo());
+        Log.d(TAG,"onBindViewHolder" + listaObras.get(position).getTitulo());
+        holder.txtDescripcionObra.setText(listaObras.get(position).getDescripcion());
+        Log.d(TAG,"onBindViewHolder" + listaObras.get(position).getDescripcion());
         Glide.with(contexto)
-                .load(listaCuadros.get(position).getFotoCuadro())
+                .load(listaObras.get(position).getUrlImagen())
                 .centerCrop()
-                .into(holder.imgFotoCuadro);
+                .into(holder.imgFotoObra);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listener != null) {
                     Log.d(TAG,"Se pulsó sobre item" + holder.getAdapterPosition());
-                    listener.onCuadroClick(listaCuadros.get(holder.getAdapterPosition()));
+                    listener.onObraClick(listaObras.get(holder.getAdapterPosition()));
                 }
             }
         });
@@ -61,19 +62,19 @@ public class AdaptadorCuadro extends RecyclerView.Adapter<AdaptadorCuadro.ViewHo
 
     @Override
     public int getItemCount() {
-        return listaCuadros.size();
+        return listaObras.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
-        private ImageView imgFotoCuadro;
-        private TextView txtTituloCuadro;
-        private TextView txtDescripcionCuadro;
+        private ImageView imgFotoObra;
+        private TextView txtTituloObra;
+        private TextView txtDescripcionObra;
 
         public ViewHolder(@NonNull View itemView){
             super(itemView);
-            imgFotoCuadro = itemView.findViewById(R.id.imgFotoCuadro);
-            txtTituloCuadro = itemView.findViewById(R.id.txtTituloCuadro);
-            txtDescripcionCuadro = itemView.findViewById(R.id.txtDescripcionCuadro);
+            imgFotoObra = itemView.findViewById(R.id.imgFotoElemento);
+            txtTituloObra = itemView.findViewById(R.id.txtTituloElemento);
+            txtDescripcionObra = itemView.findViewById(R.id.txtDescripcionElemento);
         }
     }
 }
