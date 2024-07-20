@@ -1,7 +1,6 @@
 package com.example.proyecto_idnp.Actividades;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -103,7 +102,7 @@ public class HomeActivity extends AppCompatActivity {
     private void loadFragment(Fragment fragment) {
         if (fragmentManager != null) {
             fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.fragmentContainerView, fragment);
+            fragmentTransaction.replace(R.id.contenedorFragments, fragment);
             fragmentTransaction.commit();
         }
     }

@@ -5,29 +5,28 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
-import com.example.proyecto_idnp.Adaptadores.AdaptadorObra;
-import com.example.proyecto_idnp.Entidades.ObraDeArte;
-import com.example.proyecto_idnp.Adaptadores.OnObraClickListener;
-import com.example.proyecto_idnp.Modelos.ObrasViewModel;
+import com.example.proyecto_idnp.Adaptadores.AdaptadorResultado;
+import com.example.proyecto_idnp.Adaptadores.OnResultadoClickListener;
+import com.example.proyecto_idnp.Entidades.ResultadoFiltro;
+import com.example.proyecto_idnp.Modelos.ResultadosViewModel;
 import com.example.proyecto_idnp.R;
 
-public class ExplorarFragment extends Fragment implements OnObraClickListener {
+public class ExplorarFragment extends Fragment implements OnResultadoClickListener {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private RecyclerView recyclerListaObras;
-    private AdaptadorObra adaptadorObra;
-    private ObrasViewModel obrasModel;
+    private RecyclerView recyclerListaResultados;
+    private ResultadosViewModel resultadosModel;
+    private AdaptadorResultado adaptadorResultados;
 
     private String mParam1;
     private String mParam2;
@@ -59,22 +58,22 @@ public class ExplorarFragment extends Fragment implements OnObraClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_explorar, container, false);
-        obrasModel = new ViewModelProvider(requireActivity()).get(ObrasViewModel.class);
-        recyclerListaObras = view.findViewById(R.id.recyclerListaObras);
-        recyclerListaObras.setLayoutManager(new LinearLayoutManager(getContext()));
+        resultadosModel = new ViewModelProvider(requireActivity()).get(ResultadosViewModel.class);
+        recyclerListaResultados = view.findViewById(R.id.recyclerFiltros);
+        recyclerListaResultados.setLayoutManager(new GridLayoutManager(getContext(),3));
 
-        adaptadorObra = new AdaptadorObra(obrasModel.getObrasLiveData().getValue(),getContext(),this);
-        recyclerListaObras.setAdapter(adaptadorObra);
-        Log.d("AdaptadorObra", "Adaptador configurado y asignado al RecyclerView.");
+        adaptadorResultados = new AdaptadorResultado(resultadosModel.getResultadosLiveData().getValue(),getContext(),this);
+        recyclerListaResultados.setAdapter(adaptadorResultados);
+        Log.d("AdaptadorResultado", "Adaptador configurado y asignado al RecyclerView.");
         return view;
     }
     @Override
-    public void onObraClick(ObraDeArte obra) {
-        obrasModel.setObraSeleccionada(obra);
+    public void onResultadoClick(ResultadoFiltro resultado) {
+        resultadosModel.setResultadoSeleccionado(resultado);
         //Cargar fragment detalle
         FragmentManager fragmentManager = getParentFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainerView, DetalleObraFragment.class, null)
+                .replace(R.id.contenedorFragments, DetalleExposicionFragment.class, null)
                 .addToBackStack(null)
                 .commit();
     }

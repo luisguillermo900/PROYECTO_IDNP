@@ -64,7 +64,7 @@ public class DetalleExposicionFragment extends Fragment implements OnObraClickLi
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_detalle_exposicion, container, false);
         obrasModel = new ViewModelProvider(requireActivity()).get(ObrasViewModel.class);
-        recyclerListaObras = view.findViewById(R.id.recyclerListaObras);
+        recyclerListaObras = view.findViewById(R.id.recyclerFiltros);
         recyclerListaObras.setLayoutManager(new LinearLayoutManager(getContext()));
 
         adaptadorObra = new AdaptadorObra(obrasModel.getObrasLiveData().getValue(),getContext(),this);
@@ -78,7 +78,7 @@ public class DetalleExposicionFragment extends Fragment implements OnObraClickLi
         //Cargar fragment detalle
         FragmentManager fragmentManager = getParentFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainerView, DetalleObraFragment.class, null)
+                .replace(R.id.contenedorFragments, DetalleObraFragment.class, null)
                 .addToBackStack(null)
                 .commit();
     }
