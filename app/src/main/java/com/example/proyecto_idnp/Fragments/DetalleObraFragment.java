@@ -50,7 +50,6 @@ public class DetalleObraFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_detalle_obra, container, false);
         TextView txtDetObraTitulo = view.findViewById(R.id.txtDetObraTitulo);
         ImageView imgDetObraFoto = view.findViewById(R.id.imgDetObraFoto);
@@ -67,16 +66,6 @@ public class DetalleObraFragment extends Fragment {
                         .centerCrop()
                         .into(imgDetObraFoto);
                 txtDetObraDescripcion.setText(obra.getDescripcion());
-            }
-        });
-
-        ImageView btnBack = view.findViewById(R.id.icono_atras);
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(obrasModel != null){
-                    obrasModel.setClosePictureById(1);
-                }
             }
         });
         return view;

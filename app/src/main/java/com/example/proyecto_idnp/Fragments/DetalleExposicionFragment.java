@@ -29,7 +29,7 @@ public class DetalleExposicionFragment extends Fragment implements OnObraClickLi
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private RecyclerView recyclerListaObras;
-    private AdaptadorObra adaptadorObra;
+    private AdaptadorObra adaptadorObras;
     private ObrasViewModel obrasModel;
 
     // TODO: Rename and change types of parameters
@@ -67,19 +67,19 @@ public class DetalleExposicionFragment extends Fragment implements OnObraClickLi
         recyclerListaObras = view.findViewById(R.id.recyclerFiltros);
         recyclerListaObras.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        adaptadorObra = new AdaptadorObra(obrasModel.getObrasLiveData().getValue(),getContext(),this);
-        recyclerListaObras.setAdapter(adaptadorObra);
+        adaptadorObras = new AdaptadorObra(obrasModel.getObrasLiveData().getValue(),getContext(),this);
+        recyclerListaObras.setAdapter(adaptadorObras);
         Log.d("AdaptadorCuadro", "Adaptador configurado y asignado al RecyclerView.");
         return view;
     }
     @Override
     public void onObraClick(ObraDeArte obra) {
         obrasModel.setObraSeleccionada(obra);
-        //Cargar fragment detalle
-        FragmentManager fragmentManager = getParentFragmentManager();
+        //Cargar fragment detalle (ya se carga al usar la funcion setObraSeleccionada)
+        /*FragmentManager fragmentManager = getParentFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.contenedorFragments, DetalleObraFragment.class, null)
                 .addToBackStack(null)
-                .commit();
+                .commit();*/
     }
 }
