@@ -3,11 +3,24 @@ package com.example.proyecto_idnp.Fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.example.proyecto_idnp.Adaptadores.AdaptadorObra;
+import com.example.proyecto_idnp.Adaptadores.OnObraClickListener;
+import com.example.proyecto_idnp.Entidades.ObraDeArte;
+import com.example.proyecto_idnp.Entidades.ResultadoFiltro;
+import com.example.proyecto_idnp.Modelos.ObrasViewModel;
+import com.example.proyecto_idnp.Modelos.ResultadosViewModel;
 import com.example.proyecto_idnp.R;
 
 /**
@@ -15,14 +28,17 @@ import com.example.proyecto_idnp.R;
  * Use the {@link DetalleGenericoFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DetalleGenericoFragment extends Fragment {
+public class DetalleGenericoFragment extends Fragment implements OnObraClickListener {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
+    private RecyclerView recyclerListaObras;
+    private AdaptadorObra adaptadorObras;
+    private ObrasViewModel obrasModel;
+    private ResultadosViewModel resultadosModel;
+    private ResultadoFiltro resultadoSeleccionado;
+
     private String mParam1;
     private String mParam2;
 
@@ -30,15 +46,6 @@ public class DetalleGenericoFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment DetalleGenericoFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static DetalleGenericoFragment newInstance(String param1, String param2) {
         DetalleGenericoFragment fragment = new DetalleGenericoFragment();
         Bundle args = new Bundle();
@@ -61,6 +68,41 @@ public class DetalleGenericoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_detalle_generico, container, false);
+        View view = inflater.inflate(R.layout.fragment_detalle_generico, container, false);
+        ImageView imgFotoGenerico = view.findViewById(R.id.imgFotoGenerico);
+        TextView txtTituloGenerico = view.findViewById(R.id.txtTituloGenerico);
+        resultadosModel = new ViewModelProvider(requireActivity()).get(ResultadosViewModel.class);
+        obrasModel = new ViewModelProvider(requireActivity()).get(ObrasViewModel.class);
+
+        // Observar el resultado seleccionado y actualizar la UI
+        resultadosModel.getResultadoSeleccionado().observe(getViewLifecycleOwner(), resultado -> {
+            if (resultado != null) {
+                txtTituloGenerico.setText(resultado.getNombre());
+                Glide.with(getContext())
+                        .load(resultado.getUrlImagen())
+                        .centerCrop()
+                        .into(imgFotoGenerico);
+            }
+        });
+
+        resultadoSeleccionado = resultadosModel.getResultadoSeleccionado().getValue();
+        recyclerListaObras = view.findViewById(R.id.recyclerObrasGenerico);
+        recyclerListaObras.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        adaptadorObras = new AdaptadorObra(obrasModel.getObrasLiveData().getValue(),getContext(),this);
+        recyclerListaObras.setAdapter(adaptadorObras);
+        Log.d("AdaptadorCuadro", "Adaptador configurado y asignado al RecyclerView.");
+
+        return view;
+    }
+
+    public void onObraClick(ObraDeArte obra) {
+        obrasModel.setObraSeleccionada(obra);
+        //Cargar fragment detalle (ya se carga al usar la funcion setObraSeleccionada)
+        /*FragmentManager fragmentManager = getParentFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.contenedorFragments, DetalleObraFragment.class, null)
+                .addToBackStack(null)
+                .commit();*/
     }
 }

@@ -1,5 +1,7 @@
 package com.example.proyecto_idnp.Fragments;
 
+import static androidx.constraintlayout.widget.Constraints.TAG;
+
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -13,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.proyecto_idnp.Adaptadores.AdaptadorResultado;
 import com.example.proyecto_idnp.Adaptadores.OnResultadoClickListener;
@@ -35,6 +38,7 @@ public class ExplorarFragment extends Fragment implements OnResultadoClickListen
     private Button btnFiltroTipo;
     private Button btnFiltroExpo;
     private Button btnFiltroGaleria;
+    private String seleccionDetalle = "";
 
     private String mParam1;
     private String mParam2;
@@ -66,6 +70,7 @@ public class ExplorarFragment extends Fragment implements OnResultadoClickListen
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_explorar, container, false);
+        seleccionDetalle = "exposicion";
         btnFiltroAutor = view.findViewById(R.id.btnFiltroAutor);
         btnFiltroTipo = view.findViewById(R.id.btnFiltroTipo);
         btnFiltroExpo = view.findViewById(R.id.btnFiltroExpo);
@@ -73,7 +78,7 @@ public class ExplorarFragment extends Fragment implements OnResultadoClickListen
 
         //Cargando el LiveModel de resultados
         resultadosModel = new ViewModelProvider(requireActivity()).get(ResultadosViewModel.class);
-        recyclerListaResultados = view.findViewById(R.id.recyclerFiltros);
+        recyclerListaResultados = view.findViewById(R.id.recyclerObrasGenerico);
         recyclerListaResultados.setLayoutManager(new GridLayoutManager(getContext(),3));
 
         //Cargando datos de resultados del viewmodel al adaptador
@@ -86,24 +91,28 @@ public class ExplorarFragment extends Fragment implements OnResultadoClickListen
         btnFiltroAutor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                seleccionDetalle = "generico";
                 filtrarPorAutor();
             }
         });
         btnFiltroTipo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                seleccionDetalle = "generico";
                 filtrarPorTipo();
             }
         });
         btnFiltroExpo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                seleccionDetalle = "exposicion";
                 filtrarPorExposicion();
             }
         });
         btnFiltroGaleria.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                seleccionDetalle = "generico";
                 filtrarPorGaleria();
             }
         });
@@ -111,13 +120,26 @@ public class ExplorarFragment extends Fragment implements OnResultadoClickListen
     }
     @Override
     public void onResultadoClick(ResultadoFiltro resultado) {
+        Fragment fragmentoDetalle = null;
         resultadosModel.setResultadoSeleccionado(resultado);
+        if(seleccionDetalle.equals("exposicion")){
+            fragmentoDetalle = new DetalleExposicionFragment();
+        } else if (seleccionDetalle.equals("generico")) {
+            fragmentoDetalle = new DetalleGenericoFragment();
+        } else {
+            Log.d(TAG, "No existe un fragmento definido para esta opcion");
+        }
         //Cargar fragment detalle
-        FragmentManager fragmentManager = getParentFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.contenedorFragments, DetalleExposicionFragment.class, null)
-                .addToBackStack(null)
-                .commit();
+        if (fragmentoDetalle != null) {
+            FragmentManager fragmentManager = getParentFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.contenedorFragments, fragmentoDetalle, null)
+                    .addToBackStack(null)
+                    .commit();
+        } else {
+            Toast.makeText(getContext(), "No se pudo cargar el fragmento", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     private void filtrarPorAutor(){

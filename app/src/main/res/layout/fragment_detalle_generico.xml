@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="Fragments.DetalleGenericoFragment">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -20,11 +21,12 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/imgDetGenericoFoto"
-            android:layout_width="match_parent"
+            android:id="@+id/imgFotoGenerico"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:adjustViewBounds="true"
+            android:scaleType="fitStart"
             android:src="@drawable/pintura_imagen"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -40,10 +42,10 @@
             android:background="?android:attr/listDivider"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtDetGenericoTitulo" />
+            app:layout_constraintTop_toBottomOf="@+id/txtTituloGenerico" />
 
         <TextView
-            android:id="@+id/txtDetGenericoTitulo"
+            android:id="@+id/txtTituloGenerico"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
@@ -52,7 +54,7 @@
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imgDetGenericoFoto" />
+            app:layout_constraintTop_toBottomOf="@+id/imgFotoGenerico" />
 
         <TextView
             android:id="@+id/textView5"
@@ -82,7 +84,7 @@
                 android:layout_height="wrap_content">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerFiltros"
+                    android:id="@+id/recyclerObrasGenerico"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </FrameLayout>

@@ -3,7 +3,6 @@ package com.example.proyecto_idnp.Fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,11 +24,6 @@ import com.example.proyecto_idnp.Modelos.ObrasViewModel;
 import com.example.proyecto_idnp.Modelos.ResultadosViewModel;
 import com.example.proyecto_idnp.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link DetalleExposicionFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class DetalleExposicionFragment extends Fragment implements OnObraClickListener {
 
     private static final String ARG_PARAM1 = "param1";
@@ -40,7 +34,6 @@ public class DetalleExposicionFragment extends Fragment implements OnObraClickLi
     private ResultadosViewModel resultadosModel;
     private ResultadoFiltro resultadoSeleccionado;
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -95,7 +88,7 @@ public class DetalleExposicionFragment extends Fragment implements OnObraClickLi
 
 
         resultadoSeleccionado = resultadosModel.getResultadoSeleccionado().getValue();
-        recyclerListaObras = view.findViewById(R.id.recyclerFiltros);
+        recyclerListaObras = view.findViewById(R.id.recyclerObrasGenerico);
         recyclerListaObras.setLayoutManager(new LinearLayoutManager(getContext()));
 
         adaptadorObras = new AdaptadorObra(obrasModel.getObrasLiveData().getValue(),getContext(),this);
