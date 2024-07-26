@@ -30,21 +30,6 @@ public class ResultadosViewModel extends ViewModel {
         resultadoSeleccionado.setValue(resultado);
     }
 
-    public void setResultadoSeleccionadoporNombre(String nombre) {
-        ResultadoFiltro resultado = getResultadoPorNombre(nombre);
-        resultadoSeleccionado.setValue(resultado);
-    }
-
-    private ResultadoFiltro getResultadoPorNombre(String nombre) {
-        if (resultados != null) {
-            for (ResultadoFiltro resultado : resultados) {
-                if (resultado.getNombre().equals(nombre)) {
-                    return resultado;
-                }
-            }
-        }
-        return null;
-    }
     private void cargarResultados(){
         resultados = new ArrayList<>();
         resultados.add(new ResultadoFiltro("https://ccunsa.org.pe/wp-content/uploads/2024/06/167.jpg","La otra ciudad"));

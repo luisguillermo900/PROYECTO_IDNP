@@ -59,6 +59,19 @@ public class ObrasViewModel extends ViewModel {
         }
         return null;
     }
+
+    private void cargarObrasPorConsulta(int id, String tipo, String nombre) {
+        if(tipo.equals("tipo")){
+            //SELECT * FROM ObraDeArte WHERE tipo = $nombre
+            //El retorno se asigna al obrasLiveData
+            obrasLiveData.setValue(listaObras);
+        } else {
+            //SELECT * FROM ObraDeArte WHERE id_$tipo = $id
+            //El retorno se asigna al obrasLiveData
+            obrasLiveData.setValue(listaObras);
+        }
+    }
+
     private void loadObras() {
         listaObras = new ArrayList<>();
 

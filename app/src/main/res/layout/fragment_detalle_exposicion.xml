@@ -20,7 +20,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/imgDetExposicionFoto"
+            android:id="@+id/imgFotoExposicion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -43,7 +43,7 @@
             app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
         <TextView
-            android:id="@+id/txtDetExposicionTitulo"
+            android:id="@+id/txtTituloExposicion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
@@ -52,7 +52,7 @@
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imgDetExposicionFoto" />
+            app:layout_constraintTop_toBottomOf="@+id/imgFotoExposicion" />
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -62,8 +62,8 @@
             android:layout_marginTop="15dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="@+id/txtDetExposicionTitulo"
-            app:layout_constraintTop_toBottomOf="@+id/txtDetExposicionTitulo">
+            app:layout_constraintStart_toStartOf="@+id/txtTituloExposicion"
+            app:layout_constraintTop_toBottomOf="@+id/txtTituloExposicion">
 
             <ImageView
                 android:id="@+id/imageView3"
@@ -98,7 +98,7 @@
                 android:src="@drawable/calendar_24" />
 
             <TextView
-                android:id="@+id/txtDetExposicionFecha"
+                android:id="@+id/txtFechaExposicion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Fecha de expo" />
@@ -118,7 +118,7 @@
             app:layout_constraintTop_toBottomOf="@+id/divider2" />
 
         <TextView
-            android:id="@+id/txtDetExpocisionDescripcion"
+            android:id="@+id/txtDescripcionExpocision"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -138,7 +138,7 @@
             android:background="?android:attr/listDivider"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtDetExpocisionDescripcion" />
+            app:layout_constraintTop_toBottomOf="@+id/txtDescripcionExpocision" />
 
         <TextView
             android:id="@+id/textView5"

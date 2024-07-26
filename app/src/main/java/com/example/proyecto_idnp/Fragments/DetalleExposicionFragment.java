@@ -12,11 +12,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.proyecto_idnp.Adaptadores.AdaptadorObra;
 import com.example.proyecto_idnp.Adaptadores.OnObraClickListener;
+import com.example.proyecto_idnp.Entidades.Exposicion;
 import com.example.proyecto_idnp.Entidades.ObraDeArte;
+import com.example.proyecto_idnp.Entidades.ResultadoFiltro;
 import com.example.proyecto_idnp.Modelos.ObrasViewModel;
+import com.example.proyecto_idnp.Modelos.ResultadosViewModel;
 import com.example.proyecto_idnp.R;
 
 /**
@@ -31,6 +37,8 @@ public class DetalleExposicionFragment extends Fragment implements OnObraClickLi
     private RecyclerView recyclerListaObras;
     private AdaptadorObra adaptadorObras;
     private ObrasViewModel obrasModel;
+    private ResultadosViewModel resultadosModel;
+    private ResultadoFiltro resultadoSeleccionado;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -63,7 +71,30 @@ public class DetalleExposicionFragment extends Fragment implements OnObraClickLi
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_detalle_exposicion, container, false);
+        TextView txtTituloExposicion = view.findViewById(R.id.txtTituloExposicion);
+        TextView txtFechaExposicion = view.findViewById(R.id.txtFechaExposicion);
+        TextView txtDescripcionExpocision = view.findViewById(R.id.txtDescripcionExpocision);
+        ImageView imgFotoExposicion = view.findViewById(R.id.imgFotoExposicion);
+
+        resultadosModel = new ViewModelProvider(requireActivity()).get(ResultadosViewModel.class);
         obrasModel = new ViewModelProvider(requireActivity()).get(ObrasViewModel.class);
+
+        // Observar el resultado seleccionado y actualizar la UI
+        resultadosModel.getResultadoSeleccionado().observe(getViewLifecycleOwner(), resultado -> {
+            Exposicion expoObtenida = consultaExposicion(resultadosModel.getResultadoSeleccionado().getValue());
+            if (resultado != null) {
+                txtTituloExposicion.setText(expoObtenida.getNombre());
+                Glide.with(getContext())
+                        .load(expoObtenida.getUrlImagen())
+                        .centerCrop()
+                        .into(imgFotoExposicion);
+                txtFechaExposicion.setText(expoObtenida.getFecha());
+                txtDescripcionExpocision.setText(expoObtenida.getDescripcion());
+            }
+        });
+
+
+        resultadoSeleccionado = resultadosModel.getResultadoSeleccionado().getValue();
         recyclerListaObras = view.findViewById(R.id.recyclerFiltros);
         recyclerListaObras.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -81,5 +112,14 @@ public class DetalleExposicionFragment extends Fragment implements OnObraClickLi
                 .replace(R.id.contenedorFragments, DetalleObraFragment.class, null)
                 .addToBackStack(null)
                 .commit();*/
+    }
+
+    public Exposicion consultaExposicion(ResultadoFiltro resultado){
+        Exposicion expoConsultada;
+        //Se obtiene todos los datos de la exposicion desde base de datos
+        //SELECT * FROM Exposicion WHERE id= resultado.getId()
+        //Se guarda en una variable y se retorna
+        //return expoConsultada;
+        return new Exposicion();
     }
 }
