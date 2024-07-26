@@ -3,6 +3,7 @@ package com.example.proyecto_idnp.Fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -71,6 +72,8 @@ public class DetalleGenericoFragment extends Fragment implements OnObraClickList
         View view = inflater.inflate(R.layout.fragment_detalle_generico, container, false);
         ImageView imgFotoGenerico = view.findViewById(R.id.imgFotoGenerico);
         TextView txtTituloGenerico = view.findViewById(R.id.txtTituloGenerico);
+        ImageView btnGenVolver = view.findViewById(R.id.btnGenVolver);
+
         resultadosModel = new ViewModelProvider(requireActivity()).get(ResultadosViewModel.class);
         obrasModel = new ViewModelProvider(requireActivity()).get(ObrasViewModel.class);
 
@@ -82,6 +85,16 @@ public class DetalleGenericoFragment extends Fragment implements OnObraClickList
                         .load(resultado.getUrlImagen())
                         .centerCrop()
                         .into(imgFotoGenerico);
+            }
+        });
+
+        btnGenVolver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager fragmentManager = getParentFragmentManager();
+                if (fragmentManager.getBackStackEntryCount() > 0) {
+                    fragmentManager.popBackStack(); // Navega al fragmento anterior en el back stack
+                }
             }
         });
 

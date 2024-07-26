@@ -3,6 +3,7 @@ package com.example.proyecto_idnp.Fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -68,6 +69,7 @@ public class DetalleExposicionFragment extends Fragment implements OnObraClickLi
         TextView txtFechaExposicion = view.findViewById(R.id.txtFechaExposicion);
         TextView txtDescripcionExpocision = view.findViewById(R.id.txtDescripcionExpocision);
         ImageView imgFotoExposicion = view.findViewById(R.id.imgFotoExposicion);
+        ImageView btnExpoVolver = view.findViewById(R.id.btnExpoVolver);
 
         resultadosModel = new ViewModelProvider(requireActivity()).get(ResultadosViewModel.class);
         obrasModel = new ViewModelProvider(requireActivity()).get(ObrasViewModel.class);
@@ -86,6 +88,15 @@ public class DetalleExposicionFragment extends Fragment implements OnObraClickLi
             }
         });
 
+        btnExpoVolver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager fragmentManager = getParentFragmentManager();
+                if (fragmentManager.getBackStackEntryCount() > 0) {
+                    fragmentManager.popBackStack(); // Navega al fragmento anterior en el back stack
+                }
+            }
+        });
 
         resultadoSeleccionado = resultadosModel.getResultadoSeleccionado().getValue();
         recyclerListaObras = view.findViewById(R.id.recyclerObrasGenerico);

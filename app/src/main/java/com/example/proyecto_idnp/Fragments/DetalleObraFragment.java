@@ -3,6 +3,7 @@ package com.example.proyecto_idnp.Fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
@@ -54,6 +55,7 @@ public class DetalleObraFragment extends Fragment {
         TextView txtDetObraTitulo = view.findViewById(R.id.txtDetObraTitulo);
         ImageView imgDetObraFoto = view.findViewById(R.id.imgDetObraFoto);
         TextView txtDetObraDescripcion = view.findViewById(R.id.txtDetObraDescripcion);
+        ImageView btnObraVolver = view.findViewById(R.id.btnObraVolver);
 
         obrasModel = new ViewModelProvider(requireActivity()).get(ObrasViewModel.class);
 
@@ -68,6 +70,17 @@ public class DetalleObraFragment extends Fragment {
                 txtDetObraDescripcion.setText(obra.getDescripcion());
             }
         });
+
+        btnObraVolver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager fragmentManager = getParentFragmentManager();
+                if (fragmentManager.getBackStackEntryCount() > 0) {
+                    fragmentManager.popBackStack(); // Navega al fragmento anterior en el back stack
+                }
+            }
+        });
+
         return view;
     }
 }
