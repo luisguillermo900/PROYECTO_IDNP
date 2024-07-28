@@ -152,17 +152,43 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/textView3"
             app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-        <android.widget.Button
-            android:id="@+id/btnEscucharDescripcion"
+        <ImageButton
+            android:id="@+id/btnDetener"
             android:layout_width="wrap_content"
-            android:layout_height="33dp"
-            android:background="@drawable/boton_cuadrado"
-            android:drawableStart="@drawable/play_24"
-            android:padding="6dp"
-            android:text="Escuchar"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/stop_24"
             app:layout_constraintBottom_toTopOf="@+id/txtDetObraDescripcion"
             app:layout_constraintEnd_toEndOf="@+id/divider2"
             app:layout_constraintTop_toBottomOf="@+id/divider2" />
+
+        <ImageButton
+            android:id="@+id/btnReiniciar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="3dp"
+            app:layout_constraintBottom_toTopOf="@+id/txtDetObraDescripcion"
+            app:layout_constraintEnd_toStartOf="@+id/btnDetener"
+            app:layout_constraintTop_toBottomOf="@+id/divider2"
+            app:srcCompat="@drawable/skip_back_24" />
+
+        <ImageButton
+            android:id="@+id/btnPausar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="3dp"
+            app:layout_constraintBottom_toTopOf="@+id/txtDetObraDescripcion"
+            app:layout_constraintEnd_toStartOf="@+id/btnReiniciar"
+            app:layout_constraintTop_toBottomOf="@+id/divider2"
+            app:srcCompat="@drawable/pause_24" />
+
+        <ImageButton
+            android:id="@+id/btnReproducir"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="3dp"
+            app:layout_constraintBottom_toTopOf="@+id/txtDetObraDescripcion"
+            app:layout_constraintEnd_toStartOf="@+id/btnPausar"
+            app:layout_constraintTop_toBottomOf="@+id/divider2"
+            app:srcCompat="@drawable/play_24" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
