@@ -48,6 +48,7 @@ public class ServicioAudio extends Service {
         String nombreArchivo = intent.getStringExtra("nombreArchivo");
         String control = intent.getStringExtra("control");
         Log.d(TAG,control);
+        startForeground(textoNotificacion);
         if(control.equals("reproducir")){
             try {
                 Log.d(TAG,"Inicio Reproduciendo audio");
@@ -63,7 +64,7 @@ public class ServicioAudio extends Service {
         } else if (control.equals("parar")) {
             detenerAudio();
         }
-        startForeground(textoNotificacion);
+
         return START_STICKY;
     }
 
@@ -130,8 +131,8 @@ public class ServicioAudio extends Service {
             reproductor.release();
             reproductor = null;
         }
-        Toast.makeText(this, "Detener", Toast.LENGTH_SHORT).show();
         stopForeground(true);
+        Toast.makeText(this, "Detener", Toast.LENGTH_SHORT).show();
         stopSelf();
     }
     private void pausarAudio() {

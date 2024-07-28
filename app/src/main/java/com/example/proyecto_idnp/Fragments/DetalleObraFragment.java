@@ -60,10 +60,10 @@ public class DetalleObraFragment extends Fragment {
         ImageView imgDetObraFoto = view.findViewById(R.id.imgDetObraFoto);
         TextView txtDetObraDescripcion = view.findViewById(R.id.txtDetObraDescripcion);
         ImageView btnObraVolver = view.findViewById(R.id.btnObraVolver);
-        ImageButton btnReproducir = view.findViewById(R.id.btnReproducir);;
-        ImageButton btnDetener = view.findViewById(R.id.btnDetener);;
-        ImageButton btnPausar = view.findViewById(R.id.btnPausar);;
-        ImageButton btnReiniciar = view.findViewById(R.id.btnReiniciar);;
+        ImageButton btnReproducir = view.findViewById(R.id.btnReproducir);
+        ImageButton btnDetener = view.findViewById(R.id.btnDetener);
+        ImageButton btnPausar = view.findViewById(R.id.btnPausar);
+        ImageButton btnReiniciar = view.findViewById(R.id.btnReiniciar);
 
         obrasModel = new ViewModelProvider(requireActivity()).get(ObrasViewModel.class);
 
