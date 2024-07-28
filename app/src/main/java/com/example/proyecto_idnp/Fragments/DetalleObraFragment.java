@@ -1,5 +1,7 @@
 package com.example.proyecto_idnp.Fragments;
 
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,12 +12,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.proyecto_idnp.Modelos.ObrasViewModel;
 import com.example.proyecto_idnp.R;
+import com.example.proyecto_idnp.Servicios.ServicioAudio;
 
 public class DetalleObraFragment extends Fragment {
 
@@ -56,8 +60,37 @@ public class DetalleObraFragment extends Fragment {
         ImageView imgDetObraFoto = view.findViewById(R.id.imgDetObraFoto);
         TextView txtDetObraDescripcion = view.findViewById(R.id.txtDetObraDescripcion);
         ImageView btnObraVolver = view.findViewById(R.id.btnObraVolver);
+        ImageButton btnReproducir = view.findViewById(R.id.btnReproducir);;
+        ImageButton btnDetener = view.findViewById(R.id.btnDetener);;
+        ImageButton btnPausar = view.findViewById(R.id.btnPausar);;
+        ImageButton btnReiniciar = view.findViewById(R.id.btnReiniciar);;
 
         obrasModel = new ViewModelProvider(requireActivity()).get(ObrasViewModel.class);
+
+        btnReproducir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startAudioService();
+            }
+        });
+        btnDetener.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pararReproduccion();
+            }
+        });
+        btnPausar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pausarReproduccion();
+            }
+        });
+        btnReiniciar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                reiniciarReproduccion();
+            }
+        });
 
         // Observar el cuadro seleccionado y actualizar la UI
         obrasModel.getObraSeleccionada().observe(getViewLifecycleOwner(), obra -> {
@@ -82,5 +115,47 @@ public class DetalleObraFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private void startAudioService() {
+        Intent serviceIntent = new Intent(getContext(), ServicioAudio.class);
+        serviceIntent.putExtra("nombreCuadro","nombre");
+        serviceIntent.putExtra("nombreArchivo","audio_cuadro.mp3");
+        serviceIntent.putExtra("control","reproducir");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            requireActivity().startForegroundService(serviceIntent);
+        } else {
+            requireActivity().startService(serviceIntent);
+        }
+    }
+    private void pararReproduccion(){
+        Intent serviceIntent = new Intent(getContext(), ServicioAudio.class);
+        serviceIntent.putExtra("nombreCuadro","nombre");
+        serviceIntent.putExtra("control","parar");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            requireActivity().startForegroundService(serviceIntent);
+        } else {
+            requireActivity().startService(serviceIntent);
+        }
+    }
+    private void pausarReproduccion(){
+        Intent serviceIntent = new Intent(getContext(), ServicioAudio.class);
+        serviceIntent.putExtra("nombreCuadro","nombre");
+        serviceIntent.putExtra("control","pausar");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            requireActivity().startForegroundService(serviceIntent);
+        } else {
+            requireActivity().startService(serviceIntent);
+        }
+    }
+    private void reiniciarReproduccion(){
+        Intent serviceIntent = new Intent(getContext(), ServicioAudio.class);
+        serviceIntent.putExtra("nombreCuadro","nombre");
+        serviceIntent.putExtra("control","reiniciar");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            requireActivity().startForegroundService(serviceIntent);
+        } else {
+            requireActivity().startService(serviceIntent);
+        }
     }
 }
