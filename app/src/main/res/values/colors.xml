@@ -7,4 +7,10 @@
     <color name="purple">#FF6200EE</color>
     <color name="purple_dark">#FF3700B3</color>
     <color name="color_activity">#8E24AA</color>
+
+    <color name="blue_dark">#201E43</color>
+    <color name="emerald">#134B70</color>
+    <color name="light_emerald">#508C9B</color>
+    <color name="silver">#EEEEEE</color>
+
 </resources>

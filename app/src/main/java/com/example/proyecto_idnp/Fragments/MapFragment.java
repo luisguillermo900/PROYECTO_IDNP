@@ -1,18 +1,30 @@
 package com.example.proyecto_idnp.Fragments;
 
+import static androidx.constraintlayout.widget.Constraints.TAG;
+
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ScrollView;
+import android.widget.Toast;
+
+import com.example.proyecto_idnp.Customviews.SalaView;
+import com.example.proyecto_idnp.Entidades.ResultadoFiltro;
+import com.example.proyecto_idnp.Modelos.CanvasViewModel;
 import com.example.proyecto_idnp.Modelos.ObrasViewModel;
 import com.example.proyecto_idnp.Customviews.MapView;
+import com.example.proyecto_idnp.R;
 //import com.example.proyecto_idnp.Modelos.CuadrosViewModel;
 
 /**
@@ -31,6 +43,7 @@ public class MapFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private ObrasViewModel itemViewModel;
+    private CanvasViewModel canvasViewModel;
     private MapView mapView;
 
     public MapFragment() {
@@ -64,9 +77,11 @@ public class MapFragment extends Fragment {
         }
     }
 
+    @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         ScrollView scrollView = new ScrollView(requireContext());
         FrameLayout frameLayout = new FrameLayout(requireContext());
         mapView = new MapView(requireContext());
@@ -74,9 +89,23 @@ public class MapFragment extends Fragment {
         scrollView.addView(frameLayout);
         return scrollView;
     }
+
     public void onViewCreated( View view, Bundle savedInstanceStatus) {
         super.onViewCreated(view, savedInstanceStatus);
-        itemViewModel = new ViewModelProvider(requireActivity()).get(ObrasViewModel.class);
-        mapView.setListener(itemViewModel);
+        //itemViewModel = new ViewModelProvider(requireActivity()).get(ObrasViewModel.class);
+        //mapView.setListener(itemViewModel);
+        canvasViewModel = new ViewModelProvider(requireActivity()).get(CanvasViewModel.class);
+        mapView.setListener2(canvasViewModel);
+
+        canvasViewModel.getSelectRoom().observe(getViewLifecycleOwner(), roomId -> {
+            if (roomId != null) {
+                FragmentManager fragmentManager = getParentFragmentManager();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.contenedorFragments, SalaFragment.class, null)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+        canvasViewModel.setSelectRoom(null);
     }
 }

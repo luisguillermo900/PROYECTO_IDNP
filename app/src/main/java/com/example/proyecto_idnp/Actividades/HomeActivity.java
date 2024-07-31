@@ -26,6 +26,7 @@ import com.example.proyecto_idnp.Fragments.DetalleObraFragment;
 import com.example.proyecto_idnp.Fragments.HomeFragment;
 import com.example.proyecto_idnp.Fragments.MapFragment;
 import com.example.proyecto_idnp.Fragments.QrFragment;
+import com.example.proyecto_idnp.Fragments.SalaFragment;
 import com.example.proyecto_idnp.Modelos.ObrasViewModel;
 import com.example.proyecto_idnp.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -84,15 +85,15 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        itemViewModel = new ViewModelProvider(this).get(ObrasViewModel.class);
-        // Dibuja un cuadro
-        itemViewModel.getObraSeleccionada().observe(this, obra -> {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.contenedorFragments, DetalleObraFragment.class, null)
-                    .addToBackStack(null)
-                    .commit();
-        });
+//        itemViewModel = new ViewModelProvider(this).get(ObrasViewModel.class);
+//        // Dibuja un cuadro
+//        itemViewModel.getObraSeleccionada().observe(this, obra -> {
+//            FragmentManager fragmentManager = getSupportFragmentManager();
+//            fragmentManager.beginTransaction()
+//                    .replace(R.id.contenedorFragments, DetalleObraFragment.class, null)
+//                    .addToBackStack(null)
+//                    .commit();
+//        });
         /*itemViewModel.getObraSeleccionada().observe(this, cuadro -> {
             if (cuadro != null) {
                 pictureFragment = new DetalleObraFragment();

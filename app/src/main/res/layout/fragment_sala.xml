@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.MapFragment">
+    tools:context=".Fragments.SalaFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
@@ -11,10 +11,11 @@
         android:layout_height="match_parent"
         android:text="@string/hello_blank_fragment" />
 
-    <com.example.proyecto_idnp.customviews.MapView
-        android:id="@+id/map_canvas_view"
+    <com.example.proyecto_idnp.customviews.SalaView
+        android:id="@+id/sala_canvas_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         tools:ignore="MissingClass" />
+
 
 </FrameLayout>
