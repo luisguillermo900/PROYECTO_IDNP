@@ -1,12 +1,16 @@
 package com.example.proyecto_idnp.Fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 
 import com.example.proyecto_idnp.Customviews.SalaView;
 import com.example.proyecto_idnp.R;
@@ -26,6 +30,8 @@ public class SalaFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    ImageView back;
 
     public SalaFragment() {
         // Required empty public constructor
@@ -58,10 +64,24 @@ public class SalaFragment extends Fragment {
         }
     }
 
+    @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_sala, container, false);
+        SalaView salaView = view.findViewById(R.id.salaView);
         SalaView room = new SalaView(requireContext());
-        return room;
+
+        back = view.findViewById(R.id.btnExpoVolverSala);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getParentFragmentManager();
+                if (fragmentManager.getBackStackEntryCount() > 0){
+                    fragmentManager.popBackStack();
+                }
+            }
+        });
+        return view;
     }
 }

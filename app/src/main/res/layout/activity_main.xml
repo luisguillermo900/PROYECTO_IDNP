@@ -11,7 +11,7 @@
         android:id="@+id/imgDetObraFoto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/img_centro_cultural_unsa"
+        android:src="@color/blue_dark"
         android:scaleType="centerCrop" />
 
     <View
@@ -40,7 +40,9 @@
         android:layout_marginTop="200dp"
         android:text="Iniciar"
         app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/btn_floating"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

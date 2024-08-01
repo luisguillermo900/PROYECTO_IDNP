@@ -163,7 +163,19 @@ public class MapView extends View {
     }
 
     private void drawPicture() {
-        pictureDrawable = AppCompatResources.getDrawable(context, R.drawable.cuadros_icon_blue);
+        pictureDrawable = AppCompatResources.getDrawable(context, R.drawable.icon_cuadro);
+        if (pictureDrawable != null) {
+            int left = (int) (506 * scaleX);
+            int top = (int) (2020 * scaleY);
+            int right = (int) (556 * scaleX);
+            int bottom = (int) (2070 * scaleY);
+            pictureDrawable.setBounds(left, top, right, bottom);
+            pictureDrawable.draw(canvas);
+        }
+    }
+
+    private void drawSala() {
+        pictureDrawable = AppCompatResources.getDrawable(context, R.drawable.icon_cuadro);
         if (pictureDrawable != null) {
             int left = (int) (456 * scaleX);
             int top = (int) (1980 * scaleY);
@@ -188,8 +200,14 @@ public class MapView extends View {
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                boolean clicked = pictureDrawable.getBounds().contains(pointX,pointY);
-                if (clicked) {
+                //boolean clicked = pictureDrawable.getBounds().contains(pointX,pointY);
+                //{253, 1763, 684, 2080}, // Sala 1
+                int x_negative = (int) (253 * scaleX);
+                int x_positive = (int) (684 * scaleX);
+                int y_negative = (int) (1763 * scaleX);
+                int y_positive = (int) (2080 * scaleX);
+
+                if (pointX >= x_negative && pointX <= x_positive && pointY >= y_negative && pointY <= y_positive) {
                     //itemViewModel.setObraSeleccionadaPorId(1);
 //                    fragmentManager = getSupportFragmentManager();
                     canvasModel.setSelectRoom(1);

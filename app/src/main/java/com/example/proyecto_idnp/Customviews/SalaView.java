@@ -19,8 +19,6 @@ public class SalaView extends View {
     private Paint paintRoom;
     private Canvas canvas;
     private float scaleX, scaleY;
-    private static final float DRAW_WIDTH = 1050f;
-    private static final float DRAW_HEIGHT = 2080f;
     private Drawable pictureDrawable;
 
     public SalaView(Context context) {
@@ -55,18 +53,15 @@ public class SalaView extends View {
         int propTouch = canvas.getHeight() / canvas.getWidth();
         int proporcion_x = 431 * propTouch;
         int proporcion_y = 317 * propTouch;
-        int left = (int) (canvas.getWidth()/2 - proporcion_x);
-        int top = (int) (canvas.getHeight()/2 - proporcion_y);
-        int right = (int) (canvas.getWidth()/2 + proporcion_x);
-        int bootom = (int) (canvas.getHeight()/2 + proporcion_y);
-        // {253, 1763, 684, 2080}
+        int left = canvas.getWidth()/2 - proporcion_x;
+        int top = canvas.getHeight()/2 - proporcion_y;
+        int right = canvas.getWidth()/2 + proporcion_x;
+        int bootom = canvas.getHeight()/2 + proporcion_y;
         canvas.drawRect(left, top, right, bootom,paintRoom);
     }
     private void calculateScale(){
-        float canvasWidth = canvas.getWidth();
-        float canvasHeight = canvas.getHeight();
-        scaleX = canvasWidth / DRAW_WIDTH;
-        scaleY = canvasHeight / DRAW_HEIGHT;
+        scaleX = canvas.getWidth();
+        scaleY = canvas.getHeight();
     }
     private void drawPicture() {
         pictureDrawable = AppCompatResources.getDrawable(context, R.drawable.cuadros_icon_blue);
@@ -78,13 +73,5 @@ public class SalaView extends View {
             pictureDrawable.setBounds(left, top, right, bottom);
             pictureDrawable.draw(canvas);
         }
-    }
-    @Override
-    protected void onMeasure(int widthSpec, int heightSpec) {
-        super.onMeasure(widthSpec,  heightSpec);
-        int width = MeasureSpec.getSize(widthSpec);
-        int height = (int) (DRAW_HEIGHT * (width / DRAW_WIDTH));
-        setMeasuredDimension(width, height);
-        invalidate();
     }
 }
