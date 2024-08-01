@@ -120,6 +120,7 @@ public class ExplorarFragment extends Fragment implements OnResultadoClickListen
     }
     @Override
     public void onResultadoClick(ResultadoFiltro resultado) {
+        Log.d(TAG, "Pulsado sobre resultado de filtro");
         Fragment fragmentoDetalle = null;
         resultadosModel.setResultadoSeleccionado(resultado);
         if(seleccionDetalle.equals("exposicion")){

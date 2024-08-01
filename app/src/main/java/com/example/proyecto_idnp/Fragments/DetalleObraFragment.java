@@ -94,7 +94,7 @@ public class DetalleObraFragment extends Fragment {
                 new IntentFilter("ACTUALIZAR_UI"));
 
         obrasModel = new ViewModelProvider(requireActivity()).get(ObrasViewModel.class);
-
+        Log.d(TAG, "Cargando detalle obra");
         btnReproducirPausar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

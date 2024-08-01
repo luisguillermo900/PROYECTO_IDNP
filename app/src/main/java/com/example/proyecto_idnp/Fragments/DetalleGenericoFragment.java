@@ -1,5 +1,7 @@
 package com.example.proyecto_idnp.Fragments;
 
+import static android.content.ContentValues.TAG;
+
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -112,10 +114,11 @@ public class DetalleGenericoFragment extends Fragment implements OnObraClickList
     public void onObraClick(ObraDeArte obra) {
         obrasModel.setObraSeleccionada(obra);
         //Cargar fragment detalle (ya se carga al usar la funcion setObraSeleccionada)
-        /*FragmentManager fragmentManager = getParentFragmentManager();
+        Log.d(TAG, "Pulsar sobre obra");
+        FragmentManager fragmentManager = getParentFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.contenedorFragments, DetalleObraFragment.class, null)
                 .addToBackStack(null)
-                .commit();*/
+                .commit();
     }
 }
