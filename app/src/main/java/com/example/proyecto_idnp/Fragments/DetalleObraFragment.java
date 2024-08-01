@@ -98,10 +98,7 @@ public class DetalleObraFragment extends Fragment {
         //Implementar en vista QR
         //imgQr = view.findViewById(R.id.imgQr);
         if (mParam1 != null) {
-            Log.d(TAG, "Recibiendo argumento desde notifiacion");
-            Log.d(TAG, mParam1);
             estaReproduciendo = Boolean.parseBoolean(mParam1);
-            Log.d(TAG, "" + estaReproduciendo);
             if(estaReproduciendo){
                 btnReproducirPausar.setImageResource(R.drawable.baseline_pause_24);
             } else {
@@ -149,12 +146,12 @@ public class DetalleObraFragment extends Fragment {
         });
 
         // l: Obtener el ID de la obra desde los argumentos y cargarla
-        if (getArguments() != null) {
+        /*if (getArguments() != null) {
             String idObra = getArguments().getString("param1");
             if (idObra != null) {
                 obrasModel.setObraSeleccionada(Integer.parseInt(idObra));
             }
-        }
+        }*/
 
         // Observar el cuadro seleccionado y actualizar la UI
         obrasModel.getObraSeleccionada().observe(getViewLifecycleOwner(), obra -> {

@@ -8,18 +8,19 @@ import androidx.room.RoomDatabase;
 
 import com.example.proyecto_idnp.Dao.DaoArtRoom;
 import com.example.proyecto_idnp.Dao.DaoAuthor;
-import com.example.proyecto_idnp.Dao.DaoPicture;
-import com.example.proyecto_idnp.Dao.DaoPictureAuthor;
-import com.example.proyecto_idnp.Dao.DaoUsuario;
+import com.example.proyecto_idnp.Dao.DaoObra;
 import com.example.proyecto_idnp.Entidades.ArtRoom;
 import com.example.proyecto_idnp.Entidades.Author;
-import com.example.proyecto_idnp.Entidades.AuthorWithPictures;
-import com.example.proyecto_idnp.Entidades.Picture;
-import com.example.proyecto_idnp.Entidades.Usuario;
+import com.example.proyecto_idnp.Entidades.Exposicion;
+import com.example.proyecto_idnp.Entidades.ObraDeArte;
 
 @Database(
-        entities = {Usuario.class, Author.class, Picture.class, ArtRoom.class},
-        version  = 9
+        entities = {
+                Author.class,
+                ObraDeArte.class,
+                ArtRoom.class,
+                Exposicion.class},
+        version  = 10
 )
 public abstract class AppDatabase extends RoomDatabase {
 
@@ -40,5 +41,6 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract DaoArtRoom daoArtRoom();
     //public abstract DaoPicture daoPicture();
     public abstract DaoAuthor daoAuthor();
+    public abstract DaoObra daoObra();
     //public abstract DaoPictureAuthor daoPictureAuthor();
 }

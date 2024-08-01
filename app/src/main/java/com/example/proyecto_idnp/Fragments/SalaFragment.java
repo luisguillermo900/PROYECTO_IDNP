@@ -70,12 +70,11 @@ public class SalaFragment extends Fragment {
         }
     }
 
-    @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sala, container, false);
-        SalaView salaView = view.findViewById(R.id.salaView);
+        salaView = view.findViewById(R.id.salaView);
         SalaView room = new SalaView(requireContext());
 
         back = view.findViewById(R.id.btnExpoVolverSala);
@@ -90,22 +89,33 @@ public class SalaFragment extends Fragment {
         });
         return view;
     }
-//    public void onViewCreated( View view, Bundle savedInstanceStatus) {
-//        super.onViewCreated(view, savedInstanceStatus);
-//        obrasViewModel = new ViewModelProvider(requireActivity()).get(ObrasViewModel.class);
-//        salaView.setListener(obrasViewModel);
-////        canvasViewModel = new ViewModelProvider(requireActivity()).get(CanvasViewModel.class);
-////        salaView.setListener2(canvasViewModel);
-//
-////        obrasViewModel.get().observe(getViewLifecycleOwner(), roomId -> {
-////            if (roomId != null) {
-////                FragmentManager fragmentManager = getParentFragmentManager();
-////                fragmentManager.beginTransaction()
-////                        .replace(R.id.contenedorFragments, DetalleExposicionFragment.class, null)
-////                        .addToBackStack(null)
-////                        .commit();
-////            }
-////        });
-////        canvasViewModel.setSelectRoom(null);
-//    }
+    public void onViewCreated( View view, Bundle savedInstanceStatus) {
+        super.onViewCreated(view, savedInstanceStatus);
+        obrasViewModel = new ViewModelProvider(requireActivity()).get(ObrasViewModel.class);
+        salaView.setListener2(obrasViewModel);
+
+        obrasViewModel.getObraSeleccionada().observe(getViewLifecycleOwner(), roomId -> {
+            if (roomId != null) {
+                FragmentManager fragmentManager = getParentFragmentManager();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.contenedorFragments, DetalleObraFragment.class, null)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        obrasViewModel.setObraSeleccionada(null);
+//        canvasViewModel = new ViewModelProvider(requireActivity()).get(CanvasViewModel.class);
+//        salaView.setListener(canvasViewModel);
+//        canvasViewModel.getSelectRoom().observe(getViewLifecycleOwner(), roomId -> {
+//            if (roomId != null) {
+//                FragmentManager fragmentManager = getParentFragmentManager();
+//                fragmentManager.beginTransaction()
+//                        .replace(R.id.contenedorFragments, DetalleObraFragment.class, null)
+//                        .addToBackStack(null)
+//                        .commit();
+//            }
+//        });
+//        canvasViewModel.setSelectRoom(null);
+    }
 }

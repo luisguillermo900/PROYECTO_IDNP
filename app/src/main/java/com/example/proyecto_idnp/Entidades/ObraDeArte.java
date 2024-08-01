@@ -1,12 +1,13 @@
 package com.example.proyecto_idnp.Entidades;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
 @Entity(
-        foreignKeys = {
+       /* foreignKeys = {
                 @ForeignKey(entity = Author.class,
                         parentColumns = "id",
                         childColumns = "id_autor",
@@ -19,9 +20,10 @@ import androidx.room.PrimaryKey;
                         parentColumns = "id",
                         childColumns = "id_galeria",
                         onDelete = ForeignKey.CASCADE)
-        }
+        }*/
 )
 public class ObraDeArte {
+    @NonNull
     @PrimaryKey
     private int id;
 
@@ -52,7 +54,7 @@ public class ObraDeArte {
     @ColumnInfo(name = "descripcion")
     private String descripcion;
 
-    public ObraDeArte(int id, String urlImagen, String titulo, int idAutor, int idExposicion, int idGaleria, String fecha, String tipo, String tecnica, String descripcion) {
+    public ObraDeArte(@NonNull int id, String urlImagen, String titulo, int idAutor, int idExposicion, int idGaleria, String fecha, String tipo, String tecnica, String descripcion) {
         this.id = id;
         this.urlImagen = urlImagen;
         this.titulo = titulo;

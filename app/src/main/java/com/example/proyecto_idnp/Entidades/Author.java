@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey;
 public class Author {
     @PrimaryKey
     @NonNull
-    public String idAuthor;
+    public String id;
     @ColumnInfo(name = "name")
     public String name;
     @ColumnInfo(name = "surname")
@@ -17,11 +17,11 @@ public class Author {
 
     @NonNull
     public String getIdAuthor() {
-        return idAuthor;
+        return id;
     }
 
     public void setIdAuthor(@NonNull String idAuthor) {
-        this.idAuthor = idAuthor;
+        this.id = idAuthor;
     }
 
     public String getName() {
@@ -41,7 +41,7 @@ public class Author {
     }
 
     public Author(@NonNull String idAuthor, String name, String surname) {
-        this.idAuthor = idAuthor;
+        this.id = idAuthor;
         this.name = name;
         this.surname = surname;
     }
