@@ -11,11 +11,16 @@ import com.example.proyecto_idnp.Dao.DaoAuthor;
 import com.example.proyecto_idnp.Dao.DaoObra;
 import com.example.proyecto_idnp.Entidades.ArtRoom;
 import com.example.proyecto_idnp.Entidades.Author;
+import com.example.proyecto_idnp.Entidades.Exposicion;
 import com.example.proyecto_idnp.Entidades.ObraDeArte;
 
 @Database(
-        entities = {Author.class, ObraDeArte.class, ArtRoom.class},
-        version  = 9
+        entities = {
+                Author.class,
+                ObraDeArte.class,
+                ArtRoom.class,
+                Exposicion.class},
+        version  = 10
 )
 public abstract class AppDatabase extends RoomDatabase {
 

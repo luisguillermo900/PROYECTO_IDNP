@@ -14,16 +14,16 @@ public interface DaoAuthor {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAuthor(Author... author);
 
-    @Query("UPDATE author SET name = :name, surname = :surname WHERE idAuthor = :id")
+    @Query("UPDATE author SET name = :name, surname = :surname WHERE id = :id")
     void updateAuthor(String id, String name, String surname);
 
-    @Query("DELETE FROM author WHERE idAuthor = :id")
+    @Query("DELETE FROM author WHERE id = :id")
     void deleteAuthor(String id);
 
     @Query("SELECT * FROM author")
     List<Author> getAllAuthor();
 
-    @Query("SELECT * FROM author WHERE idAuthor = :id")
+    @Query("SELECT * FROM author WHERE id = :id")
     Author getAuthor(String id);
 
 }

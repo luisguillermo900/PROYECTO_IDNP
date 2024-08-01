@@ -7,7 +7,7 @@ import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
 @Entity(
-        foreignKeys = {
+       /* foreignKeys = {
                 @ForeignKey(entity = Author.class,
                         parentColumns = "id",
                         childColumns = "id_autor",
@@ -20,7 +20,7 @@ import androidx.room.PrimaryKey;
                         parentColumns = "id",
                         childColumns = "id_galeria",
                         onDelete = ForeignKey.CASCADE)
-        }
+        }*/
 )
 public class ObraDeArte {
     @NonNull
