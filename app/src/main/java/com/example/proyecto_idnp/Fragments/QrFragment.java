@@ -69,7 +69,7 @@ public class QrFragment extends Fragment {
                 integrator.setCameraId(0);  // 0 para la cámara trasera
                 integrator.setBeepEnabled(true);
                 integrator.setBarcodeImageEnabled(true);
-                integrator.setOrientationLocked(true);  // Bloquea la orientación a la actual
+                integrator.setOrientationLocked(false);  // Bloquea la orientación a la actual
                 integrator.initiateScan();
             }
         });
@@ -100,10 +100,12 @@ public class QrFragment extends Fragment {
                 Toast.makeText(getActivity(), "Código escaneado: " + idObra, Toast.LENGTH_LONG).show();
 
                 // Establecer la obra seleccionada en el ViewModel
-                obrasViewModel.setObraSeleccionada(Integer.parseInt(idObra));
+                //obrasViewModel.setObraSeleccionada(Integer.parseInt(idObra));
 
                 // Navegar al fragmento de detalles del cuadro
-                DetalleObraFragment detalleObraFragment = DetalleObraFragment.newInstance(idObra, null);
+                // Uso con setObraPorId()
+                //DetalleObraFragment detalleObraFragment = DetalleObraFragment.newInstance(idObra, null);
+                DetalleObraFragment detalleObraFragment = new DetalleObraFragment();
                 FragmentManager fragmentManager = getParentFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.contenedorFragments, detalleObraFragment);

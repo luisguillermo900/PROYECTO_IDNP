@@ -118,7 +118,7 @@ public class ServicioAudio extends Service {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence nombre = "Reproducción de audio";
             String descripcion = "Canal para reproducción de audio";
-            int importancia = NotificationManager.IMPORTANCE_DEFAULT;
+            int importancia = NotificationManager.IMPORTANCE_LOW;
             NotificationChannel canal = new NotificationChannel(CHANNEL_ID, nombre, importancia);
             canal.setDescription(descripcion);
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
@@ -130,7 +130,8 @@ public class ServicioAudio extends Service {
     private void iniciarPrimerPlano(){
         Intent notificationIntent = new Intent(this, HomeActivity.class);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        notificationIntent.putExtra("openFragment", "TuFragmento");
+        notificationIntent.putExtra("abrirFragmento", "DetalleObraFragment");
+        notificationIntent.putExtra("estaReproduciendo", isPlaying);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(
                 this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT
@@ -219,8 +220,13 @@ public class ServicioAudio extends Service {
             reproductor.release();
             reproductor = null;
         }
+        if(notification != null){
+            Log.d(TAG, "Con notificacion");
+            stopForeground(true);
+        } else {
+            Log.d(TAG, "Sin notificacion");
+        }
         Toast.makeText(this, "Detener", Toast.LENGTH_SHORT).show();
-        stopForeground(true);
         stopSelf();
     }
 

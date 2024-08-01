@@ -1,11 +1,29 @@
 package com.example.proyecto_idnp.Entidades;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-@Entity
+@Entity(
+        foreignKeys = {
+                @ForeignKey(entity = Author.class,
+                        parentColumns = "id",
+                        childColumns = "id_autor",
+                        onDelete = ForeignKey.CASCADE),
+                @ForeignKey(entity = Exposicion.class,
+                        parentColumns = "id",
+                        childColumns = "id_exposicion",
+                        onDelete = ForeignKey.CASCADE),
+                @ForeignKey(entity = ArtRoom.class,
+                        parentColumns = "id",
+                        childColumns = "id_galeria",
+                        onDelete = ForeignKey.CASCADE)
+        }
+)
 public class ObraDeArte {
+    @NonNull
     @PrimaryKey
     private int id;
 
@@ -14,7 +32,7 @@ public class ObraDeArte {
 
     @ColumnInfo(name = "titulo")
     private String titulo;
-
+    //-------------------Llaves foranesas----
     @ColumnInfo(name = "id_autor")
     private int idAutor;
 
@@ -23,7 +41,7 @@ public class ObraDeArte {
 
     @ColumnInfo(name = "id_galeria")
     private int idGaleria;
-
+    //--------------------------------
     @ColumnInfo(name = "fecha")
     private String fecha;
 
@@ -36,7 +54,7 @@ public class ObraDeArte {
     @ColumnInfo(name = "descripcion")
     private String descripcion;
 
-    public ObraDeArte(int id, String urlImagen, String titulo, int idAutor, int idExposicion, int idGaleria, String fecha, String tipo, String tecnica, String descripcion) {
+    public ObraDeArte(@NonNull int id, String urlImagen, String titulo, int idAutor, int idExposicion, int idGaleria, String fecha, String tipo, String tecnica, String descripcion) {
         this.id = id;
         this.urlImagen = urlImagen;
         this.titulo = titulo;
@@ -128,4 +146,5 @@ public class ObraDeArte {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
+
 }

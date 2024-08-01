@@ -2,6 +2,7 @@ package com.example.proyecto_idnp.Actividades;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -115,12 +116,24 @@ public class HomeActivity extends AppCompatActivity {
         });*/
     }
 
-    private void loadFragment(Fragment fragment) {
-        if (fragmentManager != null) {
-            fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.contenedorFragments, fragment);
-            fragmentTransaction.addToBackStack(null); // Añade el fragmento al back stack
-            fragmentTransaction.commit();
+    @Override
+    protected void onNewIntent(Intent intent){
+        super.onNewIntent(intent);
+        if(intent.getStringExtra("abrirFragmento").equals("DetalleObraFragment")) {
+            boolean reproduciendo = intent.getBooleanExtra("estaReproduciendo", false);
+            Log.d(TAG, "Cargando fragmento DetalleObraFragment");
+            loadFragment(DetalleObraFragment.newInstance(reproduciendo));
         }
+    }
+
+    private void loadFragment(Fragment fragment) {
+        if (fragmentManager == null) {
+            fragmentManager = getSupportFragmentManager();
+        }
+        Log.d(TAG, "loadFragment() Cargando fragmento DetalleObraFragment");
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.contenedorFragments, fragment);
+        fragmentTransaction.addToBackStack(null); // Añade el fragmento al back stack
+        fragmentTransaction.commit();
     }
 }
