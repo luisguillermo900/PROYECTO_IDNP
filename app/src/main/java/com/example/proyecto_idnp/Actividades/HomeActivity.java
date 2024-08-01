@@ -1,6 +1,9 @@
 package com.example.proyecto_idnp.Actividades;
 
+import static android.content.ContentValues.TAG;
+
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -28,6 +31,7 @@ import com.example.proyecto_idnp.Fragments.MapFragment;
 import com.example.proyecto_idnp.Fragments.QrFragment;
 import com.example.proyecto_idnp.Fragments.SalaFragment;
 import com.example.proyecto_idnp.Modelos.ObrasViewModel;
+import com.example.proyecto_idnp.Modelos.ResultadosViewModel;
 import com.example.proyecto_idnp.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -36,8 +40,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private TextView layout;
     private BottomNavigationView menu;
-    private ObrasViewModel itemViewModel;
-    private DetalleObraFragment pictureFragment;
+    private ResultadosViewModel resultadosViewModel;
     private FragmentManager fragmentManager = null;
     private FragmentTransaction fragmentTransaction = null;
 
@@ -52,6 +55,8 @@ public class HomeActivity extends AppCompatActivity {
             return insets;
         });
 
+        resultadosViewModel = new ViewModelProvider(this).get(ResultadosViewModel.class);
+
         layout = findViewById(R.id.pageHomeActivity);
         layout.setVisibility(View.GONE);
 
@@ -64,9 +69,11 @@ public class HomeActivity extends AppCompatActivity {
                     layout.setVisibility(View.GONE);
                     loadFragment(new HomeFragment());
                     return true;
-                } else if (menuItem.getItemId() == R.id.menu_obras) {
+                } else if (menuItem.getItemId() == R.id.menu_explorar) {
                     layout.setVisibility(View.VISIBLE);
-                    layout.setText("Cuadros");
+                    layout.setText("Explorar");
+                    resultadosViewModel.setfiltroSeleccionado("Exposiciones");
+                    Log.d(TAG, "HomeActivity " + resultadosViewModel.getfiltroSeleccionado());
                     loadFragment(new ExplorarFragment());
                     return true;
                 } else if (menuItem.getItemId() == R.id.menu_mapa) {
