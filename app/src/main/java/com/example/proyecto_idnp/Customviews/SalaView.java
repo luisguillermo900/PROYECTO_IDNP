@@ -82,7 +82,10 @@ public class SalaView extends View {
             pictureDrawable.draw(canvas);
         }
     }
-    public void setListener(ObrasViewModel obrasViewModel){
+    public void setListener(CanvasViewModel canvasViewModel){
+        this.canvasModel = canvasViewModel;
+    }
+    public void setListener2(ObrasViewModel obrasViewModel){
         this.obrasViewModel = obrasViewModel;
     }
     @Override
@@ -93,6 +96,7 @@ public class SalaView extends View {
             case MotionEvent.ACTION_DOWN:
                 boolean clicked = pictureDrawable.getBounds().contains(pointX,pointY);
                 if (clicked) {
+                    //canvasModel.setSelectRoom(1);
                     obrasViewModel.setObraSeleccionadaPorId(1);
                     Log.d("MapView","onTouchEvent Puntos " + pointX + " " + pointY );
                 }

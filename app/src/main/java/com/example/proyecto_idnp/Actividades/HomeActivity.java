@@ -101,6 +101,7 @@ public class HomeActivity extends AppCompatActivity {
 //                    .addToBackStack(null)
 //                    .commit();
 //        });
+
         /*itemViewModel.getObraSeleccionada().observe(this, cuadro -> {
             if (cuadro != null) {
                 pictureFragment = new DetalleObraFragment();

@@ -197,21 +197,15 @@ public class MapView extends View {
     public boolean onTouchEvent(MotionEvent event) {
         int pointX = (int) event.getX();
         int pointY = (int) event.getY();
-
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                //boolean clicked = pictureDrawable.getBounds().contains(pointX,pointY);
-                //{253, 1763, 684, 2080}, // Sala 1
-
                 int x_negative = (int) (253 * scaleX);
                 int x_positive = (int) (684 * scaleX);
                 int y_negative = (int) (1763 * scaleX);
                 int y_positive = (int) (2080 * scaleX);
 
                 if (pointX >= x_negative && pointX <= x_positive && pointY >= y_negative && pointY <= y_positive) {
-                    //itemViewModel.setObraSeleccionadaPorId(1);
-//                    fragmentManager = getSupportFragmentManager();
-                    canvasModel.setSelectRoom(1);
+                    canvasModel.setSelectRoomById(2);
                     Log.d("MapView","onTouchEvent Puntos " + pointX + " " + pointY );
                 }
                 break;
