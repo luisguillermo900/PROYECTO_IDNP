@@ -2,4 +2,13 @@
     <string name="app_name">PROYECTO_IDNP</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--Para Login&Register-->
+    <string name="register">REGISTRO</string>
+
+    <string name="login_password_hint">Contraseña</string>
+    <string name="signup_login_hint">Already have an account? Sign In</string>
+    <string name="login_signup_hint">...</string>
+    <string name="login_name_hint">Nombres</string>
+
 </resources>
