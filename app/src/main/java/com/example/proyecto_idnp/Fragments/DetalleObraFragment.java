@@ -35,18 +35,18 @@ import com.google.zxing.BarcodeFormat;
 
 public class DetalleObraFragment extends Fragment {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_PARAM1 = "estaReproduciendo";
 
     private String mParam1;
-    private String mParam2;
 
     private ImageButton btnReproducirPausar;
     private ImageButton btnDetener;
     private ImageButton btnReiniciar;
     private boolean estaReproduciendo = false;
     private ObrasViewModel obrasModel;
-    private ImageView imgQr;//l
+
+    //Implementar en vista QR
+    //private ImageView imgQr;
 
     private BroadcastReceiver receptorBotonesReproduccion = new BroadcastReceiver() {
         @Override
@@ -67,11 +67,10 @@ public class DetalleObraFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static DetalleObraFragment newInstance(String param1, String param2) {
+    public static DetalleObraFragment newInstance(boolean estaReproduciendo) {
         DetalleObraFragment fragment = new DetalleObraFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putBoolean(ARG_PARAM1, estaReproduciendo);
         fragment.setArguments(args);
         return fragment;
     }
@@ -80,8 +79,7 @@ public class DetalleObraFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            mParam1 = String.valueOf(getArguments().getBoolean(ARG_PARAM1));
         }
     }
 
@@ -97,7 +95,19 @@ public class DetalleObraFragment extends Fragment {
         btnReproducirPausar = view.findViewById(R.id.btnReproducirPausar);
         btnDetener = view.findViewById(R.id.btnDetener);
         btnReiniciar = view.findViewById(R.id.btnReiniciar);
-        imgQr = view.findViewById(R.id.imgQr);//laa
+        //Implementar en vista QR
+        //imgQr = view.findViewById(R.id.imgQr);
+        if (mParam1 != null) {
+            Log.d(TAG, "Recibiendo argumento desde notifiacion");
+            Log.d(TAG, mParam1);
+            estaReproduciendo = Boolean.parseBoolean(mParam1);
+            Log.d(TAG, "" + estaReproduciendo);
+            if(estaReproduciendo){
+                btnReproducirPausar.setImageResource(R.drawable.baseline_pause_24);
+            } else {
+                btnReproducirPausar.setImageResource(R.drawable.baseline_play_arrow_24);
+            }
+        }
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(receptorBotonesReproduccion,
                 new IntentFilter("ACTUALIZAR_UI"));
 
@@ -156,7 +166,8 @@ public class DetalleObraFragment extends Fragment {
                         .into(imgDetObraFoto);
                 txtDetObraDescripcion.setText(obra.getDescripcion());
                 // l: Generar el código QR con el identificador del cuadro
-                generarCodigoQR(String.valueOf(obra.getId()));
+                //Implementar en vista QR
+                //generarCodigoQR(String.valueOf(obra.getId()));
             }
         });
 
@@ -182,8 +193,8 @@ public class DetalleObraFragment extends Fragment {
             requireActivity().startService(intentServicio);
         }
     }
-    //l
-    private void generarCodigoQR(String idObra) {
+    //funcion para generar QR (Implementar en Vista QR)
+    /*private void generarCodigoQR(String idObra) {
         try {
             BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
             Bitmap bitmap = barcodeEncoder.encodeBitmap(idObra, BarcodeFormat.QR_CODE, 750, 750);
@@ -191,7 +202,7 @@ public class DetalleObraFragment extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
     //l
     @Override
     public void onDestroy() {

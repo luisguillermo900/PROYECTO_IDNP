@@ -103,7 +103,9 @@ public class QrFragment extends Fragment {
                 obrasViewModel.setObraSeleccionada(Integer.parseInt(idObra));
 
                 // Navegar al fragmento de detalles del cuadro
-                DetalleObraFragment detalleObraFragment = DetalleObraFragment.newInstance(idObra, null);
+                // Uso con setObraPorId()
+                //DetalleObraFragment detalleObraFragment = DetalleObraFragment.newInstance(idObra, null);
+                DetalleObraFragment detalleObraFragment = new DetalleObraFragment();
                 FragmentManager fragmentManager = getParentFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.contenedorFragments, detalleObraFragment);
