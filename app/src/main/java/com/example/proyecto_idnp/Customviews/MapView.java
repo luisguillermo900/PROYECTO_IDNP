@@ -202,6 +202,7 @@ public class MapView extends View {
             case MotionEvent.ACTION_DOWN:
                 //boolean clicked = pictureDrawable.getBounds().contains(pointX,pointY);
                 //{253, 1763, 684, 2080}, // Sala 1
+
                 int x_negative = (int) (253 * scaleX);
                 int x_positive = (int) (684 * scaleX);
                 int y_negative = (int) (1763 * scaleX);

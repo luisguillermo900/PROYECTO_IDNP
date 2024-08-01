@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +13,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.example.proyecto_idnp.Customviews.MapView;
 import com.example.proyecto_idnp.Customviews.SalaView;
+import com.example.proyecto_idnp.Modelos.CanvasViewModel;
+import com.example.proyecto_idnp.Modelos.ObrasViewModel;
 import com.example.proyecto_idnp.R;
 
 /**
@@ -30,8 +34,10 @@ public class SalaFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
-    ImageView back;
+    private CanvasViewModel canvasViewModel;
+    private ObrasViewModel obrasViewModel;
+    private SalaView salaView;
+    private ImageView back;
 
     public SalaFragment() {
         // Required empty public constructor
@@ -84,4 +90,22 @@ public class SalaFragment extends Fragment {
         });
         return view;
     }
+//    public void onViewCreated( View view, Bundle savedInstanceStatus) {
+//        super.onViewCreated(view, savedInstanceStatus);
+//        obrasViewModel = new ViewModelProvider(requireActivity()).get(ObrasViewModel.class);
+//        salaView.setListener(obrasViewModel);
+////        canvasViewModel = new ViewModelProvider(requireActivity()).get(CanvasViewModel.class);
+////        salaView.setListener2(canvasViewModel);
+//
+////        obrasViewModel.get().observe(getViewLifecycleOwner(), roomId -> {
+////            if (roomId != null) {
+////                FragmentManager fragmentManager = getParentFragmentManager();
+////                fragmentManager.beginTransaction()
+////                        .replace(R.id.contenedorFragments, DetalleExposicionFragment.class, null)
+////                        .addToBackStack(null)
+////                        .commit();
+////            }
+////        });
+////        canvasViewModel.setSelectRoom(null);
+//    }
 }
