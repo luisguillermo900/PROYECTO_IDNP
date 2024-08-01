@@ -2,10 +2,12 @@ package com.example.proyecto_idnp.Fragments;
 
 import static android.content.ContentValues.TAG;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -28,6 +30,9 @@ import com.example.proyecto_idnp.Modelos.ObrasViewModel;
 import com.example.proyecto_idnp.R;
 import com.example.proyecto_idnp.Servicios.ServicioAudio;
 
+import com.journeyapps.barcodescanner.BarcodeEncoder;
+import com.google.zxing.BarcodeFormat;
+
 public class DetalleObraFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
@@ -41,6 +46,7 @@ public class DetalleObraFragment extends Fragment {
     private ImageButton btnReiniciar;
     private boolean estaReproduciendo = false;
     private ObrasViewModel obrasModel;
+    private ImageView imgQr;//l
 
     private BroadcastReceiver receptorBotonesReproduccion = new BroadcastReceiver() {
         @Override
@@ -79,6 +85,7 @@ public class DetalleObraFragment extends Fragment {
         }
     }
 
+    @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -90,6 +97,7 @@ public class DetalleObraFragment extends Fragment {
         btnReproducirPausar = view.findViewById(R.id.btnReproducirPausar);
         btnDetener = view.findViewById(R.id.btnDetener);
         btnReiniciar = view.findViewById(R.id.btnReiniciar);
+        imgQr = view.findViewById(R.id.imgQr);//laa
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(receptorBotonesReproduccion,
                 new IntentFilter("ACTUALIZAR_UI"));
 
@@ -130,6 +138,14 @@ public class DetalleObraFragment extends Fragment {
             }
         });
 
+        // l: Obtener el ID de la obra desde los argumentos y cargarla
+        if (getArguments() != null) {
+            String idObra = getArguments().getString("param1");
+            if (idObra != null) {
+                obrasModel.setObraSeleccionada(Integer.parseInt(idObra));
+            }
+        }
+
         // Observar el cuadro seleccionado y actualizar la UI
         obrasModel.getObraSeleccionada().observe(getViewLifecycleOwner(), obra -> {
             if (obra != null) {
@@ -139,6 +155,8 @@ public class DetalleObraFragment extends Fragment {
                         .centerCrop()
                         .into(imgDetObraFoto);
                 txtDetObraDescripcion.setText(obra.getDescripcion());
+                // l: Generar el código QR con el identificador del cuadro
+                generarCodigoQR(String.valueOf(obra.getId()));
             }
         });
 
@@ -163,5 +181,21 @@ public class DetalleObraFragment extends Fragment {
         } else {
             requireActivity().startService(intentServicio);
         }
+    }
+    //l
+    private void generarCodigoQR(String idObra) {
+        try {
+            BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+            Bitmap bitmap = barcodeEncoder.encodeBitmap(idObra, BarcodeFormat.QR_CODE, 750, 750);
+            imgQr.setImageBitmap(bitmap);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    //l
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(receptorBotonesReproduccion);
     }
 }
