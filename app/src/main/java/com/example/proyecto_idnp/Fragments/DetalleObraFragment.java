@@ -1,13 +1,20 @@
 package com.example.proyecto_idnp.Fragments;
 
+import static android.content.ContentValues.TAG;
+
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +35,27 @@ public class DetalleObraFragment extends Fragment {
 
     private String mParam1;
     private String mParam2;
+
+    private ImageButton btnReproducirPausar;
+    private ImageButton btnDetener;
+    private ImageButton btnReiniciar;
+    private boolean estaReproduciendo = false;
     private ObrasViewModel obrasModel;
+
+    private BroadcastReceiver receptorBotonesReproduccion = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            boolean reproduciendo = intent.getBooleanExtra("estaReproduciendo",false);
+            estaReproduciendo = reproduciendo;
+            if (reproduciendo){
+                Log.d(TAG, "MainActivity BroadcastReceiver Reproduciendo: " + reproduciendo);
+                btnReproducirPausar.setImageResource(R.drawable.baseline_pause_24);
+            } else {
+                Log.d(TAG, "MainActivity BroadcastReceiver Reproduciendo: " + reproduciendo);
+                btnReproducirPausar.setImageResource(R.drawable.baseline_play_arrow_24);
+            }
+        }
+    };
 
     public DetalleObraFragment() {
         // Required empty public constructor
@@ -60,35 +87,46 @@ public class DetalleObraFragment extends Fragment {
         ImageView imgDetObraFoto = view.findViewById(R.id.imgDetObraFoto);
         TextView txtDetObraDescripcion = view.findViewById(R.id.txtDetObraDescripcion);
         ImageView btnObraVolver = view.findViewById(R.id.btnObraVolver);
-        ImageButton btnReproducir = view.findViewById(R.id.btnReproducir);
-        ImageButton btnDetener = view.findViewById(R.id.btnDetener);
-        ImageButton btnPausar = view.findViewById(R.id.btnPausar);
-        ImageButton btnReiniciar = view.findViewById(R.id.btnReiniciar);
+        btnReproducirPausar = view.findViewById(R.id.btnReproducirPausar);
+        btnDetener = view.findViewById(R.id.btnDetener);
+        btnReiniciar = view.findViewById(R.id.btnReiniciar);
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(receptorBotonesReproduccion,
+                new IntentFilter("ACTUALIZAR_UI"));
 
         obrasModel = new ViewModelProvider(requireActivity()).get(ObrasViewModel.class);
 
-        btnReproducir.setOnClickListener(new View.OnClickListener() {
+        btnReproducirPausar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startAudioService();
+                //estaReproduciendo -> false / estaReproduciendo ->true
+                if(estaReproduciendo){
+                    estaReproduciendo = false;
+                } else {
+                    estaReproduciendo = true;
+                }
+                if(estaReproduciendo){
+                    btnReproducirPausar.setImageResource(R.drawable.baseline_pause_24);
+                } else {
+                    btnReproducirPausar.setImageResource(R.drawable.baseline_play_arrow_24);
+                }
+
+                controlAudio("ACCION_REPRODUCIR_PAUSAR", "audio_cuadro.mp3");
             }
         });
         btnDetener.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pararReproduccion();
-            }
-        });
-        btnPausar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pausarReproduccion();
+                estaReproduciendo = false;
+                btnReproducirPausar.setImageResource(R.drawable.baseline_play_arrow_24);
+                controlAudio("ACCION_DETENER", "audio_cuadro.mp3");
             }
         });
         btnReiniciar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                reiniciarReproduccion();
+                estaReproduciendo = true;
+                btnReproducirPausar.setImageResource(R.drawable.baseline_pause_24);
+                controlAudio("ACCION_REINICIAR", "audio_cuadro.mp3");
             }
         });
 
@@ -116,46 +154,14 @@ public class DetalleObraFragment extends Fragment {
 
         return view;
     }
-
-    private void startAudioService() {
-        Intent serviceIntent = new Intent(getContext(), ServicioAudio.class);
-        serviceIntent.putExtra("nombreCuadro","nombre");
-        serviceIntent.putExtra("nombreArchivo","audio_cuadro.mp3");
-        serviceIntent.putExtra("control","reproducir");
+    private void controlAudio(String comando, String nombreArchivo) {
+        Intent intentServicio = new Intent(getContext(), ServicioAudio.class);
+        intentServicio.setAction(comando);
+        intentServicio.putExtra("nombreArchivo", nombreArchivo);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            requireActivity().startForegroundService(serviceIntent);
+            requireActivity().startForegroundService(intentServicio);
         } else {
-            requireActivity().startService(serviceIntent);
-        }
-    }
-    private void pararReproduccion(){
-        Intent serviceIntent = new Intent(getContext(), ServicioAudio.class);
-        serviceIntent.putExtra("nombreCuadro","nombre");
-        serviceIntent.putExtra("control","parar");
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            requireActivity().startForegroundService(serviceIntent);
-        } else {
-            requireActivity().startService(serviceIntent);
-        }
-    }
-    private void pausarReproduccion(){
-        Intent serviceIntent = new Intent(getContext(), ServicioAudio.class);
-        serviceIntent.putExtra("nombreCuadro","nombre");
-        serviceIntent.putExtra("control","pausar");
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            requireActivity().startForegroundService(serviceIntent);
-        } else {
-            requireActivity().startService(serviceIntent);
-        }
-    }
-    private void reiniciarReproduccion(){
-        Intent serviceIntent = new Intent(getContext(), ServicioAudio.class);
-        serviceIntent.putExtra("nombreCuadro","nombre");
-        serviceIntent.putExtra("control","reiniciar");
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            requireActivity().startForegroundService(serviceIntent);
-        } else {
-            requireActivity().startService(serviceIntent);
+            requireActivity().startService(intentServicio);
         }
     }
 }
