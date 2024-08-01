@@ -98,8 +98,9 @@ public class QrFragment extends Fragment {
                 String idObra = result.getContents();
                 txtResultado.setText(idObra);
                 Toast.makeText(getActivity(), "Código escaneado: " + idObra, Toast.LENGTH_LONG).show();
+                // Establecer la obra seleccionada por id en el ViewModel
+                obrasViewModel.setObraSeleccionadaPorId(Integer.parseInt(idObra));
 
-                // Establecer la obra seleccionada en el ViewModel
                 //obrasViewModel.setObraSeleccionada(Integer.parseInt(idObra));
 
                 // Navegar al fragmento de detalles del cuadro
