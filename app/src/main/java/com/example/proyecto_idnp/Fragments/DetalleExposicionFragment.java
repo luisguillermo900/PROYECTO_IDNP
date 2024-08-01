@@ -111,11 +111,11 @@ public class DetalleExposicionFragment extends Fragment implements OnObraClickLi
     public void onObraClick(ObraDeArte obra) {
         obrasModel.setObraSeleccionada(obra);
         //Cargar fragment detalle (ya se carga al usar la funcion setObraSeleccionada)
-        /*FragmentManager fragmentManager = getParentFragmentManager();
+        FragmentManager fragmentManager = getParentFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.contenedorFragments, DetalleObraFragment.class, null)
                 .addToBackStack(null)
-                .commit();*/
+                .commit();
     }
 
     public Exposicion consultaExposicion(ResultadoFiltro resultado){

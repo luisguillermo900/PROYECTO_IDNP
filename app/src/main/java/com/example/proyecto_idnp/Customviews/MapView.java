@@ -1,24 +1,24 @@
 package com.example.proyecto_idnp.Customviews;
 
 import android.content.Context;
-import android.content.res.Configuration;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.content.res.AppCompatResources;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 //import com.example.proyecto_idnp.Adaptadores.Cuadro;
 //import com.example.proyecto_idnp.Modelos.CuadrosViewModel;
 
+import com.example.proyecto_idnp.Modelos.CanvasViewModel;
 import com.example.proyecto_idnp.Modelos.ObrasViewModel;
 import com.example.proyecto_idnp.R;
 
@@ -34,7 +34,9 @@ public class MapView extends View {
     private Drawable pictureDrawable;
     private float scaleX, scaleY;
     private ObrasViewModel itemViewModel;
-
+    private CanvasViewModel canvasModel;
+    private FragmentManager fragmentManager = null;
+    private FragmentTransaction fragmentTransaction = null;
 
     public MapView(Context context) {
         super(context);
@@ -76,7 +78,6 @@ public class MapView extends View {
     }
 
     private void calculateScale(){
-
         float canvasWidth = canvas.getWidth();
         float canvasHeight = canvas.getHeight();
         scaleX = canvasWidth / DRAW_WIDTH;
@@ -162,7 +163,19 @@ public class MapView extends View {
     }
 
     private void drawPicture() {
-        pictureDrawable = AppCompatResources.getDrawable(context, R.drawable.cuadros_icon_blue);
+        pictureDrawable = AppCompatResources.getDrawable(context, R.drawable.icon_cuadro);
+        if (pictureDrawable != null) {
+            int left = (int) (506 * scaleX);
+            int top = (int) (2020 * scaleY);
+            int right = (int) (556 * scaleX);
+            int bottom = (int) (2070 * scaleY);
+            pictureDrawable.setBounds(left, top, right, bottom);
+            pictureDrawable.draw(canvas);
+        }
+    }
+
+    private void drawSala() {
+        pictureDrawable = AppCompatResources.getDrawable(context, R.drawable.icon_cuadro);
         if (pictureDrawable != null) {
             int left = (int) (456 * scaleX);
             int top = (int) (1980 * scaleY);
@@ -176,16 +189,29 @@ public class MapView extends View {
     public void setListener(ObrasViewModel itemViewModel){
         this.itemViewModel = itemViewModel;
     }
+    public void setListener2(CanvasViewModel canvasModel){
+        this.canvasModel = canvasModel;
+    }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         int pointX = (int) event.getX();
         int pointY = (int) event.getY();
+
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                boolean clicked = pictureDrawable.getBounds().contains(pointX,pointY);
-                if (clicked) {
-                    itemViewModel.setObraSeleccionadaPorId(1);
+                //boolean clicked = pictureDrawable.getBounds().contains(pointX,pointY);
+                //{253, 1763, 684, 2080}, // Sala 1
+
+                int x_negative = (int) (253 * scaleX);
+                int x_positive = (int) (684 * scaleX);
+                int y_negative = (int) (1763 * scaleX);
+                int y_positive = (int) (2080 * scaleX);
+
+                if (pointX >= x_negative && pointX <= x_positive && pointY >= y_negative && pointY <= y_positive) {
+                    //itemViewModel.setObraSeleccionadaPorId(1);
+//                    fragmentManager = getSupportFragmentManager();
+                    canvasModel.setSelectRoom(1);
                     Log.d("MapView","onTouchEvent Puntos " + pointX + " " + pointY );
                 }
                 break;

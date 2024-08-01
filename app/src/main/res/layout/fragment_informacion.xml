@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="Fragments.DetalleObraFragment">
+    tools:context="Fragments.DetalleExposicionFragment">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/btnObraVolver"
+            android:id="@+id/btnInfoVolver"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -20,15 +20,15 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/imgDetObraFoto"
-            android:layout_width="wrap_content"
+            android:id="@+id/imgFotoInfo"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:adjustViewBounds="true"
-            android:src="@drawable/pintura_imagen"
+            android:src="@drawable/img_centro_cultural_unsa"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnObraVolver" />
+            app:layout_constraintTop_toBottomOf="@+id/btnInfoVolver" />
 
         <View
             android:id="@+id/divider2"
@@ -43,62 +43,49 @@
             app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
         <TextView
-            android:id="@+id/txtDetObraTitulo"
+            android:id="@+id/txtTituloInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
+            android:layout_marginStart="15dp"
             android:layout_marginTop="15dp"
-            android:text="Titulo Obra"
+            android:text="CCUNSA"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imgDetObraFoto" />
+            app:layout_constraintTop_toBottomOf="@+id/imgFotoInfo" />
+
+        <View
+            android:id="@+id/divider1"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="25dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtTituloInfo" />
 
         <LinearLayout
-            android:id="@+id/linearLayout1"
+            android:id="@+id/linearLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="15dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="@+id/txtDetObraTitulo"
-            app:layout_constraintTop_toBottomOf="@+id/txtDetObraTitulo">
+            app:layout_constraintStart_toStartOf="@+id/txtTituloInfo"
+            app:layout_constraintTop_toBottomOf="@+id/divider1">
 
             <ImageView
-                android:id="@+id/btnExpoVolver"
+                android:id="@+id/imageView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="4dp"
-                android:src="@drawable/user_24" />
-
-            <TextView
-                android:id="@+id/txtDetObraAutor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Autor" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linearLayout2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="@+id/linearLayout1"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout1">
-
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="4dp"
+                android:layout_marginEnd="6dp"
                 android:src="@drawable/pin_24" />
 
             <TextView
-                android:id="@+id/txtDetObraGaleria"
+                android:id="@+id/txtUbicacionInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Galerias" />
@@ -109,24 +96,25 @@
             android:id="@+id/linearLayout3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="@+id/linearLayout2"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+            app:layout_constraintStart_toStartOf="@+id/linearLayout"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
             <ImageView
                 android:id="@+id/icono_cal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="4dp"
+                android:layout_marginEnd="6dp"
+                android:layout_gravity="top"
                 android:src="@drawable/calendar_24" />
 
             <TextView
-                android:id="@+id/txtDetObraFecha"
+                android:id="@+id/txtFechaInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Fecha de obra" />
+                android:text="Fecha de expo" />
 
         </LinearLayout>
 
@@ -143,7 +131,7 @@
             app:layout_constraintTop_toBottomOf="@+id/divider2" />
 
         <TextView
-            android:id="@+id/txtDetObraDescripcion"
+            android:id="@+id/txtDescripcionInfo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -153,44 +141,17 @@
             app:layout_constraintStart_toStartOf="@+id/textView3"
             app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
-        <ImageButton
-            android:id="@+id/btnDetener"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/txtDetObraDescripcion"
-            app:layout_constraintEnd_toEndOf="@+id/divider2"
-            app:layout_constraintTop_toBottomOf="@+id/divider2"
-            app:srcCompat="@drawable/baseline_stop_24" />
-
-        <ImageButton
-            android:id="@+id/btnReiniciar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="3dp"
-            app:layout_constraintBottom_toTopOf="@+id/txtDetObraDescripcion"
-            app:layout_constraintEnd_toStartOf="@+id/btnDetener"
-            app:layout_constraintTop_toBottomOf="@+id/divider2"
-            app:srcCompat="@drawable/baseline_skip_previous_24" />
-
-        <ImageButton
-            android:id="@+id/btnReproducirPausar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="3dp"
-            app:layout_constraintBottom_toTopOf="@+id/txtDetObraDescripcion"
-            app:layout_constraintEnd_toStartOf="@+id/btnReiniciar"
-            app:layout_constraintTop_toBottomOf="@+id/divider2"
-            app:srcCompat="@drawable/baseline_play_arrow_24" />
-
-        <ImageView
-            android:id="@+id/imgQr"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <View
+            android:id="@+id/divider3"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginStart="25dp"
             android:layout_marginTop="15dp"
+            android:layout_marginEnd="25dp"
+            android:background="?android:attr/listDivider"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtDetObraDescripcion" />
-
+            app:layout_constraintTop_toBottomOf="@+id/txtDescripcionInfo" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

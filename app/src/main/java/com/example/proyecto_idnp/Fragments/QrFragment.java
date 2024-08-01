@@ -1,49 +1,42 @@
 package com.example.proyecto_idnp.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
+
+import com.example.proyecto_idnp.Modelos.ObrasViewModel;
 import com.example.proyecto_idnp.R;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link QrFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class QrFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private Button btnScan;
+    private EditText txtResultado;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    //l
+    private ObrasViewModel obrasViewModel;
 
     public QrFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment QrFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static QrFragment newInstance(String param1, String param2) {
         QrFragment fragment = new QrFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString("param1", param1);
+        args.putString("param2", param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -52,17 +45,75 @@ public class QrFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            String mParam1 = getArguments().getString("param1");
+            String mParam2 = getArguments().getString("param2");
         }
+        //l
+        obrasViewModel = new ViewModelProvider(requireActivity()).get(ObrasViewModel.class);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        //return inflater.inflate(R.layout.fragment_qr, container, false);
         View view = inflater.inflate(R.layout.fragment_qr, container, false);
+
+        btnScan = view.findViewById(R.id.btnScan);
+        txtResultado = view.findViewById(R.id.txtResultado);
+
+        btnScan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IntentIntegrator integrator = IntentIntegrator.forSupportFragment(QrFragment.this);
+                integrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES);
+                integrator.setPrompt("Escanea un código QR");
+                integrator.setCameraId(0);  // 0 para la cámara trasera
+                integrator.setBeepEnabled(true);
+                integrator.setBarcodeImageEnabled(true);
+                integrator.setOrientationLocked(false);  // Bloquea la orientación a la actual
+                integrator.initiateScan();
+            }
+        });
+
         return view;
+    }
+
+    private void initiateQrScan() {
+        IntentIntegrator integrator = IntentIntegrator.forSupportFragment(QrFragment.this);
+        integrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES);
+        integrator.setPrompt("Escanea un código QR");
+        integrator.setCameraId(0);  // 0 para la cámara trasera
+        integrator.setBeepEnabled(true);
+        integrator.setBarcodeImageEnabled(true);
+        integrator.setOrientationLocked(true);  // Bloquea la orientación a la actual
+        integrator.initiateScan();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if (result != null) {
+            if (result.getContents() == null) {
+                Toast.makeText(getActivity(), "Escaneo cancelado", Toast.LENGTH_LONG).show();
+            } else {
+                String idObra = result.getContents();
+                txtResultado.setText(idObra);
+                Toast.makeText(getActivity(), "Código escaneado: " + idObra, Toast.LENGTH_LONG).show();
+
+                // Establecer la obra seleccionada en el ViewModel
+                obrasViewModel.setObraSeleccionada(Integer.parseInt(idObra));
+
+                // Navegar al fragmento de detalles del cuadro
+                // Uso con setObraPorId()
+                //DetalleObraFragment detalleObraFragment = DetalleObraFragment.newInstance(idObra, null);
+                DetalleObraFragment detalleObraFragment = new DetalleObraFragment();
+                FragmentManager fragmentManager = getParentFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.contenedorFragments, detalleObraFragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }

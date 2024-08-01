@@ -38,7 +38,7 @@ public class ExplorarFragment extends Fragment implements OnResultadoClickListen
     private Button btnFiltroTipo;
     private Button btnFiltroExpo;
     private Button btnFiltroGaleria;
-    private String seleccionDetalle = "";
+    private String filtroSeleccionado;
 
     private String mParam1;
     private String mParam2;
@@ -70,7 +70,6 @@ public class ExplorarFragment extends Fragment implements OnResultadoClickListen
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_explorar, container, false);
-        seleccionDetalle = "exposicion";
         btnFiltroAutor = view.findViewById(R.id.btnFiltroAutor);
         btnFiltroTipo = view.findViewById(R.id.btnFiltroTipo);
         btnFiltroExpo = view.findViewById(R.id.btnFiltroExpo);
@@ -81,39 +80,41 @@ public class ExplorarFragment extends Fragment implements OnResultadoClickListen
         recyclerListaResultados = view.findViewById(R.id.recyclerObrasGenerico);
         recyclerListaResultados.setLayoutManager(new GridLayoutManager(getContext(),3));
 
-        //Cargando datos de resultados del viewmodel al adaptador
+        //Cargando datos de resultados del viewmodel al adaptador de acuerdo al filtro seleccionado
         resultados = resultadosModel.getResultadosLiveData().getValue();
         adaptadorResultados = new AdaptadorResultado(resultados,getContext(),this);
         recyclerListaResultados.setAdapter(adaptadorResultados);
         Log.d("AdaptadorResultado", "Adaptador configurado y asignado al RecyclerView.");
-
         //Asignando listeners para los botones de filtro
-        btnFiltroAutor.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                seleccionDetalle = "generico";
-                filtrarPorAutor();
-            }
-        });
-        btnFiltroTipo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                seleccionDetalle = "generico";
-                filtrarPorTipo();
-            }
-        });
         btnFiltroExpo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                seleccionDetalle = "exposicion";
-                filtrarPorExposicion();
+                resultadosModel.setfiltroSeleccionado("Exposiciones");
+                actualizarDatos();
             }
         });
+
+        btnFiltroAutor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                resultadosModel.setfiltroSeleccionado("Autores");
+                actualizarDatos();
+            }
+        });
+
+        btnFiltroTipo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                resultadosModel.setfiltroSeleccionado("Tipos");
+                actualizarDatos();
+            }
+        });
+
         btnFiltroGaleria.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                seleccionDetalle = "generico";
-                filtrarPorGaleria();
+                resultadosModel.setfiltroSeleccionado("Galerias");
+                actualizarDatos();
             }
         });
         return view;
@@ -121,13 +122,12 @@ public class ExplorarFragment extends Fragment implements OnResultadoClickListen
     @Override
     public void onResultadoClick(ResultadoFiltro resultado) {
         Fragment fragmentoDetalle = null;
+        filtroSeleccionado = resultadosModel.getfiltroSeleccionado();
         resultadosModel.setResultadoSeleccionado(resultado);
-        if(seleccionDetalle.equals("exposicion")){
+        if(filtroSeleccionado.equals("Exposicion")){
             fragmentoDetalle = new DetalleExposicionFragment();
-        } else if (seleccionDetalle.equals("generico")) {
-            fragmentoDetalle = new DetalleGenericoFragment();
         } else {
-            Log.d(TAG, "No existe un fragmento definido para esta opcion");
+            fragmentoDetalle = new DetalleGenericoFragment();
         }
         //Cargar fragment detalle
         if (fragmentoDetalle != null) {
