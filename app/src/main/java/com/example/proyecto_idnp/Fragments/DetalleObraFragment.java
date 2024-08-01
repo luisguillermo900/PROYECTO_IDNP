@@ -188,7 +188,11 @@ public class DetalleObraFragment extends Fragment {
         intentServicio.setAction(comando);
         intentServicio.putExtra("nombreArchivo", nombreArchivo);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            requireActivity().startForegroundService(intentServicio);
+            if(comando.equals("ACCION_DETENER")){
+                requireActivity().startService(intentServicio);
+            } else {
+                requireActivity().startForegroundService(intentServicio);
+            }
         } else {
             requireActivity().startService(intentServicio);
         }

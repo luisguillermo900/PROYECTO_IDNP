@@ -220,8 +220,13 @@ public class ServicioAudio extends Service {
             reproductor.release();
             reproductor = null;
         }
+        if(notification != null){
+            Log.d(TAG, "Con notificacion");
+            stopForeground(true);
+        } else {
+            Log.d(TAG, "Sin notificacion");
+        }
         Toast.makeText(this, "Detener", Toast.LENGTH_SHORT).show();
-        stopForeground(true);
         stopSelf();
     }
 
