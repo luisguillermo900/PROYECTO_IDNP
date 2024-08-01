@@ -30,5 +30,4 @@ public interface DaoObraDeArte {
 
     @Query("SELECT * FROM ObraDeArte WHERE id = :id")
     ObraDeArte getPicture(String id);
-
 }

@@ -31,7 +31,6 @@ public class ArtRoom {
         this.name = name;
         this.idRoom = idRoom;
     }
-
     //Constructor sin Id Foraneo
     public ArtRoom(@NonNull String idRoom, String name, String description) {
         this.idRoom = idRoom;

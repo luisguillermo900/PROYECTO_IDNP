@@ -25,5 +25,4 @@ public interface DaoArtRoom {
 
     @Query("SELECT * FROM artroom WHERE idRoom = :id")
     ArtRoom getArtRoom(String id);
-
 }

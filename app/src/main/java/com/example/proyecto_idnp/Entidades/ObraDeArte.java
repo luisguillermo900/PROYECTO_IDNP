@@ -145,5 +145,4 @@ public class ObraDeArte {
         this.descripcion = descripcion;
     }
 
-
 }

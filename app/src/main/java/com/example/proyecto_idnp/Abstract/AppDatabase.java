@@ -35,8 +35,7 @@ public abstract class AppDatabase extends RoomDatabase {
         }
         return appDatabase;
     }
-
-    //faltan agregar
+    //faltan agregar:
     //public abstract DaoUsuario daoUsuario();
     public abstract DaoArtRoom daoArtRoom();
     //public abstract DaoPicture daoPicture();
