@@ -29,6 +29,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+    buildToolsVersion = "34.0.0"
 }
 
 dependencies {
@@ -39,6 +40,7 @@ dependencies {
 
     implementation("androidx.room:room-runtime:$room_version")
     annotationProcessor("androidx.room:room-compiler:$room_version")
+    implementation ("com.journeyapps:zxing-android-embedded:4.3.0")
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
