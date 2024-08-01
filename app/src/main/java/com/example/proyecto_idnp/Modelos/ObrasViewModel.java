@@ -14,6 +14,7 @@ import java.util.List;
 public class ObrasViewModel extends ViewModel {
     //l
     private final MutableLiveData<List<ObraDeArte>> obrasList = new MutableLiveData<>();
+
     //l
     private MutableLiveData<List<ObraDeArte>> obrasLiveData;
     private MutableLiveData<ObraDeArte> obraSeleccionada;

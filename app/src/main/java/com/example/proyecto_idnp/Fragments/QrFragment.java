@@ -58,6 +58,7 @@ public class QrFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_qr, container, false);
 
         btnScan = view.findViewById(R.id.btnScan);
+        txtResultado = view.findViewById(R.id.txtResultado);
 
         btnScan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,6 +87,10 @@ public class QrFragment extends Fragment {
                 String idObra = result.getContents();
                 txtResultado.setText(idObra);
                 Toast.makeText(getActivity(), "Código escaneado: " + idObra, Toast.LENGTH_LONG).show();
+
+                // Establecer la obra seleccionada en el ViewModel
+                obrasViewModel.setObraSeleccionada(Integer.parseInt(idObra));
+
                 // Navegar al fragmento de detalles del cuadro
                 DetalleObraFragment detalleObraFragment = DetalleObraFragment.newInstance(idObra, null);
                 FragmentManager fragmentManager = getParentFragmentManager();
