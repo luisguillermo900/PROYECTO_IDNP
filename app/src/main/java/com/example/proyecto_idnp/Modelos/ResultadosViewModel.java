@@ -1,5 +1,7 @@
 package com.example.proyecto_idnp.Modelos;
 
+import static android.content.ContentValues.TAG;
+
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -14,13 +16,27 @@ import java.util.List;
 public class ResultadosViewModel extends ViewModel {
     private MutableLiveData<List<ResultadoFiltro>> resultadosLiveData;
     private MutableLiveData<ResultadoFiltro> resultadoSeleccionado;
+    private String filtroSeleccionado = "";
     private List<ResultadoFiltro> resultados;
     public ResultadosViewModel(){
         resultadosLiveData = new MutableLiveData<>();
         resultadoSeleccionado = new MutableLiveData<>();
-        cargarResultados();
     }
     public LiveData<List<ResultadoFiltro>> getResultadosLiveData(){
+        switch (filtroSeleccionado) {
+            case "Exposiciones":
+                cargarConsultaPorExposiciones();
+                break;
+            case "Autores":
+                cargarConsultaPorAutores();
+                break;
+            case "Tipos":
+                break;
+            case "Galerias":
+                break;
+            default:
+                Log.d(TAG, "Opcion Invalida");
+        }
         return resultadosLiveData;
     }
     public LiveData<ResultadoFiltro> getResultadoSeleccionado(){
@@ -28,6 +44,12 @@ public class ResultadosViewModel extends ViewModel {
     }
     public void setResultadoSeleccionado(ResultadoFiltro resultado) {
         resultadoSeleccionado.setValue(resultado);
+    }
+    public void setfiltroSeleccionado(String seleccionado) {
+        filtroSeleccionado = seleccionado;
+    }
+    public String getfiltroSeleccionado() {
+        return filtroSeleccionado;
     }
 
     private void cargarResultados(){
