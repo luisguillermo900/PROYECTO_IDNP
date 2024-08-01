@@ -11,4 +11,10 @@
         android:layout_height="match_parent"
         android:text="@string/hello_blank_fragment" />
 
+    <com.example.proyecto_idnp.customviews.MapView
+        android:id="@+id/map_canvas_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="MissingClass" />
+
 </FrameLayout>

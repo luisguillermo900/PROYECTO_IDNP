@@ -15,7 +15,7 @@ import androidx.room.PrimaryKey;
 public class ArtRoom {
     @PrimaryKey(autoGenerate = true)
     @NonNull
-    public String idRoom;
+    public int idRoom;
     public String name;
     public String description;
 
@@ -25,25 +25,25 @@ public class ArtRoom {
     public ArtRoom(){}
 
     //Constructor con id Id Foraneo
-    public ArtRoom(int idExposicion, String description, String name, @NonNull String idRoom) {
+    public ArtRoom(int idExposicion, String description, String name, @NonNull int idRoom) {
         this.idExposicion = idExposicion;
         this.description = description;
         this.name = name;
         this.idRoom = idRoom;
     }
     //Constructor sin Id Foraneo
-    public ArtRoom(@NonNull String idRoom, String name, String description) {
+    public ArtRoom(@NonNull int idRoom, String name, String description) {
         this.idRoom = idRoom;
         this.name = name;
         this.description = description;
     }
 
     @NonNull
-    public String getIdRoom() {
+    public int getIdRoom() {
         return idRoom;
     }
 
-    public void setIdRoom(@NonNull String idRoom) {
+    public void setIdRoom(@NonNull int idRoom) {
         this.idRoom = idRoom;
     }
 
