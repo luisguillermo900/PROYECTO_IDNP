@@ -77,6 +77,17 @@ public class QrFragment extends Fragment {
         return view;
     }
 
+    private void initiateQrScan() {
+        IntentIntegrator integrator = IntentIntegrator.forSupportFragment(QrFragment.this);
+        integrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES);
+        integrator.setPrompt("Escanea un código QR");
+        integrator.setCameraId(0);  // 0 para la cámara trasera
+        integrator.setBeepEnabled(true);
+        integrator.setBarcodeImageEnabled(true);
+        integrator.setOrientationLocked(true);  // Bloquea la orientación a la actual
+        integrator.initiateScan();
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);

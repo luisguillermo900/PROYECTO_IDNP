@@ -118,6 +118,7 @@ public class HomeActivity extends AppCompatActivity {
         if (fragmentManager != null) {
             fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.contenedorFragments, fragment);
+            fragmentTransaction.addToBackStack(null); // Añade el fragmento al back stack
             fragmentTransaction.commit();
         }
     }
