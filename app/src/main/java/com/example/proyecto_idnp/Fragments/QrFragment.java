@@ -69,7 +69,7 @@ public class QrFragment extends Fragment {
                 integrator.setCameraId(0);  // 0 para la cámara trasera
                 integrator.setBeepEnabled(true);
                 integrator.setBarcodeImageEnabled(true);
-                integrator.setOrientationLocked(true);  // Bloquea la orientación a la actual
+                integrator.setOrientationLocked(false);  // Bloquea la orientación a la actual
                 integrator.initiateScan();
             }
         });
