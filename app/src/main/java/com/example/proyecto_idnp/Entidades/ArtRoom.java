@@ -23,6 +23,7 @@ public class ArtRoom {
     public int idExposicion;
 
     public ArtRoom(){}
+
     //Constructor con id Id Foraneo
     public ArtRoom(int idExposicion, String description, String name, @NonNull String idRoom) {
         this.idExposicion = idExposicion;

@@ -144,4 +144,6 @@ public class ObraDeArte {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
+
+
 }

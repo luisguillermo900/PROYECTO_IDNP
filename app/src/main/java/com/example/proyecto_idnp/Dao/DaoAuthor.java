@@ -25,4 +25,5 @@ public interface DaoAuthor {
 
     @Query("SELECT * FROM author WHERE idAuthor = :id")
     Author getAuthor(String id);
+
 }

@@ -29,5 +29,6 @@ public interface DaoExposicion {
 
     @Query("DELETE FROM Exposicion")
     void deleteAll();
+
 }
 

@@ -60,4 +60,5 @@ public class Exposicion {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
+
 }
