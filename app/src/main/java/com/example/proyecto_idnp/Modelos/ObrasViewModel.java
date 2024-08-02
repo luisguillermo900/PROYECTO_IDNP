@@ -62,6 +62,19 @@ public class ObrasViewModel extends AndroidViewModel {
         return daoObra.obtenerObra(id);
     }
 
+    public void cargarObrasPorTipo(String tipo){
+        obrasLiveData.setValue(daoObra.cargarObrasPorTipo(tipo));
+    }
+    public void cargarObrasPorAutor(String autor){
+        obrasLiveData.setValue(daoObra.cargarObrasPorAutor(autor));
+    }
+    public void cargarObrasPorGaleria(String galeria){
+        obrasLiveData.setValue(daoObra.cargarObrasPorGaleria(galeria));
+    }
+    public void cargarObrasPorExposicion(String exposicion){
+        obrasLiveData.setValue(daoObra.cargarObrasPorExposicion(exposicion));
+    }
+
     private void cargarObrasPorConsulta(int id, String tipo, String nombre) {
         if(tipo.equals("tipo")){
             //SELECT * FROM ObraDeArte WHERE tipo = $nombre

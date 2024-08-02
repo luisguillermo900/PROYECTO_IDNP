@@ -90,7 +90,7 @@ public class ExplorarFragment extends Fragment implements OnResultadoClickListen
             @Override
             public void onClick(View view) {
                 resultadosModel.setfiltroSeleccionado("Exposiciones");
-                actualizarDatos();
+                filtrarPorExposicion();
             }
         });
 
@@ -98,7 +98,7 @@ public class ExplorarFragment extends Fragment implements OnResultadoClickListen
             @Override
             public void onClick(View view) {
                 resultadosModel.setfiltroSeleccionado("Autores");
-                actualizarDatos();
+                filtrarPorAutor();
             }
         });
 
@@ -106,7 +106,7 @@ public class ExplorarFragment extends Fragment implements OnResultadoClickListen
             @Override
             public void onClick(View view) {
                 resultadosModel.setfiltroSeleccionado("Tipos");
-                actualizarDatos();
+                filtrarPorTipo();
             }
         });
 
@@ -114,7 +114,7 @@ public class ExplorarFragment extends Fragment implements OnResultadoClickListen
             @Override
             public void onClick(View view) {
                 resultadosModel.setfiltroSeleccionado("Galerias");
-                actualizarDatos();
+                filtrarPorGaleria();
             }
         });
         return view;
@@ -136,14 +136,10 @@ public class ExplorarFragment extends Fragment implements OnResultadoClickListen
                     .replace(R.id.contenedorFragments, fragmentoDetalle, null)
                     .addToBackStack(null)
                     .commit();
-        } else {
-            Toast.makeText(getContext(), "No se pudo cargar el fragmento", Toast.LENGTH_SHORT).show();
         }
-
     }
 
     private void filtrarPorAutor(){
-        //Se va a ejecutar una consulta SQL y actualizar el RecyclerView
         resultadosModel.cargarConsultaPorAutores();
         actualizarDatos();
     }

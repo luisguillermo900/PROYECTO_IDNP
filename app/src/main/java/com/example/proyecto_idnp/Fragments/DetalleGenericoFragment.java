@@ -41,6 +41,7 @@ public class DetalleGenericoFragment extends Fragment implements OnObraClickList
     private ObrasViewModel obrasModel;
     private ResultadosViewModel resultadosModel;
     private ResultadoFiltro resultadoSeleccionado;
+    private String filtroSeleccionado;
 
     private String mParam1;
     private String mParam2;
@@ -99,10 +100,21 @@ public class DetalleGenericoFragment extends Fragment implements OnObraClickList
                 }
             }
         });
-
+        filtroSeleccionado = resultadosModel.getfiltroSeleccionado();
         resultadoSeleccionado = resultadosModel.getResultadoSeleccionado().getValue();
         recyclerListaObras = view.findViewById(R.id.recyclerObrasGenerico);
         recyclerListaObras.setLayoutManager(new LinearLayoutManager(getContext()));
+        switch (filtroSeleccionado){
+            case "Autores":
+                obrasModel.cargarObrasPorAutor(resultadoSeleccionado.getNombre());
+                break;
+            case "Tipos":
+                obrasModel.cargarObrasPorTipo(resultadoSeleccionado.getNombre());
+                break;
+            case "Galerias":
+                obrasModel.cargarObrasPorGaleria(resultadoSeleccionado.getNombre());
+                break;
+        }
 
         adaptadorObras = new AdaptadorObra(obrasModel.getObrasLiveData().getValue(),getContext(),this);
         recyclerListaObras.setAdapter(adaptadorObras);

@@ -29,4 +29,22 @@ public interface DaoObra {
 
     @Query("SELECT tipo AS nombre, url_imagen AS urlImagen FROM ObraDeArte GROUP BY tipo")
     List<ResultadoFiltro> filtrarTipos();
+
+    @Query("SELECT * FROM ObraDeArte WHERE tipo = :tipo")
+    List<ObraDeArte> cargarObrasPorTipo(String tipo);
+
+    @Query("SELECT * FROM ObraDeArte " +
+            "    INNER JOIN Autor ON ObraDeArte.id_autor = Autor.id " +
+            "    WHERE Autor.nombre = :autor")
+    List<ObraDeArte> cargarObrasPorAutor(String autor);
+
+    @Query("SELECT * FROM ObraDeArte " +
+            "    INNER JOIN Galeria ON ObraDeArte.id_galeria = Galeria.id " +
+            "    WHERE Galeria.nombre = :galeria")
+    List<ObraDeArte> cargarObrasPorGaleria(String galeria);
+
+    @Query("SELECT * FROM ObraDeArte " +
+            "    INNER JOIN Exposicion ON ObraDeArte.id_exposicion = Exposicion.id " +
+            "    WHERE Exposicion.nombre = :exposicion")
+    List<ObraDeArte> cargarObrasPorExposicion(String exposicion);
 }

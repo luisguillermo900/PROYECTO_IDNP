@@ -37,6 +37,7 @@ public class DetalleExposicionFragment extends Fragment implements OnObraClickLi
     private AdaptadorObra adaptadorObras;
     private ObrasViewModel obrasModel;
     private ResultadosViewModel resultadosModel;
+    private String nombreFiltro = "";
     AppDatabase db = AppDatabase.getInstance(getContext());
     DaoExposicion daoExposicion = db.daoExposicion();
     private ResultadoFiltro resultadoSeleccionado;
@@ -73,7 +74,6 @@ public class DetalleExposicionFragment extends Fragment implements OnObraClickLi
         View view = inflater.inflate(R.layout.fragment_detalle_exposicion, container, false);
         TextView txtTituloExposicion = view.findViewById(R.id.txtTituloExposicion);
         TextView txtFechaExposicion = view.findViewById(R.id.txtFechaExposicion);
-        TextView txtDescripcionExpocision = view.findViewById(R.id.txtDescripcionExpocision);
         ImageView imgFotoExposicion = view.findViewById(R.id.imgFotoExposicion);
         ImageView btnExpoVolver = view.findViewById(R.id.btnExpoVolver);
 
@@ -82,6 +82,7 @@ public class DetalleExposicionFragment extends Fragment implements OnObraClickLi
 
         // Observar el resultado seleccionado y actualizar la UI
         resultadosModel.getResultadoSeleccionado().observe(getViewLifecycleOwner(), resultado -> {
+            nombreFiltro = resultadosModel.getResultadoSeleccionado().getValue().getNombre();
             Exposicion expoObtenida = consultaExposicion(resultadosModel.getResultadoSeleccionado().getValue());
             if (resultado != null) {
                 txtTituloExposicion.setText(expoObtenida.getNombre());
@@ -107,6 +108,7 @@ public class DetalleExposicionFragment extends Fragment implements OnObraClickLi
         recyclerListaObras = view.findViewById(R.id.recyclerObrasGenerico);
         recyclerListaObras.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        obrasModel.cargarObrasPorExposicion(nombreFiltro);
         adaptadorObras = new AdaptadorObra(obrasModel.getObrasLiveData().getValue(),getContext(),this);
         recyclerListaObras.setAdapter(adaptadorObras);
         Log.d("AdaptadorCuadro", "Adaptador configurado y asignado al RecyclerView.");
@@ -125,10 +127,6 @@ public class DetalleExposicionFragment extends Fragment implements OnObraClickLi
 
     public Exposicion consultaExposicion(ResultadoFiltro resultado){
         Exposicion expoConsultada = daoExposicion.getExposicionPorNombre(resultado.getNombre());;
-        //Se obtiene todos los datos de la exposicion desde base de datos
-        //SELECT * FROM Exposicion WHERE id= resultado.getId()
-        //Se guarda en una variable y se retorna
-        //return expoConsultada;
         return expoConsultada;
     }
 }
