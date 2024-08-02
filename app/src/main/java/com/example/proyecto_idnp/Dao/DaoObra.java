@@ -15,8 +15,8 @@ public interface DaoObra {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertarObra(ObraDeArte... obras);
 
-    @Query("UPDATE ObraDeArte SET url_imagen= :urlImagen, titulo = :titulo, id_autor = :idAutor, id_exposicion = :idExposicion, id_galeria = :idGaleria, fecha = :fecha, tipo = :tipo, tecnica = :tecnica, descripcion = :descripcion WHERE id = :id")
-    void actualizarObra(int id, String urlImagen, String titulo, int idAutor, int idExposicion, int idGaleria, String fecha, String tipo, String tecnica, String descripcion);
+    @Query("UPDATE ObraDeArte SET url_imagen= :urlImagen, archivo_audio= :archivoAudio, titulo = :titulo, id_autor = :idAutor, id_exposicion = :idExposicion, id_galeria = :idGaleria, fecha = :fecha, tipo = :tipo, tecnica = :tecnica, descripcion = :descripcion WHERE id = :id")
+    void actualizarObra(int id, String urlImagen, String archivoAudio, String titulo, int idAutor, int idExposicion, int idGaleria, String fecha, String tipo, String tecnica, String descripcion);
 
     @Query("DELETE FROM ObraDeArte WHERE id = :id")
     void eliminarObra(int id);

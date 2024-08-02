@@ -26,6 +26,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.proyecto_idnp.Abstract.AppDatabase;
+import com.example.proyecto_idnp.Dao.DaoAutor;
+import com.example.proyecto_idnp.Dao.DaoGaleria;
 import com.example.proyecto_idnp.Modelos.ObrasViewModel;
 import com.example.proyecto_idnp.R;
 import com.example.proyecto_idnp.Servicios.ServicioAudio;
@@ -38,13 +41,16 @@ public class DetalleObraFragment extends Fragment {
     private static final String ARG_PARAM1 = "estaReproduciendo";
 
     private String mParam1;
-
+    private AppDatabase appBD;
+    private DaoGaleria daoGaleria;
+    private DaoAutor daoAutor;
     private ImageButton btnReproducirPausar;
     private ImageButton btnDetener;
     private ImageButton btnReiniciar;
     private boolean estaReproduciendo = false;
     private ObrasViewModel obrasModel;
     private String nombreObra = "";
+    private String nombreArchivo = "";
 
     //Implementar en vista QR
     //private ImageView imgQr;
@@ -89,6 +95,9 @@ public class DetalleObraFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_detalle_obra, container, false);
+        appBD = AppDatabase.getInstance(getContext());
+        daoGaleria = appBD.daoGaleria();
+        daoAutor = appBD.daoAuthor();
         TextView txtDetObraTitulo = view.findViewById(R.id.txtDetObraTitulo);
         ImageView imgDetObraFoto = view.findViewById(R.id.imgDetObraFoto);
         TextView txtDetObraDescripcion = view.findViewById(R.id.txtDetObraDescripcion);
@@ -130,7 +139,7 @@ public class DetalleObraFragment extends Fragment {
                     btnReproducirPausar.setImageResource(R.drawable.baseline_play_arrow_24);
                 }
 
-                controlAudio("ACCION_REPRODUCIR_PAUSAR", "audio_cuadro.mp3");
+                controlAudio("ACCION_REPRODUCIR_PAUSAR", nombreArchivo);
             }
         });
         btnDetener.setOnClickListener(new View.OnClickListener() {
@@ -138,7 +147,7 @@ public class DetalleObraFragment extends Fragment {
             public void onClick(View v) {
                 estaReproduciendo = false;
                 btnReproducirPausar.setImageResource(R.drawable.baseline_play_arrow_24);
-                controlAudio("ACCION_DETENER", "audio_cuadro.mp3");
+                controlAudio("ACCION_DETENER", nombreArchivo);
             }
         });
         btnReiniciar.setOnClickListener(new View.OnClickListener() {
@@ -146,7 +155,7 @@ public class DetalleObraFragment extends Fragment {
             public void onClick(View v) {
                 estaReproduciendo = true;
                 btnReproducirPausar.setImageResource(R.drawable.baseline_pause_24);
-                controlAudio("ACCION_REINICIAR", "audio_cuadro.mp3");
+                controlAudio("ACCION_REINICIAR", nombreArchivo);
             }
         });
 
@@ -162,13 +171,14 @@ public class DetalleObraFragment extends Fragment {
         obrasModel.getObraSeleccionada().observe(getViewLifecycleOwner(), obra -> {
             if (obra != null) {
                 nombreObra = obra.getTitulo();
+                nombreArchivo = obra.getArchivoAudio();
                 txtDetObraTitulo.setText(obra.getTitulo());
                 Glide.with(getContext())
                         .load(obra.getUrlImagen())
                         .centerCrop()
                         .into(imgDetObraFoto);
-                txtDetObraAutor.setText(String.valueOf(obra.getIdAutor()));
-                txtDetObraGaleria.setText(String.valueOf(obra.getIdGaleria()));
+                txtDetObraAutor.setText(daoAutor.getAutor(obra.getIdAutor()).nombre);
+                txtDetObraGaleria.setText(daoGaleria.getGaleria(obra.getIdGaleria()).nombre);
                 txtDetObraFecha.setText(obra.getFecha());
                 txtDetObraDescripcion.setText(obra.getDescripcion());
                 // l: Generar el código QR con el identificador del cuadro

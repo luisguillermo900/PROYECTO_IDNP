@@ -30,6 +30,9 @@ public class ObraDeArte {
     @ColumnInfo(name = "url_imagen")
     private String urlImagen;
 
+    @ColumnInfo(name = "archivo_audio")
+    private String archivoAudio;
+
     @ColumnInfo(name = "titulo")
     private String titulo;
     //-------------------Llaves foranesas----
@@ -54,9 +57,10 @@ public class ObraDeArte {
     @ColumnInfo(name = "descripcion")
     private String descripcion;
 
-    public ObraDeArte(@NonNull int id, String urlImagen, String titulo, int idAutor, int idExposicion, int idGaleria, String fecha, String tipo, String tecnica, String descripcion) {
+    public ObraDeArte(@NonNull int id, String urlImagen, String archivoAudio, String titulo, int idAutor, int idExposicion, int idGaleria, String fecha, String tipo, String tecnica, String descripcion) {
         this.id = id;
         this.urlImagen = urlImagen;
+        this.archivoAudio = archivoAudio;
         this.titulo = titulo;
         this.idAutor = idAutor;
         this.idExposicion = idExposicion;
@@ -81,6 +85,14 @@ public class ObraDeArte {
 
     public void setUrlImagen(String urlImagen) {
         this.urlImagen = urlImagen;
+    }
+
+    public String getArchivoAudio() {
+        return archivoAudio;
+    }
+
+    public void setArchivoAudio(String archivoAudio) {
+        this.archivoAudio = archivoAudio;
     }
 
     public String getTitulo() {
@@ -146,5 +158,4 @@ public class ObraDeArte {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-
 }

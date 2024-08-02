@@ -21,7 +21,7 @@ import com.example.proyecto_idnp.Entidades.ObraDeArte;
                 ObraDeArte.class,
                 Galeria.class,
                 Exposicion.class},
-        version  = 15
+        version  = 16
 )
 public abstract class AppDatabase extends RoomDatabase {
 
