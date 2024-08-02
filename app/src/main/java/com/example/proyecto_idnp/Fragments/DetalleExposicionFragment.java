@@ -16,8 +16,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.proyecto_idnp.Abstract.AppDatabase;
 import com.example.proyecto_idnp.Adaptadores.AdaptadorObra;
 import com.example.proyecto_idnp.Adaptadores.OnObraClickListener;
+import com.example.proyecto_idnp.Dao.DaoAutor;
+import com.example.proyecto_idnp.Dao.DaoExposicion;
+import com.example.proyecto_idnp.Dao.DaoObra;
 import com.example.proyecto_idnp.Entidades.Exposicion;
 import com.example.proyecto_idnp.Entidades.ObraDeArte;
 import com.example.proyecto_idnp.Entidades.ResultadoFiltro;
@@ -33,6 +37,8 @@ public class DetalleExposicionFragment extends Fragment implements OnObraClickLi
     private AdaptadorObra adaptadorObras;
     private ObrasViewModel obrasModel;
     private ResultadosViewModel resultadosModel;
+    AppDatabase db = AppDatabase.getInstance(getContext());
+    DaoExposicion daoExposicion = db.daoExposicion();
     private ResultadoFiltro resultadoSeleccionado;
 
     private String mParam1;
@@ -84,7 +90,6 @@ public class DetalleExposicionFragment extends Fragment implements OnObraClickLi
                         .centerCrop()
                         .into(imgFotoExposicion);
                 txtFechaExposicion.setText(expoObtenida.getFecha());
-                txtDescripcionExpocision.setText(expoObtenida.getDescripcion());
             }
         });
 
@@ -119,11 +124,11 @@ public class DetalleExposicionFragment extends Fragment implements OnObraClickLi
     }
 
     public Exposicion consultaExposicion(ResultadoFiltro resultado){
-        Exposicion expoConsultada;
+        Exposicion expoConsultada = daoExposicion.getExposicionPorNombre(resultado.getNombre());;
         //Se obtiene todos los datos de la exposicion desde base de datos
         //SELECT * FROM Exposicion WHERE id= resultado.getId()
         //Se guarda en una variable y se retorna
         //return expoConsultada;
-        return new Exposicion();
+        return expoConsultada;
     }
 }

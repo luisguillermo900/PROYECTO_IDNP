@@ -12,55 +12,46 @@ import androidx.room.PrimaryKey;
                 childColumns = "id_exposicion",
                 onDelete = ForeignKey.CASCADE)
 )
-public class ArtRoom {
+public class Galeria {
     @PrimaryKey(autoGenerate = true)
     @NonNull
     public int id;
-    public String name;
-    public String description;
+
+    @ColumnInfo(name = "nombre")
+    public String nombre;
 
     @ColumnInfo(name = "id_exposicion")
     public int idExposicion;
 
-    public ArtRoom(){}
+    public Galeria(){}
 
     //Constructor con id Id Foraneo
-    public ArtRoom(int idExposicion, String description, String name, @NonNull int idRoom) {
+    public Galeria(@NonNull int id, String name, int idExposicion) {
         this.idExposicion = idExposicion;
-        this.description = description;
-        this.name = name;
-        this.id = idRoom;
+        this.nombre = name;
+        this.id = id;
     }
     //Constructor sin Id Foraneo
-    public ArtRoom(@NonNull int idRoom, String name, String description) {
-        this.id = idRoom;
-        this.name = name;
-        this.description = description;
+    public Galeria(@NonNull int id, String name) {
+        this.id = id;
+        this.nombre = name;
     }
 
     @NonNull
-    public int getIdRoom() {
+    public int getId() {
         return id;
     }
 
-    public void setIdRoom(@NonNull int idRoom) {
+    public void setId(@NonNull int idRoom) {
         this.id = idRoom;
     }
 
-    public String getName() {
-        return name;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    public void setNombre(String name) {
+        this.nombre = name;
     }
 
     public int getIdExposicion() {return idExposicion;}

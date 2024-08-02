@@ -18,8 +18,12 @@ public class Exposicion {
     @ColumnInfo(name = "fecha")
     private String fecha;
 
-    @ColumnInfo(name = "descripcion")
-    private String descripcion;
+    public Exposicion(int id, String urlImagen, String nombre, String fecha) {
+        this.id = id;
+        this.urlImagen = urlImagen;
+        this.nombre = nombre;
+        this.fecha = fecha;
+    }
 
     public int getId() {
         return id;
@@ -51,13 +55,5 @@ public class Exposicion {
 
     public void setFecha(String fecha) {
         this.fecha = fecha;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
     }
 }
