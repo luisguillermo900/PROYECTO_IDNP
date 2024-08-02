@@ -92,6 +92,7 @@ public class DetalleObraFragment extends Fragment {
         ImageView imgDetObraFoto = view.findViewById(R.id.imgDetObraFoto);
         TextView txtDetObraDescripcion = view.findViewById(R.id.txtDetObraDescripcion);
         ImageView btnObraVolver = view.findViewById(R.id.btnObraVolver);
+        TextView txtDetObraFecha = view.findViewById(R.id.txtDetObraFecha);
         btnReproducirPausar = view.findViewById(R.id.btnReproducirPausar);
         btnDetener = view.findViewById(R.id.btnDetener);
         btnReiniciar = view.findViewById(R.id.btnReiniciar);
@@ -161,6 +162,7 @@ public class DetalleObraFragment extends Fragment {
                         .load(obra.getUrlImagen())
                         .centerCrop()
                         .into(imgDetObraFoto);
+                txtDetObraFecha.setText(obra.getFecha());
                 txtDetObraDescripcion.setText(obra.getDescripcion());
                 // l: Generar el código QR con el identificador del cuadro
                 //Implementar en vista QR

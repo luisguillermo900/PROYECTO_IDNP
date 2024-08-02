@@ -92,28 +92,6 @@ public class HomeActivity extends AppCompatActivity {
                 }
             }
         });
-
-//        itemViewModel = new ViewModelProvider(this).get(ObrasViewModel.class);
-//        // Dibuja un cuadro
-//        itemViewModel.getObraSeleccionada().observe(this, obra -> {
-//            FragmentManager fragmentManager = getSupportFragmentManager();
-//            fragmentManager.beginTransaction()
-//                    .replace(R.id.contenedorFragments, DetalleObraFragment.class, null)
-//                    .addToBackStack(null)
-//                    .commit();
-//        });
-
-        /*itemViewModel.getObraSeleccionada().observe(this, cuadro -> {
-            if (cuadro != null) {
-                pictureFragment = new DetalleObraFragment();
-                loadFragment(pictureFragment);
-            }
-        });*/
-
-        // Regresa al canvas del mapa y elimina el cuadro
-        /*itemViewModel.getClosePicture().observe(this, id -> {
-            loadFragment(new MapFragment());
-        });*/
     }
 
     @Override
