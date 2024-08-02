@@ -15,6 +15,7 @@ import android.widget.ImageView;
 
 import com.example.proyecto_idnp.Customviews.MapView;
 import com.example.proyecto_idnp.Customviews.SalaView;
+import com.example.proyecto_idnp.Entidades.RoomTestEntity;
 import com.example.proyecto_idnp.Modelos.CanvasViewModel;
 import com.example.proyecto_idnp.Modelos.ObrasViewModel;
 import com.example.proyecto_idnp.R;
@@ -38,6 +39,7 @@ public class SalaFragment extends Fragment {
     private ObrasViewModel obrasViewModel;
     private SalaView salaView;
     private ImageView back;
+    private int roomId;
 
     public SalaFragment() {
         // Required empty public constructor
@@ -93,7 +95,6 @@ public class SalaFragment extends Fragment {
         super.onViewCreated(view, savedInstanceStatus);
         obrasViewModel = new ViewModelProvider(requireActivity()).get(ObrasViewModel.class);
         salaView.setListener2(obrasViewModel);
-
         obrasViewModel.getObraSeleccionada().observe(getViewLifecycleOwner(), roomId -> {
             if (roomId != null) {
                 FragmentManager fragmentManager = getParentFragmentManager();
@@ -103,19 +104,6 @@ public class SalaFragment extends Fragment {
                         .commit();
             }
         });
-
         obrasViewModel.setObraSeleccionada(null);
-//        canvasViewModel = new ViewModelProvider(requireActivity()).get(CanvasViewModel.class);
-//        salaView.setListener(canvasViewModel);
-//        canvasViewModel.getSelectRoom().observe(getViewLifecycleOwner(), roomId -> {
-//            if (roomId != null) {
-//                FragmentManager fragmentManager = getParentFragmentManager();
-//                fragmentManager.beginTransaction()
-//                        .replace(R.id.contenedorFragments, DetalleObraFragment.class, null)
-//                        .addToBackStack(null)
-//                        .commit();
-//            }
-//        });
-//        canvasViewModel.setSelectRoom(null);
     }
 }

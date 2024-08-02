@@ -22,6 +22,9 @@ import com.example.proyecto_idnp.Modelos.CanvasViewModel;
 import com.example.proyecto_idnp.Modelos.ObrasViewModel;
 import com.example.proyecto_idnp.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MapView extends View {
     private static final String TAG = "MapView";
     private static final float DRAW_WIDTH = 1050f;
@@ -37,6 +40,8 @@ public class MapView extends View {
     private CanvasViewModel canvasModel;
     private FragmentManager fragmentManager = null;
     private FragmentTransaction fragmentTransaction = null;
+    private float [][] romms;
+    private ArrayList<Icon> icons = new ArrayList<>();
 
     public MapView(Context context) {
         super(context);
@@ -85,9 +90,7 @@ public class MapView extends View {
     }
 
     private void drawMapLayout() {
-
-        float [][] romms = {
-
+        romms = new float[][] {
                 {25, 20, 1050, 2080}, // Marco
                 //{10, 20, 1040, 2070}, // Marco
                 {25, 20, 253, 337}, // Administrativo
@@ -163,33 +166,56 @@ public class MapView extends View {
     }
 
     private void drawPicture() {
-        pictureDrawable = AppCompatResources.getDrawable(context, R.drawable.icon_cuadro);
-        if (pictureDrawable != null) {
-            int left = (int) (506 * scaleX);
-            int top = (int) (2020 * scaleY);
-            int right = (int) (556 * scaleX);
-            int bottom = (int) (2070 * scaleY);
-            pictureDrawable.setBounds(left, top, right, bottom);
-            pictureDrawable.draw(canvas);
+//        pictureDrawable = AppCompatResources.getDrawable(context, R.drawable.icon_cuadro);
+//        if (pictureDrawable != null) {
+//            int left = (int) (506 * scaleX);
+//            int top = (int) (2020 * scaleY);
+//            int right = (int) (556 * scaleX);
+//            int bottom = (int) (2070 * scaleY);
+//            pictureDrawable.setBounds(left, top, right, bottom);
+//            pictureDrawable.draw(canvas);
+//        }
+
+        // ==============================
+        icons.clear();
+        float[][] roomCenters = {
+                {410, 1940}, // Sala 1
+                {74, 1940}, // Sala 2
+                {74, 1627}, // Sala 3
+                {74, 1310}, // Sala 4
+                {410, 1310}, // Sala 5
+                {74, 654}, // Sala 6
+                {410, 505}, // Sala 7
+                {860, 1310}, // Sala 8
+                {860, 1627}, // Sala 9
+                {860, 1940}  // Sala 10
+        };
+
+        for (float[] center : roomCenters) {
+            for (int i = 0; i < 1; i++) {
+                Drawable drawable = AppCompatResources.getDrawable(context, R.drawable.icon_cuadro);
+                if (drawable != null) {
+                    float offsetX = (i % 2) * 50;
+                    float offsetY = (i / 2) * 50;
+                    float left = center[0] - 30 + offsetX;
+                    float top = center[1] + 80 - offsetY;
+                    float right = center[0] + 20 + offsetX;
+                    float bottom = center[1] + 130 - offsetY;
+                    icons.add(new Icon(drawable, left, top, right, bottom));
+                }
+            }
         }
+
+        for (Icon icon : icons) {
+            icon.draw(canvas, scaleX, scaleY);
+        }
+
     }
 
-    private void drawSala() {
-        pictureDrawable = AppCompatResources.getDrawable(context, R.drawable.icon_cuadro);
-        if (pictureDrawable != null) {
-            int left = (int) (456 * scaleX);
-            int top = (int) (1980 * scaleY);
-            int right = (int) (556 * scaleX);
-            int bottom = (int) (2080 * scaleY);
-            pictureDrawable.setBounds(left, top, right, bottom);
-            pictureDrawable.draw(canvas);
-        }
-    }
-
-    public void setListener(ObrasViewModel itemViewModel){
+    public void setListenerPictures(ObrasViewModel itemViewModel){
         this.itemViewModel = itemViewModel;
     }
-    public void setListener2(CanvasViewModel canvasModel){
+    public void setListenerRooms(CanvasViewModel canvasModel){
         this.canvasModel = canvasModel;
     }
 
@@ -197,16 +223,23 @@ public class MapView extends View {
     public boolean onTouchEvent(MotionEvent event) {
         int pointX = (int) event.getX();
         int pointY = (int) event.getY();
+        int x_negative = (int) (253 * scaleX);
+        int x_positive = (int) (684 * scaleX);
+        int y_negative = (int) (1763 * scaleX);
+        int y_positive = (int) (2080 * scaleX);
+
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                int x_negative = (int) (253 * scaleX);
-                int x_positive = (int) (684 * scaleX);
-                int y_negative = (int) (1763 * scaleX);
-                int y_positive = (int) (2080 * scaleX);
-
                 if (pointX >= x_negative && pointX <= x_positive && pointY >= y_negative && pointY <= y_positive) {
                     canvasModel.setSelectRoomById(2);
                     Log.d("MapView","onTouchEvent Puntos " + pointX + " " + pointY );
+                } else {
+                    for (Icon icon : icons) {
+                        if (icon.contains(pointX, pointY, scaleX, scaleY)) {
+                            Log.d(TAG, "Icon touched at " + pointX + ", " + pointY);
+                            break;
+                        }
+                    }
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
@@ -216,6 +249,31 @@ public class MapView extends View {
         }
         invalidate();
         return true;
+    }
+
+    private static class Icon {
+        Drawable drawable;
+        float left;
+        float top;
+        float right;
+        float bottom;
+
+        Icon(Drawable drawable, float left, float top, float right, float bottom) {
+            this.drawable = drawable;
+            this.left = left;
+            this.top = top;
+            this.right = right;
+            this.bottom = bottom;
+        }
+
+        void draw(Canvas canvas, float scaleX, float scaleY) {
+            drawable.setBounds((int) (left * scaleX), (int) (top * scaleY), (int) (right * scaleX), (int) (bottom * scaleY));
+            drawable.draw(canvas);
+        }
+
+        boolean contains(float x, float y, float scaleX, float scaleY) {
+            return x >= (left * scaleX) && x <= (right * scaleX) && y >= (top * scaleY) && y <= (bottom * scaleY);
+        }
     }
 }
 

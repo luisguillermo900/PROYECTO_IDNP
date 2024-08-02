@@ -92,11 +92,15 @@ public class MapFragment extends Fragment {
 
     public void onViewCreated( View view, Bundle savedInstanceStatus) {
         super.onViewCreated(view, savedInstanceStatus);
-        //itemViewModel = new ViewModelProvider(requireActivity()).get(ObrasViewModel.class);
-        //mapView.setListener(itemViewModel);
+//        itemViewModel = new ViewModelProvider(requireActivity()).get(ObrasViewModel.class);
+//        mapView.setListenerPictures(itemViewModel);
         canvasViewModel = new ViewModelProvider(requireActivity()).get(CanvasViewModel.class);
-        mapView.setListener2(canvasViewModel);
+        mapView.setListenerRooms(canvasViewModel);
+        interfaceRoom();
+        interfacePicture();
+    }
 
+    private void interfaceRoom(){
         canvasViewModel.getSelectRoom().observe(getViewLifecycleOwner(), roomId -> {
             if (roomId != null) {
                 FragmentManager fragmentManager = getParentFragmentManager();
@@ -107,5 +111,9 @@ public class MapFragment extends Fragment {
             }
         });
         canvasViewModel.setSelectRoom(null);
+    }
+
+    private void interfacePicture(){
+
     }
 }
