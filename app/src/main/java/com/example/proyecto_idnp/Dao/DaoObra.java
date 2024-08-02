@@ -43,8 +43,6 @@ public interface DaoObra {
             "    WHERE Galeria.nombre = :galeria")
     List<ObraDeArte> cargarObrasPorGaleria(String galeria);
 
-    @Query("SELECT * FROM ObraDeArte " +
-            "    INNER JOIN Exposicion ON ObraDeArte.id_exposicion = Exposicion.id " +
-            "    WHERE Exposicion.nombre = :exposicion")
+    @Query("SELECT * FROM ObraDeArte INNER JOIN Exposicion ON ObraDeArte.id_exposicion = Exposicion.id WHERE Exposicion.nombre = :exposicion")
     List<ObraDeArte> cargarObrasPorExposicion(String exposicion);
 }

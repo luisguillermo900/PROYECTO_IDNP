@@ -23,6 +23,7 @@ import com.example.proyecto_idnp.Entidades.ResultadoFiltro;
 import com.example.proyecto_idnp.Modelos.ResultadosViewModel;
 import com.example.proyecto_idnp.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ExplorarFragment extends Fragment implements OnResultadoClickListener {
@@ -124,7 +125,7 @@ public class ExplorarFragment extends Fragment implements OnResultadoClickListen
         Fragment fragmentoDetalle = null;
         filtroSeleccionado = resultadosModel.getfiltroSeleccionado();
         resultadosModel.setResultadoSeleccionado(resultado);
-        if(filtroSeleccionado.equals("Exposicion")){
+        if(filtroSeleccionado.equals("Exposiciones")){
             fragmentoDetalle = new DetalleExposicionFragment();
         } else {
             fragmentoDetalle = new DetalleGenericoFragment();

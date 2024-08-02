@@ -38,9 +38,9 @@ public class DetalleExposicionFragment extends Fragment implements OnObraClickLi
     private ObrasViewModel obrasModel;
     private ResultadosViewModel resultadosModel;
     private String nombreFiltro = "";
+    private ResultadoFiltro resultadoSeleccionado;
     AppDatabase db = AppDatabase.getInstance(getContext());
     DaoExposicion daoExposicion = db.daoExposicion();
-    private ResultadoFiltro resultadoSeleccionado;
 
     private String mParam1;
     private String mParam2;
@@ -79,11 +79,12 @@ public class DetalleExposicionFragment extends Fragment implements OnObraClickLi
 
         resultadosModel = new ViewModelProvider(requireActivity()).get(ResultadosViewModel.class);
         obrasModel = new ViewModelProvider(requireActivity()).get(ObrasViewModel.class);
+        resultadoSeleccionado = resultadosModel.getResultadoSeleccionado().getValue();
+        nombreFiltro = resultadoSeleccionado.getNombre();
 
         // Observar el resultado seleccionado y actualizar la UI
         resultadosModel.getResultadoSeleccionado().observe(getViewLifecycleOwner(), resultado -> {
-            nombreFiltro = resultadosModel.getResultadoSeleccionado().getValue().getNombre();
-            Exposicion expoObtenida = consultaExposicion(resultadosModel.getResultadoSeleccionado().getValue());
+            Exposicion expoObtenida = consultaExposicion(resultadoSeleccionado);
             if (resultado != null) {
                 txtTituloExposicion.setText(expoObtenida.getNombre());
                 Glide.with(getContext())
@@ -104,14 +105,11 @@ public class DetalleExposicionFragment extends Fragment implements OnObraClickLi
             }
         });
 
-        resultadoSeleccionado = resultadosModel.getResultadoSeleccionado().getValue();
+        obrasModel.cargarObrasPorExposicion(nombreFiltro);
         recyclerListaObras = view.findViewById(R.id.recyclerObrasGenerico);
         recyclerListaObras.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        obrasModel.cargarObrasPorExposicion(nombreFiltro);
         adaptadorObras = new AdaptadorObra(obrasModel.getObrasLiveData().getValue(),getContext(),this);
         recyclerListaObras.setAdapter(adaptadorObras);
-        Log.d("AdaptadorCuadro", "Adaptador configurado y asignado al RecyclerView.");
         return view;
     }
     @Override

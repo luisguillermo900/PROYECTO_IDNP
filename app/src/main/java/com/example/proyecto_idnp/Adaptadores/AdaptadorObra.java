@@ -43,9 +43,11 @@ public class AdaptadorObra extends RecyclerView.Adapter<AdaptadorObra.ViewHolder
         Log.d(TAG,"onBindViewHolder" + listaObras.get(position).getTitulo());
         holder.txtDescripcionObra.setText(listaObras.get(position).getDescripcion());
         Log.d(TAG,"onBindViewHolder" + listaObras.get(position).getDescripcion());
+        Log.d(TAG,"onBindViewHolder" + listaObras.get(position).getUrlImagen());
         Glide.with(contexto)
                 .load(listaObras.get(position).getUrlImagen())
                 .centerCrop()
+                .skipMemoryCache(true)
                 .into(holder.imgFotoObra);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

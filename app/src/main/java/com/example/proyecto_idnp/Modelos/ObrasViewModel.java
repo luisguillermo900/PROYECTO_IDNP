@@ -22,17 +22,14 @@ public class ObrasViewModel extends AndroidViewModel {
     private DaoObra daoObra;
     private MutableLiveData<List<ObraDeArte>> obrasLiveData;
     private MutableLiveData<ObraDeArte> obraSeleccionada;
-    private MutableLiveData<ObraDeArte> closePicture;
     private List<ObraDeArte> listaObras;
 
     public ObrasViewModel(@NonNull Application application) {
         super(application);
         obrasLiveData = new MutableLiveData<>();
         obraSeleccionada = new MutableLiveData<>();
-        closePicture = new MutableLiveData<>();
         appBD = AppDatabase.getInstance(application);
         daoObra = appBD.daoObra();
-        loadObras();
     }
     public LiveData<List<ObraDeArte>> getObrasLiveData() {
         return obrasLiveData;
@@ -73,21 +70,5 @@ public class ObrasViewModel extends AndroidViewModel {
     }
     public void cargarObrasPorExposicion(String exposicion){
         obrasLiveData.setValue(daoObra.cargarObrasPorExposicion(exposicion));
-    }
-
-    private void cargarObrasPorConsulta(int id, String tipo, String nombre) {
-        if(tipo.equals("tipo")){
-            //SELECT * FROM ObraDeArte WHERE tipo = $nombre
-            //El retorno se asigna al obrasLiveData
-            obrasLiveData.setValue(listaObras);
-        } else {
-            //SELECT * FROM ObraDeArte WHERE id_$tipo = $id
-            //El retorno se asigna al obrasLiveData
-            obrasLiveData.setValue(listaObras);
-        }
-    }
-
-    private void loadObras() {
-        obrasLiveData.setValue(daoObra.obtenerObras());
     }
 }
