@@ -50,7 +50,7 @@ public class InicializadorBD extends Application {
                         "Jose Castro"
                 ));
                 daoAutor.insertarAutor(new Autor(
-                        3,
+                        4,
                         "https://pixnio.com/free-images/2017/11/30/2017-11-30-18-37-25-576x864.jpg",
                         "Lucia Flores"
                 ));

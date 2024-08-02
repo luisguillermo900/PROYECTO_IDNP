@@ -40,10 +40,10 @@ public class AdaptadorObra extends RecyclerView.Adapter<AdaptadorObra.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.txtTituloObra.setText(listaObras.get(position).getTitulo());
-        Log.d(TAG,"onBindViewHolder" + listaObras.get(position).getTitulo());
+        Log.d("onBindViewHolder", listaObras.get(position).getTitulo());
         holder.txtDescripcionObra.setText(listaObras.get(position).getDescripcion());
-        Log.d(TAG,"onBindViewHolder" + listaObras.get(position).getDescripcion());
-        Log.d(TAG,"onBindViewHolder" + listaObras.get(position).getUrlImagen());
+        Log.d("onBindViewHolder",listaObras.get(position).getDescripcion());
+        Log.d("onBindViewHolder",listaObras.get(position).getUrlImagen());
         Glide.with(contexto)
                 .load(listaObras.get(position).getUrlImagen())
                 .centerCrop()

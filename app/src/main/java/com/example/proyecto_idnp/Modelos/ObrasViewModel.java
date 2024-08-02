@@ -69,6 +69,14 @@ public class ObrasViewModel extends AndroidViewModel {
         obrasLiveData.setValue(daoObra.cargarObrasPorGaleria(galeria));
     }
     public void cargarObrasPorExposicion(String exposicion){
+        Log.d("ObrasViewModel", daoObra.cargarObrasPorExposicion(exposicion).toString());
         obrasLiveData.setValue(daoObra.cargarObrasPorExposicion(exposicion));
+        Log.d("ObrasViewModel", obrasLiveData.toString());
+        mostrarObrasLiveData();
+    }
+    public void mostrarObrasLiveData(){
+        for(int i=0; i< obrasLiveData.getValue().size(); i++){
+            Log.d("ObrasViewModel", obrasLiveData.getValue().get(i).getUrlImagen());
+        }
     }
 }

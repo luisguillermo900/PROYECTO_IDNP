@@ -108,6 +108,7 @@ public class DetalleExposicionFragment extends Fragment implements OnObraClickLi
         obrasModel.cargarObrasPorExposicion(nombreFiltro);
         recyclerListaObras = view.findViewById(R.id.recyclerObrasGenerico);
         recyclerListaObras.setLayoutManager(new LinearLayoutManager(getContext()));
+        Log.d("DetalleExposicionFragment", obrasModel.getObrasLiveData().getValue().toString());
         adaptadorObras = new AdaptadorObra(obrasModel.getObrasLiveData().getValue(),getContext(),this);
         recyclerListaObras.setAdapter(adaptadorObras);
         return view;
