@@ -10,10 +10,10 @@ public class Autor {
     @PrimaryKey
     @NonNull
     public int id;
-    @ColumnInfo(name = "nombres")
-    public String nombres;
-    @ColumnInfo(name = "apellidos")
-    public String apellidos;
+    @ColumnInfo(name = "url_imagen")
+    public String urlImagen;
+    @ColumnInfo(name = "nombre")
+    public String nombre;
 
     @NonNull
     public int getIdAuthor() {
@@ -25,25 +25,17 @@ public class Autor {
     }
 
     public String getName() {
-        return nombres;
+        return nombre;
     }
 
     public void setName(String name) {
-        this.nombres = name;
+        this.nombre = name;
     }
 
-    public String getSurname() {
-        return apellidos;
-    }
-
-    public void setSurname(String surname) {
-        this.apellidos = surname;
-    }
-
-    public Autor(@NonNull int idAuthor, String name, String surname) {
+    public Autor(@NonNull int idAuthor, String urlImagen, String nombre) {
         this.id = idAuthor;
-        this.nombres = name;
-        this.apellidos = surname;
+        this.urlImagen = urlImagen;
+        this.nombre = nombre;
     }
 
     public Autor() {

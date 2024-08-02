@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.example.proyecto_idnp.Entidades.ObraDeArte;
+import com.example.proyecto_idnp.Entidades.ResultadoFiltro;
 
 import java.util.List;
 
@@ -25,4 +26,7 @@ public interface DaoObra {
 
     @Query("SELECT * FROM ObraDeArte WHERE id = :id")
     ObraDeArte obtenerObra(int id);
+
+    @Query("SELECT tipo AS nombre, url_imagen AS urlImagen FROM ObraDeArte GROUP BY tipo")
+    List<ResultadoFiltro> filtrarTipos();
 }

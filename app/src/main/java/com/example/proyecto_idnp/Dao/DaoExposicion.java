@@ -1,5 +1,6 @@
 package com.example.proyecto_idnp.Dao;
 import com.example.proyecto_idnp.Entidades.Exposicion;
+import com.example.proyecto_idnp.Entidades.ResultadoFiltro;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -34,5 +35,7 @@ public interface DaoExposicion {
     @Query("DELETE FROM Exposicion")
     void deleteAll();
 
+    @Query("SELECT nombre AS nombre, url_imagen AS urlImagen FROM Exposicion")
+    List<ResultadoFiltro> filtrarExposiciones();
 }
 

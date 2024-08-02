@@ -12,14 +12,14 @@ import androidx.room.PrimaryKey;
                         parentColumns = "id",
                         childColumns = "id_autor",
                         onDelete = ForeignKey.CASCADE),
-                /*@ForeignKey(entity = Exposicion.class,
+                @ForeignKey(entity = Exposicion.class,
                         parentColumns = "id",
                         childColumns = "id_exposicion",
                         onDelete = ForeignKey.CASCADE),
                 @ForeignKey(entity = Galeria.class,
                         parentColumns = "id",
                         childColumns = "id_galeria",
-                        onDelete = ForeignKey.CASCADE)*/
+                        onDelete = ForeignKey.CASCADE)
         }
 )
 public class ObraDeArte {

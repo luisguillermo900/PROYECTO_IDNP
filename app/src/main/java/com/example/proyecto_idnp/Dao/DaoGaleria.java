@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.example.proyecto_idnp.Entidades.Galeria;
+import com.example.proyecto_idnp.Entidades.ResultadoFiltro;
 
 import java.util.List;
 
@@ -25,4 +26,7 @@ public interface DaoGaleria {
 
     @Query("SELECT * FROM Galeria WHERE id = :id")
     Galeria getGaleria(int id);
+
+    @Query("SELECT Galeria.nombre AS nombre, Exposicion.url_imagen AS urlImagen FROM Galeria INNER JOIN Exposicion ON Galeria.id_exposicion=Exposicion.id")
+    List<ResultadoFiltro> filtrarGalerias();
 }
