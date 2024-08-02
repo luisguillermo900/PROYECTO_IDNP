@@ -44,6 +44,7 @@ public class DetalleObraFragment extends Fragment {
     private ImageButton btnReiniciar;
     private boolean estaReproduciendo = false;
     private ObrasViewModel obrasModel;
+    private String nombreObra = "";
 
     //Implementar en vista QR
     //private ImageView imgQr;
@@ -93,6 +94,9 @@ public class DetalleObraFragment extends Fragment {
         TextView txtDetObraDescripcion = view.findViewById(R.id.txtDetObraDescripcion);
         ImageView btnObraVolver = view.findViewById(R.id.btnObraVolver);
         TextView txtDetObraFecha = view.findViewById(R.id.txtDetObraFecha);
+        TextView txtDetObraAutor = view.findViewById(R.id.txtDetObraAutor);
+        TextView txtDetObraGaleria = view.findViewById(R.id.txtDetObraGaleria);
+
         btnReproducirPausar = view.findViewById(R.id.btnReproducirPausar);
         btnDetener = view.findViewById(R.id.btnDetener);
         btnReiniciar = view.findViewById(R.id.btnReiniciar);
@@ -157,11 +161,14 @@ public class DetalleObraFragment extends Fragment {
         // Observar el cuadro seleccionado y actualizar la UI
         obrasModel.getObraSeleccionada().observe(getViewLifecycleOwner(), obra -> {
             if (obra != null) {
+                nombreObra = obra.getTitulo();
                 txtDetObraTitulo.setText(obra.getTitulo());
                 Glide.with(getContext())
                         .load(obra.getUrlImagen())
                         .centerCrop()
                         .into(imgDetObraFoto);
+                txtDetObraAutor.setText(String.valueOf(obra.getIdAutor()));
+                txtDetObraGaleria.setText(String.valueOf(obra.getIdGaleria()));
                 txtDetObraFecha.setText(obra.getFecha());
                 txtDetObraDescripcion.setText(obra.getDescripcion());
                 // l: Generar el código QR con el identificador del cuadro
@@ -186,6 +193,7 @@ public class DetalleObraFragment extends Fragment {
         Intent intentServicio = new Intent(getContext(), ServicioAudio.class);
         intentServicio.setAction(comando);
         intentServicio.putExtra("nombreArchivo", nombreArchivo);
+        intentServicio.putExtra("nombreObra", nombreObra);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             if(comando.equals("ACCION_DETENER")){
                 requireActivity().startService(intentServicio);

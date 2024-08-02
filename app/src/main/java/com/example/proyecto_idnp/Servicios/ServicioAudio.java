@@ -63,6 +63,7 @@ public class ServicioAudio extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         String accion = intent.getAction();
         String nombreArchivo = intent.getStringExtra("nombreArchivo");
+        String nombreObra = intent.getStringExtra("nombreObra");
 
         if (mediaItem == null || !archivoActual.equals(nombreArchivo)){
             archivoActual = nombreArchivo;
@@ -96,7 +97,7 @@ public class ServicioAudio extends Service {
                 break;
         }
         crearAcciones();
-        iniciarPrimerPlano();
+        iniciarPrimerPlano(nombreObra);
         return START_STICKY;
     }
 
@@ -127,7 +128,7 @@ public class ServicioAudio extends Service {
     }
 
     @OptIn(markerClass = UnstableApi.class)
-    private void iniciarPrimerPlano(){
+    private void iniciarPrimerPlano(String nombreObra){
         Intent notificationIntent = new Intent(this, HomeActivity.class);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         notificationIntent.putExtra("abrirFragmento", "DetalleObraFragment");
@@ -147,8 +148,7 @@ public class ServicioAudio extends Service {
                     .addAction(accionDetener)
                     .setStyle(new MediaStyleNotificationHelper.MediaStyle(mediaSession)
                             .setShowActionsInCompactView(0,1,2))
-                    .setContentTitle("Wonderful music")
-                    .setContentText("My Awesome Band")
+                    .setContentTitle(nombreObra)
                     .setLargeIcon(albumArtBitmap)
                     .build();
             int type = 0;
